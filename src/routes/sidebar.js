@@ -22,6 +22,11 @@ const routes = [
     name: 'Budgeting',
   },
   {
+    path: '/app/schedule',
+    icon: 'FormsIcon',
+    name: 'Schedule',
+  },
+  {
     path: '/app/forms',
     icon: 'FormsIcon',
     name: 'Forms',

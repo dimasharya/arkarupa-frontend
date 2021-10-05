@@ -1,6 +1,7 @@
 import React, { lazy } from 'react'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import AccessibleNavigationAnnouncer from './components/AccessibleNavigationAnnouncer'
+import { Toaster } from 'react-hot-toast'
 
 const Layout = lazy(() => import('./containers/Layout'))
 const Login = lazy(() => import('./pages/Login'))
@@ -12,6 +13,7 @@ function App() {
     <>
       <Router>
         <AccessibleNavigationAnnouncer />
+        <Toaster position="top-right" />
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/create-account" component={CreateAccount} />

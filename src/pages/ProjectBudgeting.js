@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@windmill/react-ui";
-import { Print, FilePdf, EditIcon, MinusCirlce } from "../icons/index";
+import {
+  Print,
+  FilePdf,
+  EditIcon,
+  MinusCirlce,
+  ChevronLeft,
+} from "../icons/index";
 import {
   Table,
   TableHeader,
@@ -12,25 +18,281 @@ import {
   Pagination,
 } from "@windmill/react-ui";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPaintRoller,
-  faRulerHorizontal,
-  faLayerGroup,
-  faDollarSign,
-  faSearch,
-  faCog
-} from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faCog } from "@fortawesome/free-solid-svg-icons";
 import Tooltip from "react-tooltip";
+import Searchboxitems from "../components/Searchbox/Searchboxitems";
+import Itemcontrol from "../components/Projectbudget/Itemcontrol";
+import NumberFormat from "react-number-format";
 
 function ProjectBudgeting() {
+
+  const data = [
+    {
+      nama: "Pemasangan Besu Bertingkat Dengan Bekisting",
+      category: "PAW",
+      unit: "m2",
+      volume: 200,
+      price: 345000,
+      total: 69000000,
+    },
+    {
+      nama: "Pagar sementara seng gelombang tinggi 2 m",
+      category: "PAW",
+      unit: "m2",
+      volume: 200,
+      price: 345000,
+      total: 69000000,
+    },
+    {
+      nama: "Pengukuran dan pemasangan bowplank",
+      category: "PAW",
+      unit: "m2",
+      volume: 200,
+      price: 345000,
+      total: 69000000,
+    },
+    {
+      nama: "Pembongkaran Plesteran dengan Membersihkan",
+      category: "PAW",
+      unit: "m2",
+      volume: 200,
+      price: 345000,
+      total: 69000000,
+    },
+    {
+      nama: "Membersihkan Parit Samping Jalan Menggunakan Buruh",
+      category: "PAW",
+      unit: "m2",
+      volume: 200,
+      price: 345000,
+      total: 69000000,
+    },
+    {
+      nama: "Membersihkan Parit Samping Jalan Menggunakan Buruh",
+      category: "PAW",
+      unit: "m2",
+      volume: 200,
+      price: 345000,
+      total: 69000000,
+    },
+    {
+      nama: "Membersihkan Parit Samping Jalan Menggunakan Buruh",
+      category: "PAW",
+      unit: "m2",
+      volume: 200,
+      price: 345000,
+      total: 69000000,
+    },
+    {
+      nama: "Membersihkan Parit Samping Jalan Menggunakan Buruh",
+      category: "PAW",
+      unit: "m2",
+      volume: 200,
+      price: 345000,
+      total: 69000000,
+    },
+    {
+      nama: "Membersihkan Parit Samping Jalan Menggunakan Buruh",
+      category: "PAW",
+      unit: "m2",
+      volume: 200,
+      price: 345000,
+      total: 69000000,
+    },
+    {
+      nama: "Membersihkan Parit Samping Jalan Menggunakan Buruh",
+      category: "PAW",
+      unit: "m2",
+      volume: 200,
+      price: 345000,
+      total: 69000000,
+    },
+    {
+      nama: "Membersihkan Parit Samping Jalan Menggunakan Buruh",
+      category: "PAW",
+      unit: "m2",
+      volume: 200,
+      price: 345000,
+      total: 69000000,
+    },
+    {
+      nama: "Membersihkan Parit Samping Jalan Menggunakan Buruh",
+      category: "PAW",
+      unit: "m2",
+      volume: 200,
+      price: 345000,
+      total: 69000000,
+    },
+    {
+      nama: "Membersihkan Parit Samping Jalan Menggunakan Buruh",
+      category: "PAW",
+      unit: "m2",
+      volume: 200,
+      price: 345000,
+      total: 69000000,
+    },
+    {
+      nama: "Membersihkan Parit Samping Jalan Menggunakan Buruh",
+      category: "PAW",
+      unit: "m2",
+      volume: 200,
+      price: 345000,
+      total: 69000000,
+    },
+    {
+      nama: "Membersihkan Parit Samping Jalan Menggunakan Buruh",
+      category: "PAW",
+      unit: "m2",
+      volume: 200,
+      price: 345000,
+      total: 69000000,
+    },
+  ];
+
+  /// Table Area
+  const [itemTable, setItemTable] = useState(data);
+  const [pageTable, setPageTable] = useState(1);
+  const [dataTable, setDataTable] = useState([]);
+  const [totalResults, setTotalResult] = useState(itemTable.length);
+
+  function onPageChangeTable(p) {
+    setPageTable(p);
+  }
+
+  // Pagination
+  //const totalResults = itemTable.length;
+  const resultsPerPage = 10;
+
+  useEffect(() => {
+    setDataTable(
+      itemTable.slice(
+        (pageTable - 1) * resultsPerPage,
+        pageTable * resultsPerPage
+      )
+    );
+  }, [pageTable, totalResults, itemTable]);
+
+  // Total Display
+
+  const [totalDisplay, setTotalDisplay] = useState(0);
+
+  useEffect(() => {
+    let sum = 0;
+    for (let i = 0; i < itemTable.length; i++) {
+      sum = sum + parseFloat(itemTable[i].total);
+    }
+    setTotalDisplay(sum);
+  }, [itemTable]);
+
+  /// Item Control Area
+
+  const [itemControl, setItemcontrol] = useState("");
+  const [isItemControl, setisItemcontrol] = useState(false);
+
+  function hapusClick(props) {
+    const data = [...itemTable];
+    let indexData = 0;
+    if (pageTable !== 0) {
+      indexData = (pageTable - 1) * 10 + props;
+    } else {
+      indexData = props;
+    }
+    data.splice(indexData, 1);
+    setTotalResult(data.length);
+    setItemTable(data);
+  }
+
+  function editClick(props) {
+    const data = dataTable[props];
+    const dataEdit = {
+      index: props,
+      nama: data.nama,
+      unit: data.unit,
+      category: data.category,
+      price: data.price,
+      volume: data.volume,
+      total: data.total,
+    };
+    setItemcontrol(dataEdit);
+    setisItemcontrol(true);
+  }
+
+  function submitItem(props) {
+    const changedData = {
+      nama: props.nama,
+      unit: props.unit,
+      category: props.category,
+      price: props.price,
+      volume: props.volume,
+      total: props.total,
+    };
+
+    let indexData = 0;
+    if (pageTable !== 0) {
+      indexData = (pageTable - 1) * 10 + props.index;
+    } else {
+      indexData = props.index;
+    }
+    
+    let newData = [];
+    for (let index = 0; index < itemTable.length; index++) {
+      if (index === indexData) {
+        newData[index] = changedData;
+      } else {
+        newData[index] = itemTable[index];
+      }
+    }
+    setItemTable(newData);
+    setisItemcontrol(false);
+  }
+
+  function closeItemControl() {
+    setisItemcontrol(false);
+    setItemcontrol("");
+  }
+
+  /// Search Area
+
+  const searchItem = [
+    {
+      nama: "Pemasangan Besu Bertingkat Dengan Bekisting",
+      category: "PAW",
+      unit: "m2",
+      price: "345000",
+    },
+    {
+      nama: "Pekerjaan Urugan Pasir Batu",
+      category: "PAW",
+      unit: "m3",
+      price: "345000",
+    },
+  ];
+
+  const [searchResult, setSearchresult] = useState([]);
+
+  function searchResultcontrol(props) {
+    const searchKey = props.target.value;
+    const filtered = searchItem.filter((item) => {
+      return item.nama.toLowerCase().includes(searchKey.toLowerCase());
+    });
+    if (searchKey !== "") {
+      setSearchresult(filtered);
+    } else {
+      setSearchresult([]);
+    }
+  }
+
   return (
     <>
-      <div className="flex py-4 bg-white px-8 border rounded-2xl">
+      <div className="flex py-4 px-2">
         <div className="flex flex-auto justify-between items-center">
-          <label className="text-sm font-bold">
-            BSD City Botanical Park
-            <span className="text-xs font-thin"> | Project Budget</span>
-          </label>
+          <div className="flex gap-4 items-center">
+            <Button size="small" icon={ChevronLeft} layout="link" />
+            <label className="text-lg font-black">
+              BSD City Botanical Park
+              <span className="text-sm font-thin"> - Project Budget</span>
+            </label>
+          </div>
           <div className="flex gap-4 items-center">
             <label className="text-xs">
               Last Updated : 22 Aug 2021 18.45 PM
@@ -44,53 +306,102 @@ function ProjectBudgeting() {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-5 gap-4 my-4">
-        <TableContainer className="col-span-4">
-          <Table>
-            <TableHeader>
-              <tr className="text-center">
-                <TableCell>No</TableCell>
-                <TableCell>Item</TableCell>
-                <TableCell>Category</TableCell>
-                <TableCell>Unit</TableCell>
-                <TableCell>Volume</TableCell>
-                <TableCell>Price</TableCell>
-                <TableCell>Total Amount</TableCell>
-                <TableCell><FontAwesomeIcon icon={faCog} size="1x" /></TableCell>
-              </tr>
-            </TableHeader>
-            <TableBody className="text-sm overflow-scroll">
-              <TableRow className="hover:bg-yellow-50 focus:bg-yellow-100 ">
-                <TableCell className="text-center">1</TableCell>
-                <TableCell>
-                  <p className="truncate">Pemasangan Besi Bertingkat</p>
-                </TableCell>
-                <TableCell className="text-center">
-                <label
-                    className="mr-2 text-xs font-black"
-                    data-tip
-                    data-for="table-cat"
+      <div className="grid grid-cols-5 inline-flex gap-4 my-4">
+        <div className="col-span-4">
+          <TableContainer>
+            <Table>
+              <TableHeader>
+                <tr className="text-center">
+                  <TableCell>Item</TableCell>
+                  <TableCell>Category</TableCell>
+                  <TableCell>Unit</TableCell>
+                  <TableCell>Volume</TableCell>
+                  <TableCell>Price</TableCell>
+                  <TableCell>Total Amount</TableCell>
+                  <TableCell>
+                    <FontAwesomeIcon icon={faCog} size="1x" />
+                  </TableCell>
+                </tr>
+              </TableHeader>
+              <TableBody className="text-sm overflow-scroll">
+                {dataTable.map((idx, i) => (
+                  <TableRow
+                    key={i}
+                    className="hover:bg-yellow-50 focus:bg-yellow-100 "
                   >
-                    PAW
-                  </label>
-                  <Tooltip id="table-cat" place="top" effect="solid">
-                    Pekerjaan Awalan
-                  </Tooltip>
-                </TableCell>
-                <TableCell className="text-center">m2</TableCell>
-                <TableCell className="text-center">200</TableCell>
-                <TableCell>Rp. 345.0000</TableCell>
-                <TableCell>Rp. 34.000.000</TableCell>
-                <TableCell className="text-center w-1/12">
-                  <Button size="small" icon={EditIcon} layout="link" />
-                  <Button size="small" icon={MinusCirlce} layout="link" />
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-          <TableFooter></TableFooter>
-        </TableContainer>
-        <div className="grid gap-4">
+                    <TableCell>
+                      <p className="truncate">{idx.nama}</p>
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <label
+                        className="mr-2 text-xs font-black"
+                        data-tip
+                        data-for="table-cat"
+                      >
+                        {idx.category}
+                      </label>
+                      <Tooltip id="table-cat" place="top" effect="solid">
+                        Pekerjaan Awalan
+                      </Tooltip>
+                    </TableCell>
+                    <TableCell className="text-center">{idx.unit}</TableCell>
+                    <TableCell className="text-center">{idx.volume}</TableCell>
+                    <TableCell>
+                      <NumberFormat
+                        value={idx.price}
+                        displayType={"text"}
+                        thousandSeparator
+                        prefix={"Rp. "}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <NumberFormat
+                        value={idx.total}
+                        displayType={"text"}
+                        thousandSeparator
+                        prefix={"Rp. "}
+                      />
+                    </TableCell>
+                    <TableCell className="text-center w-1/12">
+                      <Button
+                        onClick={() => editClick(i)}
+                        size="small"
+                        icon={EditIcon}
+                        layout="link"
+                      />
+                      <Button
+                        onClick={() => hapusClick(i)}
+                        size="small"
+                        icon={MinusCirlce}
+                        layout="link"
+                      />
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+            <div className="flex justify-between bg-white border-t px-8 py-3 items-center">
+              <h4 className="text-sm font-medium">Total : </h4>
+              <h4 className="text-lg font-bold">
+                <NumberFormat
+                  value={totalDisplay}
+                  displayType={"text"}
+                  thousandSeparator
+                  prefix={"Rp. "}
+                />
+              </h4>
+            </div>
+            <TableFooter>
+              <Pagination
+                totalResults={totalResults}
+                resultsPerPage={resultsPerPage}
+                onChange={onPageChangeTable}
+                label="Table navigation"
+              />
+            </TableFooter>
+          </TableContainer>
+        </div>
+        <div className="flex flex-col gap-4">
           <div className="border rounded-lg bg-white">
             <div className="bg-gray-50 rounded-t-lg border-b">
               <h4 className="py-3 text-center text-xs font-semibold text-gray-500">
@@ -99,123 +410,40 @@ function ProjectBudgeting() {
             </div>
             <div className="grid gap-2 my-3 mx-4">
               <div className="flex border items-center rounded-md">
-                <div className="text-center w-12 mx-1 border-r">
+                <div className="text-center w-10 mx-1 border-r">
                   <FontAwesomeIcon icon={faSearch} size="xs" />
                 </div>
                 <input
                   placeholder="Type something ..."
                   className="w-full rounded-lg p-2 text-sm font-medium"
-                ></input>
+                  onChange={searchResultcontrol}
+                />
               </div>
               <div className="border rounded-md h-32 overflow-y-scroll divide-y divide-gray-200">
-                <div
-                  role="button"
-                  className="py-2 px-3 hover:bg-yellow-50 focus:bg-yellow-50 truncate"
-                >
-                  <label
-                    role="button"
-                    className="mr-2 text-xs font-black"
-                    data-tip
-                    data-for="cat"
-                  >
-                    PAW
-                  </label>
-                  <label
-                    role="button"
-                    className="text-xs font-medium"
-                    data-tip
-                    data-for="item"
-                  >
-                    Pemasangan Besi Bertingkat Dengan Bekisting
-                  </label>
-                  <Tooltip id="cat" place="top" effect="solid">
-                    Pekerjaan Awalan
-                  </Tooltip>
-                  <Tooltip id="item" place="bottom" effect="solid">
-                    Pemasangan Besi Bertingkat Dengan Bekisting
-                  </Tooltip>
-                </div>
-              </div>
-              <div className="my-2">
-                <Button className="w-full" size="small">
-                  ADD ITEM
-                </Button>
+                {searchResult.map((item, idx) => (
+                  <Searchboxitems
+                    key={idx}
+                    idx={idx}
+                    nama={item.nama}
+                    category={item.category}
+                  />
+                ))}
               </div>
             </div>
           </div>
-          <div className="border rounded-lg bg-white transition duration-700 ease-in-out ">
-            <div className="bg-gray-50 rounded-t-lg border-b">
-              <h4 className="py-3 text-center text-xs font-semibold text-gray-500">
-                ITEM CONTROL
-              </h4>
-            </div>
-            <div className="py-3 px-4">
-              <div className="flex py-1 items-center">
-                <div className="p-2 text-center w-2/12">
-                  <FontAwesomeIcon icon={faPaintRoller} size="sm" />
-                </div>
-                <div className="mx-2">
-                  <label className="block text-xs font-light text-gray-500">
-                    Item
-                  </label>
-                  <p className="text-sm font-medium leading-none">
-                    Pemasangan Besi Bertingkat
-                  </p>
-                </div>
-              </div>
-              <div className="flex py-1 items-center">
-                <div className="p-2 text-center w-2/12">
-                  <FontAwesomeIcon icon={faLayerGroup} size="sm" />
-                </div>
-                <div className="mx-2">
-                  <label className="block text-xs font-light text-gray-500">
-                    Category
-                  </label>
-                  <p className="text-sm font-medium leading-none">
-                    Pekerjaan Struktur
-                  </p>
-                </div>
-              </div>
-              <div className="flex py-1 items-center">
-                <div className="p-2 text-center w-2/12">
-                  <FontAwesomeIcon icon={faDollarSign} size="sm" />
-                </div>
-                <div className="mx-2">
-                  <label className="block text-xs font-light text-gray-500">
-                    Price
-                  </label>
-                  <p className="text-sm font-medium leading-none">
-                    Rp. 35.0000
-                  </p>
-                </div>
-              </div>
-              <div className="flex py-1 items-center">
-                <div className="p-2 text-center w-2/12">
-                  <FontAwesomeIcon icon={faRulerHorizontal} size="sm" />
-                </div>
-                <div className="mx-2">
-                  <label className="block text-xs font-light text-gray-500">
-                    Volume
-                  </label>
-                  <input
-                    className="border border-white rounded-md text-sm font-medium px-2 py-1 hover:border-gray-200"
-                    placeholder="0"
-                  ></input>
-                </div>
-              </div>
-              <div className="mx-4 mb-4">
-                <label className="block text-xs font-light text-gray-500">
-                  Total
-                </label>
-                <h4 className="text-lg font-bold">Rp. 10.135.000</h4>
-              </div>
-              <div className="my-2">
-                <Button className="w-full" size="small">
-                  SUBMIT
-                </Button>
-              </div>
-            </div>
-          </div>
+          {isItemControl ? (
+            <Itemcontrol
+              index={itemControl.index}
+              nama={itemControl.nama}
+              unit={itemControl.unit}
+              category={itemControl.category}
+              price={itemControl.price}
+              volume={itemControl.volume}
+              total={itemControl.total}
+              closeItemControl={closeItemControl}
+              submitItem={submitItem}
+            />
+          ) : null}
         </div>
       </div>
     </>

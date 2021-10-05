@@ -4,6 +4,7 @@ import { lazy } from 'react'
 const Dashboard = lazy(() => import('../pages/Dashboard'))
 const ProjectDashboard = lazy(() => import('../pages/projectdashboard/ProjectDasborad'))
 const ProjectBudgeting = lazy(() => import('../pages/ProjectBudgeting'))
+const Schedule = lazy(() => import('../pages/schedule/Schedule'))
 const Forms = lazy(() => import('../pages/Forms'))
 const Cards = lazy(() => import('../pages/Cards'))
 const Charts = lazy(() => import('../pages/Charts'))
@@ -35,6 +36,10 @@ const routes = [
   {
     path: '/projectbudgeting',
     component: ProjectBudgeting
+  },
+  {
+    path: '/schedule',
+    component: Schedule
   },
   {
     path: '/forms',

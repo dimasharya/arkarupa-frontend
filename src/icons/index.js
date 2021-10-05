@@ -31,6 +31,7 @@ import { ReactComponent as LocationMarker } from './map-marker-alt-solid.svg'
 import { ReactComponent as Print } from './print-solid.svg'
 import { ReactComponent as FilePdf } from './file-pdf-solid.svg'
 import { ReactComponent as MinusCirlce } from './minus-circle-solid.svg'
+import { ReactComponent as ChevronLeft } from './chevron-left-solid.svg'
 
 export {
   ButtonsIcon,
@@ -65,5 +66,6 @@ export {
   LocationMarker,
   Print,
   FilePdf,
-  MinusCirlce
+  MinusCirlce,
+  ChevronLeft
 }
