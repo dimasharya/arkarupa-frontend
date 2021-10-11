@@ -1,14 +1,16 @@
 import React from "react";
 import Tooltip from "react-tooltip";
 
-export default function Searchboxitems({nama, category, idx}) {
+export default function Searchboxitems({nama, category, idx, addItem}) {
   const item = `item${idx}`;
   const cat = `cat${idx}`
+
   return (
     <>
       <div
         role="button"
         className="py-2 px-3 hover:bg-yellow-50 focus:bg-yellow-50 truncate"
+        onClick={addItem}
       >
         <label
           role="button"

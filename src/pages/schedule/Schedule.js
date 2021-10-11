@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Gantt, DefaultTheme } from "@dhtmlx/trial-react-gantt";
+import { Gantt } from "@dhtmlx/trial-react-gantt";
+import { Button } from "@windmill/react-ui";
+import { ChevronLeft } from "../../icons";
 import MyTooltipContent from "./MyTooltipContent";
 import { RestDataProvider } from "@dhtmlx/gantt-data-provider";
 import { getData } from "./data";
@@ -31,7 +33,15 @@ export default function Schedule({ cellHeight, borders }) {
 
   return (
     <>
-        <DefaultTheme>
+      <div className="lex py-4 px-2">
+      <div className="flex gap-4 items-center">
+            <Button size="small" icon={ChevronLeft} layout="link" />
+            <label className="text-lg font-black">
+              BSD City Botanical Park
+              <span className="text-sm font-thin"> - Project Schedule</span>
+            </label>
+          </div>
+        <div className="wx-default py-4">
           <Gantt
             cellHeight={cellHeight}
             borders={borders}
@@ -43,7 +53,8 @@ export default function Schedule({ cellHeight, borders }) {
             save={(data) => server.current.saveData(data)}
             store={(ev) => (store.current = ev)}
           />
-        </DefaultTheme>
+        </div>
+      </div>
     </>
   );
 }

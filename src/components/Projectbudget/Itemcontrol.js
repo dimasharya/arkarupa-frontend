@@ -19,9 +19,20 @@ export default function Itemcontrol({
   total,
   closeItemControl,
   submitItem,
+  mode
 }) {
   if (volume === "") {
     volume = 0;
+  }
+
+  let headTitle, btnSubmit
+
+  if (mode === "edit"){
+    headTitle = "EDIT ITEM"
+    btnSubmit = "SUBMIT"
+  } else {
+    headTitle = "ADD ITEM"
+    btnSubmit = "ADD ITEM"
   }
 
   const [volumeAmount, setVolumeAmount] = useState(volume);
@@ -39,6 +50,7 @@ export default function Itemcontrol({
   function submitItemControl() {
     submitItem({
       index,
+      mode,
       nama,
       unit,
       category,
@@ -53,7 +65,7 @@ export default function Itemcontrol({
       <div className="transition ease-in-out duration-700 border rounded-lg bg-white transition duration-700 ease-in-out ">
         <div className="flex justify-end items-center bg-gray-50 rounded-t-lg border-b">
           <h4 className="w-8/12 py-3 text-center text-xs font-semibold text-gray-500">
-            ITEM CONTROL
+            {headTitle}
           </h4>
           <button
             className="w-6 h-6 mx-3 text-gray-400 transition-colors duration-150 rounded dark:hover:text-gray-200 hover: hover:text-gray-700"
@@ -145,6 +157,7 @@ export default function Itemcontrol({
             <h4 className="text-lg font-bold">
               <NumberFormat
                 value={totalAmount}
+                defaultValue={0}
                 thousandSeparator
                 prefix={"Rp. "}
                 displayType="text"
@@ -153,7 +166,7 @@ export default function Itemcontrol({
           </div>
           <div className="my-2">
             <Button className="w-full" size="small" onClick={submitItemControl}>
-              SUBMIT
+              {btnSubmit}
             </Button>
           </div>
         </div>

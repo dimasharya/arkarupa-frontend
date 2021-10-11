@@ -25,7 +25,6 @@ import Itemcontrol from "../components/Projectbudget/Itemcontrol";
 import NumberFormat from "react-number-format";
 
 function ProjectBudgeting() {
-
   const data = [
     {
       nama: "Pemasangan Besu Bertingkat Dengan Bekisting",
@@ -202,6 +201,14 @@ function ProjectBudgeting() {
     setItemTable(data);
   }
 
+  function itemControlHandler(props) {
+    if (props.mode === "edit") {
+      editClick(props.data);
+    } else {
+      addItem(props.data);
+    }
+  }
+
   function editClick(props) {
     const data = dataTable[props];
     const dataEdit = {
@@ -212,6 +219,7 @@ function ProjectBudgeting() {
       price: data.price,
       volume: data.volume,
       total: data.total,
+      mode: "edit",
     };
     setItemcontrol(dataEdit);
     setisItemcontrol(true);
@@ -227,20 +235,24 @@ function ProjectBudgeting() {
       total: props.total,
     };
 
-    let indexData = 0;
-    if (pageTable !== 0) {
-      indexData = (pageTable - 1) * 10 + props.index;
-    } else {
-      indexData = props.index;
-    }
-    
     let newData = [];
-    for (let index = 0; index < itemTable.length; index++) {
-      if (index === indexData) {
-        newData[index] = changedData;
+    if (props.mode === "edit") {
+      let indexData = 0;
+      if (pageTable !== 0) {
+        indexData = (pageTable - 1) * 10 + props.index;
       } else {
-        newData[index] = itemTable[index];
+        indexData = props.index;
       }
+
+      for (let index = 0; index < itemTable.length; index++) {
+        if (index === indexData) {
+          newData[index] = changedData;
+        } else {
+          newData[index] = itemTable[index];
+        }
+      }
+    } else {
+      newData = [...itemTable, changedData]
     }
     setItemTable(newData);
     setisItemcontrol(false);
@@ -255,18 +267,28 @@ function ProjectBudgeting() {
 
   const searchItem = [
     {
+      id: "507f1f77bcf86cd799439011",
       nama: "Pemasangan Besu Bertingkat Dengan Bekisting",
       category: "PAW",
       unit: "m2",
       price: "345000",
     },
     {
+      id: "507f191e810c19729de860ea",
       nama: "Pekerjaan Urugan Pasir Batu",
       category: "PAW",
       unit: "m3",
       price: "345000",
     },
   ];
+
+  function addItem(props) {
+    const itemId = props;
+    let item = searchItem.find((item) => item.id === itemId);
+    item = { ...item, mode: "add" };
+    setItemcontrol(item);
+    setisItemcontrol(true);
+  }
 
   const [searchResult, setSearchresult] = useState([]);
 
@@ -364,7 +386,9 @@ function ProjectBudgeting() {
                     </TableCell>
                     <TableCell className="text-center w-1/12">
                       <Button
-                        onClick={() => editClick(i)}
+                        onClick={() =>
+                          itemControlHandler({ data: i, mode: "edit" })
+                        }
                         size="small"
                         icon={EditIcon}
                         layout="link"
@@ -426,6 +450,9 @@ function ProjectBudgeting() {
                     idx={idx}
                     nama={item.nama}
                     category={item.category}
+                    addItem={() =>
+                      itemControlHandler({ data: item.id, mode: "add" })
+                    }
                   />
                 ))}
               </div>
@@ -440,6 +467,7 @@ function ProjectBudgeting() {
               price={itemControl.price}
               volume={itemControl.volume}
               total={itemControl.total}
+              mode={itemControl.mode}
               closeItemControl={closeItemControl}
               submitItem={submitItem}
             />
