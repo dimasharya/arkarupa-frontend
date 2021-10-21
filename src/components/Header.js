@@ -54,7 +54,7 @@ function Header() {
         </div>
         <ul className="flex items-center flex-shrink-0 space-x-6 text-black">
           {/* <!-- Theme toggler --> */}
-          {/* <li className="flex">
+          <li className="flex">
             <button
               className="rounded-md focus:outline-none focus:shadow-outline-green"
               onClick={toggleMode}
@@ -66,7 +66,7 @@ function Header() {
                 <MoonIcon className="w-5 h-5" aria-hidden="true" />
               )}
             </button>
-          </li> */}
+          </li>
           {/* <!-- Notifications menu --> */}
           {/* <li className="relative">
             <button
