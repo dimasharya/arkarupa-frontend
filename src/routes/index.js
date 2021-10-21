@@ -57,10 +57,10 @@ const routes = [
   //   path: '/buttons',
   //   component: Buttons,
   // },
-  // {
-  //   path: '/modals',
-  //   component: Modals,
-  // },
+  {
+    path: '/modals',
+    component: Modals,
+  },
   // {
   //   path: '/tables',
   //   component: Tables,

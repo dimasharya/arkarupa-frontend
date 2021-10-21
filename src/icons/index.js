@@ -32,6 +32,7 @@ import { ReactComponent as Print } from './print-solid.svg'
 import { ReactComponent as FilePdf } from './file-pdf-solid.svg'
 import { ReactComponent as MinusCirlce } from './minus-circle-solid.svg'
 import { ReactComponent as ChevronLeft } from './chevron-left-solid.svg'
+import { ReactComponent as PlusCircle } from './plus-circle-solid.svg'
 
 export {
   ButtonsIcon,
@@ -67,5 +68,6 @@ export {
   Print,
   FilePdf,
   MinusCirlce,
-  ChevronLeft
+  ChevronLeft,
+  PlusCircle
 }

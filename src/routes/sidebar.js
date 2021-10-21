@@ -7,24 +7,24 @@
  */
 const routes = [
   {
-    path: '/app/dashboard', // the url
-    icon: 'HomeIcon', // the component being exported from icons/index.js
-    name: 'Dashboard', // name that appear in Sidebar
+    path: "/app/dashboard", // the url
+    icon: "HomeIcon", // the component being exported from icons/index.js
+    name: "Dashboard", // name that appear in Sidebar
   },
   {
-    path: '/app/project',
-    icon: 'FormsIcon',
-    name: 'Project',
+    path: "/app/project",
+    icon: "FormsIcon",
+    name: "Project",
   },
   {
-    path: '/app/projectbudgeting',
-    icon: 'FormsIcon',
-    name: 'Budgeting',
+    path: "/app/projectbudgeting",
+    icon: "FormsIcon",
+    name: "Budgeting",
   },
   {
-    path: '/app/schedule',
-    icon: 'FormsIcon',
-    name: 'Schedule',
+    path: "/app/schedule",
+    icon: "FormsIcon",
+    name: "Schedule",
   },
   // {
   //   path: '/app/forms',
@@ -83,6 +83,6 @@ const routes = [
   //     },
   //   ],
   // },
-]
+];
 
-export default routes
+export default routes;

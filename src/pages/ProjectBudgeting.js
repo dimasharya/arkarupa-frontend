@@ -27,7 +27,7 @@ import NumberFormat from "react-number-format";
 function ProjectBudgeting() {
   const data = [
     {
-      nama: "Pemasangan Besu Bertingkat Dengan Bekisting",
+      nama: "Pemasangan Besi Bertingkat Dengan Bekisting",
       category: "PAW",
       unit: "m2",
       volume: 200,
@@ -52,86 +52,6 @@ function ProjectBudgeting() {
     },
     {
       nama: "Pembongkaran Plesteran dengan Membersihkan",
-      category: "PAW",
-      unit: "m2",
-      volume: 200,
-      price: 345000,
-      total: 69000000,
-    },
-    {
-      nama: "Membersihkan Parit Samping Jalan Menggunakan Buruh",
-      category: "PAW",
-      unit: "m2",
-      volume: 200,
-      price: 345000,
-      total: 69000000,
-    },
-    {
-      nama: "Membersihkan Parit Samping Jalan Menggunakan Buruh",
-      category: "PAW",
-      unit: "m2",
-      volume: 200,
-      price: 345000,
-      total: 69000000,
-    },
-    {
-      nama: "Membersihkan Parit Samping Jalan Menggunakan Buruh",
-      category: "PAW",
-      unit: "m2",
-      volume: 200,
-      price: 345000,
-      total: 69000000,
-    },
-    {
-      nama: "Membersihkan Parit Samping Jalan Menggunakan Buruh",
-      category: "PAW",
-      unit: "m2",
-      volume: 200,
-      price: 345000,
-      total: 69000000,
-    },
-    {
-      nama: "Membersihkan Parit Samping Jalan Menggunakan Buruh",
-      category: "PAW",
-      unit: "m2",
-      volume: 200,
-      price: 345000,
-      total: 69000000,
-    },
-    {
-      nama: "Membersihkan Parit Samping Jalan Menggunakan Buruh",
-      category: "PAW",
-      unit: "m2",
-      volume: 200,
-      price: 345000,
-      total: 69000000,
-    },
-    {
-      nama: "Membersihkan Parit Samping Jalan Menggunakan Buruh",
-      category: "PAW",
-      unit: "m2",
-      volume: 200,
-      price: 345000,
-      total: 69000000,
-    },
-    {
-      nama: "Membersihkan Parit Samping Jalan Menggunakan Buruh",
-      category: "PAW",
-      unit: "m2",
-      volume: 200,
-      price: 345000,
-      total: 69000000,
-    },
-    {
-      nama: "Membersihkan Parit Samping Jalan Menggunakan Buruh",
-      category: "PAW",
-      unit: "m2",
-      volume: 200,
-      price: 345000,
-      total: 69000000,
-    },
-    {
-      nama: "Membersihkan Parit Samping Jalan Menggunakan Buruh",
       category: "PAW",
       unit: "m2",
       volume: 200,
@@ -268,7 +188,7 @@ function ProjectBudgeting() {
   const searchItem = [
     {
       id: "507f1f77bcf86cd799439011",
-      nama: "Pemasangan Besu Bertingkat Dengan Bekisting",
+      nama: "Pemasangan Besi Bertingkat Dengan Bekisting",
       category: "PAW",
       unit: "m2",
       price: "345000",
@@ -290,7 +210,7 @@ function ProjectBudgeting() {
     setisItemcontrol(true);
   }
 
-  const [searchResult, setSearchresult] = useState([]);
+  const [searchResult, setSearchresult] = useState(searchItem);
 
   function searchResultcontrol(props) {
     const searchKey = props.target.value;
@@ -300,7 +220,7 @@ function ProjectBudgeting() {
     if (searchKey !== "") {
       setSearchresult(filtered);
     } else {
-      setSearchresult([]);
+      setSearchresult(searchItem);
     }
   }
 
