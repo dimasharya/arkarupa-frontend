@@ -13,4 +13,7 @@ module.exports = windmill({
       },
     },
   },
+  plugins: [
+    require('tailwind-scrollbar-hide')
+  ]
 })

@@ -135,7 +135,7 @@ function ProjectDasborad() {
         <div className="border col-span-2 rounded-lg bg-green-700"></div>
       </div>
       <div className="m-auto max-w-screen-xl">
-        <ul className="flex my-2 p-4 flex-nowrap overflow-x-auto overscroll-contain relative gap-6">
+        <ul className="flex my-2 p-4 flex-nowrap overflow-x-scroll overscroll-contain relative gap-6 scrollbar-hide">
           {project.map((item, idx) => {
             return (
               <li key={idx}>

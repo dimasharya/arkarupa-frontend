@@ -172,7 +172,7 @@ function ProjectBudgeting() {
         }
       }
     } else {
-      newData = [...itemTable, changedData]
+      newData = [...itemTable, changedData];
     }
     setItemTable(newData);
     setisItemcontrol(false);
@@ -224,136 +224,218 @@ function ProjectBudgeting() {
     }
   }
 
+  // Tabs Handler
+
+  const tabs = ["workspace", "item management", "price management"];
+  const [tabActive, setTabactive] = useState(tabs[0]);
+
   return (
     <>
-      <div className="flex py-4 px-2">
-        <div className="flex flex-auto justify-between items-center">
-          <div className="flex gap-4 items-center">
-            <Button size="small" icon={ChevronLeft} layout="link" />
-            <label className="text-lg font-black">
-              BSD City Botanical Park
-              <span className="text-sm font-thin"> - Project Budget</span>
-            </label>
-          </div>
-          <div className="flex gap-4 items-center">
-            <label className="text-xs">
-              Last Updated : 22 Aug 2021 18.45 PM
-            </label>
-            <Button size="small" iconLeft={Print} layout="outline">
-              <span>Print</span>
-            </Button>
-            <Button size="small" iconLeft={FilePdf} layout="outline">
-              <span>Download</span>
-            </Button>
-          </div>
+      <div className="flex-row">
+        <div className="mb-4 mx-2">
+          <ul className="inline-flex gap-4 text-xs cursor-pointer">
+            {tabs.map((item, idx) => {
+              return (
+                <li
+                  key={idx}
+                  className={
+                    (tabActive === item
+                      ? "py-2 px-4 border-b-2 border-black text-black"
+                      : "py-2 px-4  text-gray-500") +
+                    " font-bold transition duration-500 ease-in-out"
+                  }
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setTabactive(item);
+                  }}
+                  role="tablist"
+                >
+                  {item.toUpperCase()}
+                </li>
+              );
+            })}
+          </ul>
         </div>
-      </div>
-      <div className="grid grid-cols-5 inline-flex gap-4 my-4">
-        <div className="col-span-4">
-          <TableContainer>
-            <Table>
-              <TableHeader>
-                <tr className="text-center">
-                  <TableCell>Item</TableCell>
-                  <TableCell>Category</TableCell>
-                  <TableCell>Unit</TableCell>
-                  <TableCell>Volume</TableCell>
-                  <TableCell>Price</TableCell>
-                  <TableCell>Total Amount</TableCell>
-                  <TableCell>
-                    <FontAwesomeIcon icon={faCog} size="1x" />
-                  </TableCell>
-                </tr>
-              </TableHeader>
-              <TableBody className="text-sm overflow-scroll">
-                {dataTable.map((idx, i) => (
-                  <TableRow
-                    key={i}
-                    className="hover:bg-yellow-50 focus:bg-yellow-100 "
-                  >
-                    <TableCell>
-                      <p className="truncate">{idx.nama}</p>
-                    </TableCell>
-                    <TableCell className="text-center">
-                      <label
-                        className="mr-2 text-xs font-black"
-                        data-tip
-                        data-for="table-cat"
-                      >
-                        {idx.category}
-                      </label>
-                      <Tooltip id="table-cat" place="top" effect="solid">
-                        Pekerjaan Awalan
-                      </Tooltip>
-                    </TableCell>
-                    <TableCell className="text-center">{idx.unit}</TableCell>
-                    <TableCell className="text-center">{idx.volume}</TableCell>
-                    <TableCell>
+          <div
+            className={tabActive === "workspace" ? "block" : "hidden"}
+            id="Overview"
+          >
+            <div className="flex py-2 px-2">
+              <div className="flex flex-auto justify-between items-center">
+                <div className="flex gap-4 items-center">
+                  <Button size="small" icon={ChevronLeft} layout="link" />
+                  <label className=" text-base font-bold">
+                    BSD City Botanical Park
+                    <span className="text-sm font-thin"> - Project Budget</span>
+                  </label>
+                </div>
+                <div className="flex gap-4 items-center">
+                  <label className="text-xs">
+                    Last Updated : 22 Aug 2021 18.45 PM
+                  </label>
+                  <Button size="small" iconLeft={Print} layout="outline">
+                    <span>Print</span>
+                  </Button>
+                  <Button size="small" iconLeft={FilePdf} layout="outline">
+                    <span>Download</span>
+                  </Button>
+                </div>
+              </div>
+            </div>
+            <div className="grid grid-cols-5 inline-flex gap-4 my-4">
+              <div className="col-span-4">
+                <TableContainer>
+                  <Table>
+                    <TableHeader>
+                      <tr className="text-center">
+                        <TableCell>Item</TableCell>
+                        <TableCell>Category</TableCell>
+                        <TableCell>Unit</TableCell>
+                        <TableCell>Volume</TableCell>
+                        <TableCell>Price</TableCell>
+                        <TableCell>Total Amount</TableCell>
+                        <TableCell>
+                          <FontAwesomeIcon icon={faCog} size="1x" />
+                        </TableCell>
+                      </tr>
+                    </TableHeader>
+                    <TableBody className="text-sm overflow-scroll">
+                      {dataTable.map((idx, i) => (
+                        <TableRow
+                          key={i}
+                          className="hover:bg-yellow-50 focus:bg-yellow-100 "
+                        >
+                          <TableCell>
+                            <p className="truncate">{idx.nama}</p>
+                          </TableCell>
+                          <TableCell className="text-center">
+                            <label
+                              className="mr-2 text-xs font-black"
+                              data-tip
+                              data-for="table-cat"
+                            >
+                              {idx.category}
+                            </label>
+                            <Tooltip id="table-cat" place="top" effect="solid">
+                              Pekerjaan Awalan
+                            </Tooltip>
+                          </TableCell>
+                          <TableCell className="text-center">
+                            {idx.unit}
+                          </TableCell>
+                          <TableCell className="text-center">
+                            {idx.volume}
+                          </TableCell>
+                          <TableCell>
+                            <NumberFormat
+                              value={idx.price}
+                              displayType={"text"}
+                              thousandSeparator
+                              prefix={"Rp. "}
+                            />
+                          </TableCell>
+                          <TableCell>
+                            <NumberFormat
+                              value={idx.total}
+                              displayType={"text"}
+                              thousandSeparator
+                              prefix={"Rp. "}
+                            />
+                          </TableCell>
+                          <TableCell className="text-center w-1/12">
+                            <Button
+                              onClick={() =>
+                                itemControlHandler({ data: i, mode: "edit" })
+                              }
+                              size="small"
+                              icon={EditIcon}
+                              layout="link"
+                            />
+                            <Button
+                              onClick={() => hapusClick(i)}
+                              size="small"
+                              icon={MinusCirlce}
+                              layout="link"
+                            />
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                  <div className="flex justify-between bg-white border-t px-8 py-3 items-center">
+                    <h4 className="text-sm font-medium">Total : </h4>
+                    <h4 className="text-lg font-bold">
                       <NumberFormat
-                        value={idx.price}
+                        value={totalDisplay}
                         displayType={"text"}
                         thousandSeparator
                         prefix={"Rp. "}
                       />
-                    </TableCell>
-                    <TableCell>
-                      <NumberFormat
-                        value={idx.total}
-                        displayType={"text"}
-                        thousandSeparator
-                        prefix={"Rp. "}
+                    </h4>
+                  </div>
+                  <TableFooter>
+                    <Pagination
+                      totalResults={totalResults}
+                      resultsPerPage={resultsPerPage}
+                      onChange={onPageChangeTable}
+                      label="Table navigation"
+                    />
+                  </TableFooter>
+                </TableContainer>
+              </div>
+              <div className="flex flex-col gap-4">
+                <div className="border rounded-lg bg-white">
+                  <div className="bg-gray-50 rounded-t-lg border-b">
+                    <h4 className="py-3 text-center text-xs font-semibold text-gray-500">
+                      SEARCH ITEM
+                    </h4>
+                  </div>
+                  <div className="grid gap-2 my-3 mx-4">
+                    <div className="flex border items-center rounded-md">
+                      <div className="text-center w-10 mx-1 border-r">
+                        <FontAwesomeIcon icon={faSearch} size="xs" />
+                      </div>
+                      <input
+                        placeholder="Type something ..."
+                        className="w-full rounded-lg p-2 text-sm font-medium"
+                        onChange={searchResultcontrol}
                       />
-                    </TableCell>
-                    <TableCell className="text-center w-1/12">
-                      <Button
-                        onClick={() =>
-                          itemControlHandler({ data: i, mode: "edit" })
-                        }
-                        size="small"
-                        icon={EditIcon}
-                        layout="link"
-                      />
-                      <Button
-                        onClick={() => hapusClick(i)}
-                        size="small"
-                        icon={MinusCirlce}
-                        layout="link"
-                      />
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-            <div className="flex justify-between bg-white border-t px-8 py-3 items-center">
-              <h4 className="text-sm font-medium">Total : </h4>
-              <h4 className="text-lg font-bold">
-                <NumberFormat
-                  value={totalDisplay}
-                  displayType={"text"}
-                  thousandSeparator
-                  prefix={"Rp. "}
-                />
-              </h4>
+                    </div>
+                    <div className="border rounded-md h-32 overflow-y-scroll divide-y divide-gray-200">
+                      {searchResult.map((item, idx) => (
+                        <Searchboxitems
+                          key={idx}
+                          idx={idx}
+                          nama={item.nama}
+                          category={item.category}
+                          addItem={() =>
+                            itemControlHandler({ data: item.id, mode: "add" })
+                          }
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                {isItemControl ? (
+                  <Itemcontrol
+                    index={itemControl.index}
+                    nama={itemControl.nama}
+                    unit={itemControl.unit}
+                    category={itemControl.category}
+                    price={itemControl.price}
+                    volume={itemControl.volume}
+                    total={itemControl.total}
+                    mode={itemControl.mode}
+                    closeItemControl={closeItemControl}
+                    submitItem={submitItem}
+                  />
+                ) : null}
+              </div>
             </div>
-            <TableFooter>
-              <Pagination
-                totalResults={totalResults}
-                resultsPerPage={resultsPerPage}
-                onChange={onPageChangeTable}
-                label="Table navigation"
-              />
-            </TableFooter>
-          </TableContainer>
-        </div>
-        <div className="flex flex-col gap-4">
-          <div className="border rounded-lg bg-white">
-            <div className="bg-gray-50 rounded-t-lg border-b">
-              <h4 className="py-3 text-center text-xs font-semibold text-gray-500">
-                SEARCH ITEM
-              </h4>
-            </div>
-            <div className="grid gap-2 my-3 mx-4">
-              <div className="flex border items-center rounded-md">
+          </div>
+          <div className={tabActive === "item management" ? "block" : "hidden" }>
+            <div className="flex gap-8 my-3 mx-4">
+              <div className="flex flex-grow border items-center rounded-md bg-white">
                 <div className="text-center w-10 mx-1 border-r">
                   <FontAwesomeIcon icon={faSearch} size="xs" />
                 </div>
@@ -363,37 +445,106 @@ function ProjectBudgeting() {
                   onChange={searchResultcontrol}
                 />
               </div>
-              <div className="border rounded-md h-32 overflow-y-scroll divide-y divide-gray-200">
-                {searchResult.map((item, idx) => (
-                  <Searchboxitems
-                    key={idx}
-                    idx={idx}
-                    nama={item.nama}
-                    category={item.category}
-                    addItem={() =>
-                      itemControlHandler({ data: item.id, mode: "add" })
-                    }
-                  />
-                ))}
-              </div>
+              <Button size="small">ADD ITEM</Button>
             </div>
+            <TableContainer>
+              <Table>
+                <TableHeader>
+                  <tr className="text-center">
+                    <TableCell>Item</TableCell>
+                    <TableCell>Category</TableCell>
+                    <TableCell>Unit</TableCell>
+                    <TableCell>Volume</TableCell>
+                    <TableCell>Price</TableCell>
+                    <TableCell>Total Amount</TableCell>
+                    <TableCell>
+                      <FontAwesomeIcon icon={faCog} size="1x" />
+                    </TableCell>
+                  </tr>
+                </TableHeader>
+                <TableBody className="text-sm overflow-scroll">
+                  {dataTable.map((idx, i) => (
+                    <TableRow
+                      key={i}
+                      className="hover:bg-yellow-50 focus:bg-yellow-100 "
+                    >
+                      <TableCell>
+                        <p className="truncate">{idx.nama}</p>
+                      </TableCell>
+                      <TableCell className="text-center">
+                        <label
+                          className="mr-2 text-xs font-black"
+                          data-tip
+                          data-for="table-cat"
+                        >
+                          {idx.category}
+                        </label>
+                        <Tooltip id="table-cat" place="top" effect="solid">
+                          Pekerjaan Awalan
+                        </Tooltip>
+                      </TableCell>
+                      <TableCell className="text-center">{idx.unit}</TableCell>
+                      <TableCell className="text-center">
+                        {idx.volume}
+                      </TableCell>
+                      <TableCell>
+                        <NumberFormat
+                          value={idx.price}
+                          displayType={"text"}
+                          thousandSeparator
+                          prefix={"Rp. "}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <NumberFormat
+                          value={idx.total}
+                          displayType={"text"}
+                          thousandSeparator
+                          prefix={"Rp. "}
+                        />
+                      </TableCell>
+                      <TableCell className="text-center w-1/12">
+                        <Button
+                          onClick={() =>
+                            itemControlHandler({ data: i, mode: "edit" })
+                          }
+                          size="small"
+                          icon={EditIcon}
+                          layout="link"
+                        />
+                        <Button
+                          onClick={() => hapusClick(i)}
+                          size="small"
+                          icon={MinusCirlce}
+                          layout="link"
+                        />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+              <div className="flex justify-between bg-white border-t px-8 py-3 items-center">
+                <h4 className="text-sm font-medium">Total : </h4>
+                <h4 className="text-lg font-bold">
+                  <NumberFormat
+                    value={totalDisplay}
+                    displayType={"text"}
+                    thousandSeparator
+                    prefix={"Rp. "}
+                  />
+                </h4>
+              </div>
+              <TableFooter>
+                <Pagination
+                  totalResults={totalResults}
+                  resultsPerPage={resultsPerPage}
+                  onChange={onPageChangeTable}
+                  label="Table navigation"
+                />
+              </TableFooter>
+            </TableContainer>
           </div>
-          {isItemControl ? (
-            <Itemcontrol
-              index={itemControl.index}
-              nama={itemControl.nama}
-              unit={itemControl.unit}
-              category={itemControl.category}
-              price={itemControl.price}
-              volume={itemControl.volume}
-              total={itemControl.total}
-              mode={itemControl.mode}
-              closeItemControl={closeItemControl}
-              submitItem={submitItem}
-            />
-          ) : null}
         </div>
-      </div>
     </>
   );
 }

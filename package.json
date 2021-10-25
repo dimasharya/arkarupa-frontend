@@ -44,7 +44,8 @@
     "react-scripts": "^4.0.3",
     "react-step-wizard": "^5.3.9",
     "react-tooltip": "^4.2.21",
-    "react-transition-group": "^4.4.2"
+    "react-transition-group": "^4.4.2",
+    "tailwind-scrollbar-hide": "^1.0.3"
   },
   "devDependencies": {
     "@release-it/conventional-changelog": "^3.3.0",
