@@ -6,6 +6,7 @@ import { SidebarProvider } from './context/SidebarContext'
 import ThemedSuspense from './components/ThemedSuspense'
 import { Windmill } from '@windmill/react-ui'
 import * as serviceWorker from './serviceWorker'
+import CustomStyle from './assets/css/Customstyle'
 
 // if (process.env.NODE_ENV !== 'production') {
 //   const axe = require('react-axe')
@@ -15,7 +16,7 @@ import * as serviceWorker from './serviceWorker'
 ReactDOM.render(
   <SidebarProvider>
     <Suspense fallback={<ThemedSuspense />}>
-      <Windmill usePreferences>
+      <Windmill theme={CustomStyle} usePreferences>
         <App />
       </Windmill>
     </Suspense>

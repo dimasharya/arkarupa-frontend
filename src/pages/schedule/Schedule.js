@@ -7,7 +7,7 @@ import { RestDataProvider } from "@dhtmlx/gantt-data-provider";
 import { getData } from "./data";
 const { scales, columns } = getData();
 
-const url = "http://localhost:5000/api/projectschedules";
+const url = "http://localhost:5001/api/projectschedules";
 
 // eslint-disable-next-line
 const useMount = (fun) => useEffect(fun, []);
