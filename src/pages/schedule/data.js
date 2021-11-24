@@ -74,9 +74,9 @@ export const weekScaleTemplate = (a, b) => {
     ];
   
     const columns = [
-      { name: "text", label: "Task Name",align: "center",  width: "100%" },
-      { name: "start", label: "Date", align: "center" },
-      { name: "duration", label: "Duration", width: "70px", align: "center" },
+      { name: "text", label: "Item Pekerjaan",align: "center",  width: "100%" },
+      { name: "start", label: "Tanggal", align: "center" },
+      { name: "duration", label: "Durasi", width: "70px", align: "center" },
       { name: "add-task", label: "", width: "50px", align: "center" },
     ];
   

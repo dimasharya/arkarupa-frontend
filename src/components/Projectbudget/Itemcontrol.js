@@ -28,11 +28,11 @@ export default function Itemcontrol({
   let headTitle, btnSubmit
 
   if (mode === "edit"){
-    headTitle = "EDIT ITEM"
+    headTitle = "UBAH ITEM PEKERJAAN"
     btnSubmit = "SUBMIT"
   } else {
-    headTitle = "ADD ITEM"
-    btnSubmit = "ADD ITEM"
+    headTitle = "TAMBAH ITEM PEKERJAAN"
+    btnSubmit = "TAMBAH ITEM PEKERJAAN"
   }
 
   const [volumeAmount, setVolumeAmount] = useState(volume);
@@ -94,7 +94,7 @@ export default function Itemcontrol({
             </div>
             <div className="mx-2 w-10/12">
               <label className="block text-xs font-light text-gray-500">
-                Item
+                Item Pekerjaan
               </label>
               <p className="text-sm font-medium">{nama}</p>
             </div>
@@ -105,7 +105,7 @@ export default function Itemcontrol({
             </div>
             <div className="mx-2 w-10/12">
               <label className="block text-xs font-light text-gray-500">
-                Category
+                Kategori
               </label>
               <p className="text-sm font-medium leading-none">{category}</p>
             </div>
@@ -116,7 +116,7 @@ export default function Itemcontrol({
             </div>
             <div className="mx-2 w-10/12">
               <label className="block text-xs font-light text-gray-500">
-                Price
+                Harga
               </label>
               <p className="text-sm font-medium leading-none">
                 <NumberFormat

@@ -6,7 +6,7 @@ function ProjectBudgeting() {
 
   // Tabs Handler
 
-  const tabs = ["workspace", "item management", "material management", "category"];
+  const tabs = ["lembar kerja", "manajemen item pekerjaan", "manajemen material", "kategori"];
   const [tabActive, setTabactive] = useState(tabs[0]);
 
   return (
@@ -37,12 +37,12 @@ function ProjectBudgeting() {
           </ul>
         </div>
           <div
-            className={tabActive === "workspace" ? "block" : "hidden"}
+            className={tabActive === "lembar kerja" ? "block" : "hidden"}
             id="Overview"
           >
             <Workspace />
           </div>
-          <div className={tabActive === "item management" ? "block" : "hidden" }>
+          <div className={tabActive === "manajemen item pekerjaan" ? "block" : "hidden" }>
             <Itemmanagement />
           </div>
         </div>

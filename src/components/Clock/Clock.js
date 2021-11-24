@@ -12,7 +12,7 @@ export default function Clock() {
     }, [])
     return (
         <>
-        <div className="text-black font-bold text-xs">{<Moment format="ddd, MMM DD HH:mm A">{clock}</Moment>}</div>
+        <div className="text-black font-bold text-xs">{<Moment format="dddd, DD MMM HH:mm">{clock}</Moment>}</div>
         </>
     )
 };

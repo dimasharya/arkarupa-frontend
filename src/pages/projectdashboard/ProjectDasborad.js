@@ -3,32 +3,33 @@ import React, { useState, useEffect } from "react";
 import ProjectCard from "../../components/Cards/ProjectCard";
 import { PlusCircle } from "../../icons";
 import Moment from "react-moment";
+import 'moment/locale/id';
 
 function ProjectDasborad() {
   const act = [
     {
       person: "Sentot Wibisono",
-      text: "updating activity Pembesian Pondasi Dasar on BSD Botanical Park project",
+      text: "memperbarui item pekerjaan Pembesian Pondasi Dasar pada BSD Botanical Park project",
       date: "Wed Oct 13 2021 06:35:27 GMT+0700",
     },
     {
       person: "James Kristiawan",
-      text: "updating activity Pembesian Pondasi Dasar on BSD Botanical Park project",
+      text: "memperbarui item pekerjaan  Pembesian Pondasi Dasar pada BSD Botanical Park project",
       date: "Wed Oct 13 2021 05:35:27 GMT+0700",
     },
     {
       person: "Ibnu Sina",
-      text: "updating activity Pembesian Pondasi Dasar on BSD Botanical Park project",
+      text: "memperbarui item pekerjaan  Pembesian Pondasi Dasar pada BSD Botanical Park project",
       date: "Wed Oct 13 2021 03:35:27 GMT+0700",
     },
     {
       person: "Amalia Azzara",
-      text: "updating activity Pembesian Pondasi Dasar on BSD Botanical Park project",
+      text: "memperbarui item pekerjaan Pembesian Pondasi Dasar pada BSD Botanical Park project",
       date: "Wed Oct 13 2021 06:46:27 GMT+0700",
     },
     {
       person: "Sentot Wibisono",
-      text: "updating activity Pembesian Pondasi Dasar on BSD Botanical Park project",
+      text: "memperbarui item pekerjaan Pembesian Pondasi Dasar pada BSD Botanical Park project",
       date: "Oct 01 2021 06:35:27 GMT+0700",
     },
   ];
@@ -36,62 +37,52 @@ function ProjectDasborad() {
   const dataProject = [
     {
       name: "BSD City Botanical Park",
-      category: "Public Park",
+      category: "Area Publik",
       loc: "Sampora, Cisauk, Tanggerang, Banten",
       owner: "PT. Bukit Serpong Damai",
       team: "4",
       pm: "1",
       progress: 30,
-      status: "Completed",
+      status: "On Progress",
       date: "20 July 2021",
     },
     {
-      name: "Greenwood Midetarania",
-      category: "Residential Area",
+      name: "Greenwood Mideterrania",
+      category: "Perumahan",
       loc: "Widodomartani, Ngemplak, Sleman, Yogyakarta",
       owner: "PT. Barokah Jaya Realty",
       team: "4",
       pm: "1",
       progress: 80,
-      status: "Completed",
+      status: "On Progress",
       date: "3 January 2021",
     },
     {
-      name: "Greenwood Midetarania",
-      category: "Residential Area",
-      loc: "Widodomartani, Ngemplak, Sleman, Yogyakarta",
+      name: "Mojopurno Eco Living",
+      category: "Perumahan",
+      loc: "Mojopurno, Wungu, Madiun",
       owner: "PT. Barokah Jaya Realty",
       team: "4",
       pm: "1",
       progress: 80,
-      status: "Completed",
+      status: "On Progress",
       date: "3 January 2021",
     },
     {
-      name: "Greenwood Midetarania",
-      category: "Residential Area",
-      loc: "Widodomartani, Ngemplak, Sleman, Yogyakarta",
+      name: "Boulevard Hijau Raya",
+      category: "Perumahan",
+      loc: "Pejuang, Medan Satria, Kota Bekasi",
       owner: "PT. Barokah Jaya Realty",
       team: "4",
       pm: "1",
       progress: 80,
-      status: "Completed",
+      status: "On Progress",
       date: "3 January 2021",
     },
   ];
 
   const [activity, setActivity] = useState(act);
   const [project, setProject] = useState(dataProject);
-
-  const [isModalOpen, setIsModalOpen] = useState(false)
-
-  function openModal() {
-    setIsModalOpen(true)
-  }
-
-  function closeModal() {
-    setIsModalOpen(false)
-  }
 
   return (
     <>
@@ -107,29 +98,29 @@ function ProjectDasborad() {
       </div> */}
       <div className="grid gap-4 grid-cols-3">
         <div className="border rounded-lg py-4 px-6 bg-white text-black">
-          <h4 className="text-sm font-bold">Project Summary</h4>
+          <h4 className="text-sm font-bold">Data Proyek</h4>
           <div className="flex flex-row py-4 divide-x text-center">
             <div className="px-4">
               <h6 className="text-xs font-semibold text-gray-500">
-                Total Project
+                Total Proyek
               </h6>
               <h2 className="text-2xl font-black">45</h2>
             </div>
             <div className="px-4">
               <h6 className="text-xs font-semibold text-gray-500">
-                Active Project
+                Proyek Berjalan
               </h6>
               <h2 className="text-2xl font-black">5</h2>
             </div>
             <div className="px-4">
               <h6 className="text-xs font-semibold text-gray-500">
-                Project Completed
+                Proyek Selesai
               </h6>
               <h2 className="text-2xl font-black">36</h2>
             </div>
           </div>
           <Button size="small" iconLeft={PlusCircle} layout="primary">
-            <span className="text-xs">Create Project</span>
+            <span className="text-xs">Buat Proyek Baru</span>
           </Button>
         </div>
         <div className="border col-span-2 rounded-lg bg-green-700"></div>
@@ -157,10 +148,10 @@ function ProjectDasborad() {
       </div>
       <div className="flex">
         <div className="border bg-white rounded-lg w-full h-full py-4 px-6">
-          <h4 className="text-sm font-black">Last Activities</h4>
+          <h4 className="text-sm font-black">Aktivitas Terakhir</h4>
           <div className="my-4 px-4 overflow-y-auto overscroll-y-contain h-60">
             <ul>
-              <div className="text-xs font-bold text-gray-500 mb-1">Today</div>
+              <div className="text-xs font-bold text-gray-500 mb-1">Hari ini</div>
               {activity.map((item, idx) => {
                 return (
                   <li key={idx}>
@@ -182,7 +173,7 @@ function ProjectDasborad() {
                           {item.text}
                         </h4>
                         <h6 className="text-xs font-semibold text-gray-500">
-                          <Moment fromNow>{item.date}</Moment>
+                          <Moment locale="id" fromNow>{item.date}</Moment>
                         </h6>
                       </div>
                     </div>
@@ -193,40 +184,6 @@ function ProjectDasborad() {
           </div>
         </div>
       </div>
-      <div>
-        <Button onClick={openModal}>Open modal</Button>
-      </div>
-
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <ModalBody>
-          <label>Akai</label>
-        </ModalBody>
-        <ModalFooter>
-          {/* I don't like this approach. Consider passing a prop to ModalFooter
-           * that if present, would duplicate the buttons in a way similar to this.
-           * Or, maybe find some way to pass something like size="large md:regular"
-           * to Button
-           */}
-          <div className="hidden sm:block">
-            <Button layout="outline" onClick={closeModal}>
-              Cancel
-            </Button>
-          </div>
-          <div className="hidden sm:block">
-            <Button>Accept</Button>
-          </div>
-          <div className="block w-full sm:hidden">
-            <Button block size="large" layout="outline" onClick={closeModal}>
-              Cancel
-            </Button>
-          </div>
-          <div className="block w-full sm:hidden">
-            <Button block size="large">
-              Accept
-            </Button>
-          </div>
-        </ModalFooter>
-      </Modal>
     </>
   );
 }

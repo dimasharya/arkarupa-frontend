@@ -6,15 +6,18 @@ import NumberFormat from "react-number-format";
 export default function ItemData({
   idx,
   item,
+  category,
   coefficient,
   unit,
   price,
   total,
   editItem,
+  deleteItem
 }) {
   const [data, setData] = useState({
     idx: idx,
     item: item,
+    category: category,
     coefficient: coefficient,
     unit: unit,
     price: price,
@@ -40,6 +43,7 @@ export default function ItemData({
     const newData = {
       idx: idx,
       item: data.item,
+      category: data.category,
       coefficient: props.target.value,
       unit: data.unit,
       price: data.price,
@@ -53,7 +57,9 @@ export default function ItemData({
     setEditState(!editState);
   };
 
-  const toggleDelete = () => {};
+  const toggleDelete = () => {
+      deleteItem(idx)
+  };
 
   useEffect(() => {
     if (editState) {
@@ -63,8 +69,8 @@ export default function ItemData({
 
   return (
     <>
-      <tr className="px-4 inline-flex w-full items-center">
-        <td className="w-4/12 py-1 truncate">{data.item}</td>
+      <tr key={idx} className="inline-flex w-full items-center">
+        <td className="w-4/12 pl-2 py-1 truncate">{data.item}</td>
         <td className="w-2/12 text-center items-center">
           {editState ? (
             <Input
@@ -94,7 +100,7 @@ export default function ItemData({
             prefix={"Rp. "}
           />
         </td>
-        <td className="w-1/12 flex justify-center">
+        <td className="w-1/12 pr-2 flex justify-center">
           {editState ? (
             <Button
               size="small"
@@ -106,7 +112,7 @@ export default function ItemData({
           ) : (
             <>
               <Button
-                className="hover:text-green-700"
+                className="hover:text-green-600"
                 size="small"
                 icon={EditIcon}
                 layout="link"

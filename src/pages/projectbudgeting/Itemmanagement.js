@@ -2,16 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import {
   Button,
   Select,
-  Modal,
-  ModalBody,
-  ModalHeader,
-  ModalFooter,
 } from "@windmill/react-ui";
-import {
-  EditIcon,
-  MinusCirlce,
-  PlusCircle,
-} from "../../icons/index";
+import { EditIcon, PlusCircle, TrashIcon } from "../../icons/index";
 import {
   Table,
   TableHeader,
@@ -24,7 +16,6 @@ import {
 } from "@windmill/react-ui";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faCog } from "@fortawesome/free-solid-svg-icons";
-import Tooltip from "react-tooltip";
 import NumberFormat from "react-number-format";
 import Item from "../../components/Projectbudget/Itemmanagement/Item";
 
@@ -35,7 +26,26 @@ export default function Itemmanagement() {
       category: "Struktur Utama",
       sign: "STU",
       unit: "m2",
-      price: 345000,
+      ingredients: [
+        {
+          item: "Mandor",
+          category: "Pekerja",
+          coefficient: "0,8",
+          unit: "O.H",
+          price: "90000",
+          total: "72000",
+        },
+        {
+          item: "Solar",
+          category: "Bahan",
+          coefficient: "0,4",
+          unit: "Liter",
+          price: "6500",
+          total: "2600",
+        },
+      ],
+      price: 74600,
+      desc: "",
     },
   ];
 
@@ -52,27 +62,6 @@ export default function Itemmanagement() {
   // Pagination
   //const totalResults = itemTable.length;
   const resultsPerPage = 10;
-
-  useEffect(() => {
-    setDataTable(
-      itemTable.slice(
-        (pageTable - 1) * resultsPerPage,
-        pageTable * resultsPerPage
-      )
-    );
-  }, [pageTable, totalResults, itemTable]);
-
-  // Total Display
-
-  const [totalDisplay, setTotalDisplay] = useState(0);
-
-  useEffect(() => {
-    let sum = 0;
-    for (let i = 0; i < itemTable.length; i++) {
-      sum = sum + parseFloat(itemTable[i].total);
-    }
-    setTotalDisplay(sum);
-  }, [itemTable]);
 
   /// Item Control Area
 
@@ -92,38 +81,15 @@ export default function Itemmanagement() {
     setItemTable(data);
   }
 
-  function itemControlHandler(props) {
-    if (props.mode === "edit") {
-      editClick(props.data);
-    } else {
-      addItem(props.data);
-    }
-  }
-
-  function editClick(props) {
-    const data = dataTable[props];
-    const dataEdit = {
-      index: props,
-      nama: data.nama,
-      unit: data.unit,
-      category: data.category,
-      price: data.price,
-      volume: data.volume,
-      total: data.total,
-      mode: "edit",
-    };
-    setItemcontrol(dataEdit);
-    setisItemcontrol(true);
-  }
-
-  function submitItem(props) {
+  function toggleSubmit(props) {
     const changedData = {
       nama: props.nama,
-      unit: props.unit,
       category: props.category,
+      sign: props.sign,
+      unit: props.unit,
+      ingredients: props.ingredients,
       price: props.price,
-      volume: props.volume,
-      total: props.total,
+      desc: props.desc,
     };
 
     let newData = [];
@@ -146,67 +112,74 @@ export default function Itemmanagement() {
       newData = [...itemTable, changedData];
     }
     setItemTable(newData);
-    setisItemcontrol(false);
+    //setisItemcontrol(false);
   }
 
-  function closeItemControl() {
-    setisItemcontrol(false);
-    setItemcontrol("");
-  }
+  useEffect(() => {
+    setDataTable(
+      itemTable.slice(
+        (pageTable - 1) * resultsPerPage,
+        pageTable * resultsPerPage
+      )
+    );
+  }, [pageTable, totalResults, itemTable]);
 
   /// Search Area
 
-  const searchItem = [
-    {
-      id: "507f1f77bcf86cd799439011",
-      nama: "Pemasangan Besi Bertingkat Dengan Bekisting",
-      category: "PAW",
-      unit: "m2",
-      price: "345000",
-    },
-    {
-      id: "507f191e810c19729de860ea",
-      nama: "Pekerjaan Urugan Pasir Batu",
-      category: "PAW",
-      unit: "m3",
-      price: "345000",
-    },
-  ];
+  //   const searchItem = [
+  //     {
+  //       id: "507f1f77bcf86cd799439011",
+  //       nama: "Pemasangan Besi Bertingkat Dengan Bekisting",
+  //       category: "PAW",
+  //       unit: "m2",
+  //       price: "345000",
+  //     },
+  //     {
+  //       id: "507f191e810c19729de860ea",
+  //       nama: "Pekerjaan Urugan Pasir Batu",
+  //       category: "PAW",
+  //       unit: "m3",
+  //       price: "345000",
+  //     },
+  //   ];
 
-  function addItem(props) {
-    const itemId = props;
-    let item = searchItem.find((item) => item.id === itemId);
-    item = { ...item, mode: "add" };
-    setItemcontrol(item);
-    setisItemcontrol(true);
-  }
+  //   function addItem(props) {
+  //     const itemId = props;
+  //     let item = searchItem.find((item) => item.id === itemId);
+  //     item = { ...item, mode: "add" };
+  //     setItemcontrol(item);
+  //     setisItemcontrol(true);
+  //   }
 
-  const [searchResult, setSearchresult] = useState(searchItem);
-
-  function searchResultcontrol(props) {
-    const searchKey = props.target.value;
-    const filtered = searchItem.filter((item) => {
-      return item.nama.toLowerCase().includes(searchKey.toLowerCase());
-    });
-    if (searchKey !== "") {
-      setSearchresult(filtered);
-    } else {
-      setSearchresult(searchItem);
+    function searchResultcontrol(props) {
+      const searchKey = props.target.value;
+      const filtered = data.filter((item) => {
+        return item.nama.toLowerCase().includes(searchKey.toLowerCase());
+      });
+      if (searchKey !== "") {
+        setDataTable(filtered);
+      } else {
+        setDataTable(data);
+      }
     }
-  }
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  function openModal() {
-    setIsModalOpen(true);
-  }
-
-  function closeModal() {
-    setIsModalOpen(false);
-  }
 
   const [isOpen, setIsOpen] = useState(false);
-  function toggleBackdrop() {
+  function toggleEdit(props) {
+    setItemcontrol(props);
+    setIsOpen(!isOpen);
+  }
+
+  function toggleNew() {
+    const data = {
+      nama: "",
+      category: "",
+      sign: "",
+      unit: "",
+      ingredients: "",
+      price: "",
+      desc: "",
+    };
+    setItemcontrol({ data: data, mode: "new" });
     setIsOpen(!isOpen);
   }
 
@@ -218,13 +191,13 @@ export default function Itemmanagement() {
             <FontAwesomeIcon icon={faSearch} size="xs" />
           </div>
           <input
-            placeholder="Type something ..."
+            placeholder="Tuliskan sesuatu ..."
             className="w-full rounded-lg p-2 text-sm font-medium"
             onChange={searchResultcontrol}
           />
         </div>
         <Select className="w-40 truncate">
-          <option>All Categories</option>
+          <option>Semua Kategori</option>
           <option>Persiapan Dan Tanah</option>
           <option>Struktur Utama</option>
           <option>Pekerjaan Dinding</option>
@@ -232,19 +205,19 @@ export default function Itemmanagement() {
           <option>Pekerjaan Atap</option>
           <option>Pekerjaan Finishing</option>
         </Select>
-        <Button icon={PlusCircle} size="small">
-          New Item
+        <Button onClick={toggleNew} icon={PlusCircle} size="small">
+          Tambah Item Pekerjaan
         </Button>
       </div>
       <TableContainer>
         <Table>
           <TableHeader>
             <tr className="text-center">
-              <TableCell>Item</TableCell>
-              <TableCell>Category</TableCell>
-              <TableCell>Sign</TableCell>
-              <TableCell>Unit</TableCell>
-              <TableCell>Price</TableCell>
+              <TableCell>Item Pekerjaan</TableCell>
+              <TableCell>Kategori</TableCell>
+              <TableCell>Simbol</TableCell>
+              <TableCell>Satuan</TableCell>
+              <TableCell>Harga</TableCell>
               <TableCell>
                 <FontAwesomeIcon icon={faCog} size="1x" />
               </TableCell>
@@ -282,17 +255,19 @@ export default function Itemmanagement() {
                 </TableCell>
                 <TableCell className="text-center w-1/12">
                   <Button
+                    className="hover:text-green-600"
                     onClick={() =>
-                      itemControlHandler({ data: i, mode: "edit" })
+                      toggleEdit({ data: idx, index: i, mode: "edit" })
                     }
                     size="small"
                     icon={EditIcon}
                     layout="link"
                   />
                   <Button
+                    className="hover:text-red-700"
                     onClick={() => hapusClick(i)}
                     size="small"
-                    icon={MinusCirlce}
+                    icon={TrashIcon}
                     layout="link"
                   />
                 </TableCell>
@@ -310,51 +285,18 @@ export default function Itemmanagement() {
         </TableFooter>
       </TableContainer>
 
-      <Button onClick={toggleBackdrop}>Open backdrop</Button>
+      {/* <Button onClick={toggleBackdrop}>Open backdrop</Button> */}
       {isOpen && (
         <div className="fixed inset-0 z-40 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center">
           <div className="w-4/5 mx-auto overflow-hidden bg-white rounded-lg px-6 py-4">
-            <Item toggleBackdrop={toggleBackdrop} />
+            <Item
+              data={itemControl}
+              toggleEdit={toggleEdit}
+              toggleSubmit={toggleSubmit}
+            />
           </div>
         </div>
       )}
-
-      <div>
-        <Button onClick={openModal}>Open modal</Button>
-      </div>
-
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <ModalHeader>Modal header</ModalHeader>
-        <ModalBody>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum et
-          eligendi repudiandae voluptatem tempore!
-        </ModalBody>
-        <ModalFooter>
-          {/* I don't like this approach. Consider passing a prop to ModalFooter
-           * that if present, would duplicate the buttons in a way similar to this.
-           * Or, maybe find some way to pass something like size="large md:regular"
-           * to Button
-           */}
-          <div className="hidden sm:block">
-            <Button layout="outline" onClick={closeModal}>
-              Cancel
-            </Button>
-          </div>
-          <div className="hidden sm:block">
-            <Button>Accept</Button>
-          </div>
-          <div className="block w-full sm:hidden">
-            <Button block size="large" layout="outline" onClick={closeModal}>
-              Cancel
-            </Button>
-          </div>
-          <div className="block w-full sm:hidden">
-            <Button block size="large">
-              Accept
-            </Button>
-          </div>
-        </ModalFooter>
-      </Modal>
     </>
   );
 }

@@ -6,25 +6,25 @@
  * `routes/index.js`
  */
 const routes = [
-  {
-    path: "/app/dashboard", // the url
-    icon: "HomeIcon", // the component being exported from icons/index.js
-    name: "Dashboard", // name that appear in Sidebar
-  },
+  // {
+  //   path: "/app/dashboard", // the url
+  //   icon: "HomeIcon", // the component being exported from icons/index.js
+  //   name: "Dashboard", // name that appear in Sidebar
+  // },
   {
     path: "/app/project",
     icon: "FormsIcon",
-    name: "Project",
+    name: "Proyek",
   },
   {
     path: "/app/projectbudgeting",
     icon: "FormsIcon",
-    name: "Budgeting",
+    name: "Biaya Proyek",
   },
   {
     path: "/app/schedule",
     icon: "FormsIcon",
-    name: "Schedule",
+    name: "Penjadwalan",
   },
   // {
   //   path: '/app/forms',

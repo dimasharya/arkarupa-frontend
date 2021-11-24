@@ -38,7 +38,7 @@ export default function Schedule({ cellHeight, borders }) {
             <Button size="small" icon={ChevronLeft} layout="link" />
             <label className="text-lg font-black">
               BSD City Botanical Park
-              <span className="text-sm font-thin"> - Project Schedule</span>
+              <span className="text-sm font-thin"> - Penjadwalan</span>
             </label>
           </div>
         <div className="wx-default py-4">

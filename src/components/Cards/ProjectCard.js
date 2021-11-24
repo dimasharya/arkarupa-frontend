@@ -26,11 +26,11 @@ function ProjectCard ({name, category, loc, owner, team, pm, progress, status, d
                 size="1x"
               />
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col w-56">
               <h6 className="text-xs font-semibold text-gray-500">
-                Location
+                Lokasi
               </h6>
-              <p className="text-xs font-bold leading-tight">
+              <p className="text-xs font-bold leading-tight h-6">
                 {loc}
               </p>
             </div>
@@ -45,7 +45,7 @@ function ProjectCard ({name, category, loc, owner, team, pm, progress, status, d
             </div>
             <div className="flex flex-col">
               <label className="text-xs font-semibold text-gray-500">
-                Owner
+                Pemilik
               </label>
               <div className="text-xs font-bold">{owner}</div>
             </div>

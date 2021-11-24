@@ -12,6 +12,9 @@ export default function Badge({ status }) {
   } else if (statusValidation === "paused") {
     color = "red";
     animate = "animate-pulse"
+  }else if (statusValidation === "on progress") {
+    color = "orange";
+    animate = "animate-pulse"
   } else {
     color = "gray";
     animate = ""
