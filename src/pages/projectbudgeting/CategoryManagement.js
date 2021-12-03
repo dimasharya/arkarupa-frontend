@@ -14,35 +14,14 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faCog } from "@fortawesome/free-solid-svg-icons";
 import NumberFormat from "react-number-format";
-import Item from "../../components/Projectbudget/Itemmanagement/Item";
+import Item from "../../components/Projectbudget/Materialmanagement/Item";
 
-export default function Itemmanagement() {
+export default function CategoryManagement() {
   const data = [
     {
-      nama: "Pemasangan Besi Bertingkat Dengan Bekisting",
-      category: "Struktur Utama",
-      sign: "STU",
-      unit: "m2",
-      ingredients: [
-        {
-          item: "Mandor",
-          category: "Pekerja",
-          coefficient: "0,8",
-          unit: "O.H",
-          price: 90000,
-          total: 72000,
-        },
-        {
-          item: "Solar",
-          category: "Bahan",
-          coefficient: "0,4",
-          unit: "Liter",
-          price: 6500,
-          total: 2600,
-        },
-      ],
-      price: 74600,
-      desc: "",
+      category: "Pekerja",
+      sign: "PJA",
+      segment: "Material"
     },
   ];
 
@@ -51,7 +30,7 @@ export default function Itemmanagement() {
   const [pageTable, setPageTable] = useState(1);
   const [dataTable, setDataTable] = useState([]);
   const [totalResults, setTotalResult] = useState(itemTable.length);
-  const [selectedCategory, setSelectedCategory] = useState("Semua Kategori");
+  const [selectedCategory, setSelectedCategory] = useState("Semua Segmen");
   const [searchKey, setSearchKey] = useState("");
 
   function onPageChangeTable(p) {
@@ -80,13 +59,11 @@ export default function Itemmanagement() {
 
   function toggleSubmit(props) {
     const changedData = {
-      nama: props.nama,
+      item: props.item,
       category: props.category,
       sign: props.sign,
       unit: props.unit,
-      ingredients: props.ingredients,
       price: props.price,
-      desc: props.desc,
     };
 
     let newData = [];
@@ -120,24 +97,24 @@ export default function Itemmanagement() {
     );
   }, [pageTable, itemTable]);
 
-  function searchResultcontrol(category, keyword) {
+  function searchResultcontrol(segment, keyword) {
     let filtered;
     if (keyword !== "") {
-      if (category !== "Semua Kategori") {
+      if (segment !== "Semua Segmen") {
         filtered = itemTable.filter((item) => {
           return (
-            item.nama.toLowerCase().includes(keyword.toLowerCase()) &&
-            item.category.toLowerCase().includes(category.toLowerCase())
+            item.category.toLowerCase().includes(keyword.toLowerCase()) &&
+            item.segment.toLowerCase().includes(segment.toLowerCase())
           );
         });
       } else {
         filtered = itemTable.filter((item) => {
-          return item.nama.toLowerCase().includes(keyword.toLowerCase());
+          return item.category.toLowerCase().includes(keyword.toLowerCase());
         });
       }
-    } else if (category !== "Semua Kategori") {
+    } else if (segment !== "Semua Segmen") {
       filtered = itemTable.filter((item) => {
-        return item.category.toLowerCase().includes(category.toLowerCase());
+        return item.segment.toLowerCase().includes(segment.toLowerCase());
       });
     } else {
       filtered = itemTable;
@@ -163,13 +140,9 @@ export default function Itemmanagement() {
 
   function toggleNew() {
     const data = {
-      nama: "",
       category: "",
       sign: "",
-      unit: "",
-      ingredients: [],
-      price: "",
-      desc: "",
+      segment:""
     };
     setItemcontrol({ data: data, mode: "new" });
     setIsOpen(!isOpen);
@@ -178,12 +151,12 @@ export default function Itemmanagement() {
   return (
     <>
       <div className="flex gap-4 my-3 mx-4">
-        <div className="flex flex-grow border border-gray-200 items-center rounded-md bg-white hover:border-gray-400 duration-150">
+        <div className="flex flex-grow border border-gray-200 items-center rounded-md bg-white hover:border-gray-400">
           <div className="text-center w-10 mx-1 border-r">
             <FontAwesomeIcon icon={faSearch} size="xs" />
           </div>
           <input
-            placeholder="Tuliskan item pekerjaan ..."
+            placeholder="Tuliskan kategori ..."
             className="w-full rounded-lg p-2 text-sm font-medium"
             onChange={(props) => setSearchKey(props.target.value)}
           />
@@ -192,27 +165,21 @@ export default function Itemmanagement() {
           className="w-40 truncate"
           onChange={(props) => setSelectedCategory(props.target.value)}
         >
-          <option>Semua Kategori</option>
-          <option>Persiapan Dan Tanah</option>
-          <option>Struktur Utama</option>
-          <option>Pekerjaan Dinding</option>
-          <option>Pekerjaan Lantai</option>
-          <option>Pekerjaan Atap</option>
-          <option>Pekerjaan Finishing</option>
+          <option>Semua Segmen</option>
+          <option>Item Pekerjaan</option>
+          <option>Material</option>
         </Select>
         <Button onClick={toggleNew} icon={PlusCircle} size="small">
-          Tambah Item Pekerjaan
+          Tambah Kategori
         </Button>
       </div>
       <TableContainer>
         <Table>
           <TableHeader>
             <tr className="text-center">
-              <TableCell>Item Pekerjaan</TableCell>
               <TableCell>Kategori</TableCell>
               <TableCell>Simbol</TableCell>
-              <TableCell>Satuan</TableCell>
-              <TableCell>Harga</TableCell>
+              <TableCell>Segmen</TableCell>
               <TableCell>
                 <FontAwesomeIcon icon={faCog} size="1x" />
               </TableCell>
@@ -225,9 +192,6 @@ export default function Itemmanagement() {
                   key={i}
                   className="hover:bg-yellow-50 focus:bg-yellow-100 "
                 >
-                  <TableCell>
-                    <p className="truncate">{idx.nama}</p>
-                  </TableCell>
                   <TableCell className="text-center">
                     <label>{idx.category}</label>
                   </TableCell>
@@ -240,15 +204,7 @@ export default function Itemmanagement() {
                       {idx.sign}
                     </label>
                   </TableCell>
-                  <TableCell className="text-center">{idx.unit}</TableCell>
-                  <TableCell>
-                    <NumberFormat
-                      value={idx.price}
-                      displayType={"text"}
-                      thousandSeparator
-                      prefix={"Rp. "}
-                    />
-                  </TableCell>
+                  <TableCell className="text-center">{idx.segment}</TableCell>
                   <TableCell className="text-center w-1/12">
                     <Button
                       className="hover:text-green-600"
@@ -286,10 +242,10 @@ export default function Itemmanagement() {
         </TableFooter>
       </TableContainer>
 
-      {/* <Button onClick={toggleBackdrop}>Open backdrop</Button> */}
+      {/* Modal */}
       {isOpen && (
         <div className="fixed inset-0 z-40 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center">
-          <div className="w-4/5 mx-auto overflow-hidden bg-white rounded-lg px-6 py-4">
+          <div className=" w-4/12 mx-auto overflow-hidden bg-white rounded-lg px-6 py-4">
             <Item
               data={itemControl}
               toggleEdit={toggleEdit}

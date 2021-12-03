@@ -1,9 +1,10 @@
-import { Button, Modal, ModalBody, ModalHeader, ModalFooter } from "@windmill/react-ui";
-import React, { useState, useEffect } from "react";
+import { Button, Label, Input } from "@windmill/react-ui";
+import React, { useState } from "react";
 import ProjectCard from "../../components/Cards/ProjectCard";
-import { PlusCircle } from "../../icons";
+import { Check, PlusCircle } from "../../icons";
 import Moment from "react-moment";
-import 'moment/locale/id';
+import "moment/locale/id";
+import Uploader from "../../components/DropzoneUploader/Uploader";
 
 function ProjectDasborad() {
   const act = [
@@ -83,6 +84,7 @@ function ProjectDasborad() {
 
   const [activity, setActivity] = useState(act);
   const [project, setProject] = useState(dataProject);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
@@ -119,7 +121,12 @@ function ProjectDasborad() {
               <h2 className="text-2xl font-black">36</h2>
             </div>
           </div>
-          <Button size="small" iconLeft={PlusCircle} layout="primary">
+          <Button
+            onClick={() => setIsOpen(!isOpen)}
+            size="small"
+            iconLeft={PlusCircle}
+            layout="primary"
+          >
             <span className="text-xs">Buat Proyek Baru</span>
           </Button>
         </div>
@@ -151,7 +158,9 @@ function ProjectDasborad() {
           <h4 className="text-sm font-black">Aktivitas Terakhir</h4>
           <div className="my-4 px-4 overflow-y-auto overscroll-y-contain h-60">
             <ul>
-              <div className="text-xs font-bold text-gray-500 mb-1">Hari ini</div>
+              <div className="text-xs font-bold text-gray-500 mb-1">
+                Hari ini
+              </div>
               {activity.map((item, idx) => {
                 return (
                   <li key={idx}>
@@ -173,7 +182,9 @@ function ProjectDasborad() {
                           {item.text}
                         </h4>
                         <h6 className="text-xs font-semibold text-gray-500">
-                          <Moment locale="id" fromNow>{item.date}</Moment>
+                          <Moment locale="id" fromNow>
+                            {item.date}
+                          </Moment>
                         </h6>
                       </div>
                     </div>
@@ -184,6 +195,92 @@ function ProjectDasborad() {
           </div>
         </div>
       </div>
+      {/* Modal */}
+      {isOpen && (
+        <div className="fixed inset-0 z-40 flex items-end bg-black bg-opacity-20 sm:items-center sm:justify-center">
+          <div className=" w-6/12 mx-auto overflow-hidden bg-white rounded-lg px-6 py-4 shadow-lg">
+            <div className="p-4">
+              <h2 className="text-2xl font-bold">Buat Proyek Baru</h2>
+              <div className="grid grid-cols-3 ">
+                <div className="col-span-2">
+                  <Label className="mt-2">
+                    <span className="font-semibold text-xs">NAMA PROYEK</span>
+                    <Input
+                      name="nama_proyek"
+                      className="mt-1"
+                      placeholder="Perumahan Anggrek"
+                      required
+                    />
+                  </Label>
+                  <Label className="mt-2">
+                    <span className="font-semibold text-xs">PEMILIK</span>
+                    <Input
+                      name="nama_proyek"
+                      className="mt-1"
+                      placeholder="Pemilik"
+                      required
+                    />
+                  </Label>
+                </div>
+                <div className="col-span-3">
+                  <Label className="mt-2">
+                    <span className="font-semibold text-xs">ALAMAT</span>
+                    <Input
+                      name="alamat_proyek"
+                      className="mt-1"
+                      placeholder="Nama Jalan, RT/RW, Kelurahan"
+                      required
+                    />
+                  </Label>
+                  <div className="grid grid-cols-3 gap-4">
+                    <Label className="mt-2">
+                      <span className="font-semibold text-xs">KOTA</span>
+                      <Input name="nama_proyek" className="mt-1" required />
+                    </Label>
+                    <Label className="mt-2">
+                      <span className="font-semibold text-xs">PROVINSI</span>
+                      <Input name="nama_proyek" className="mt-1" required />
+                    </Label>
+                    <Label className="mt-2">
+                      <span className="font-semibold text-xs">KODE POS</span>
+                      <Input name="nama_proyek" className="mt-1" required />
+                    </Label>
+                  </div>
+                </div>
+              </div>
+              <Label className="mt-2">
+                <span className="font-semibold text-xs">BERKAS</span>
+                <Uploader />
+              </Label>
+            </div>
+            <div className="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row bg-gray-50 dark:bg-gray-800">
+              <div className="hidden sm:block">
+                <Button layout="outline" onClick={() => setIsOpen(!isOpen)}>
+                  Batal
+                </Button>
+              </div>
+              <div className="hidden sm:block">
+                <Button>Buat Proyek</Button>
+              </div>
+              <div className="block w-full sm:hidden">
+                <Button
+                  block
+                  size="large"
+                  layout="outline"
+                  onClick={() => setIsOpen(!isOpen)}
+                >
+                  Batal
+                </Button>
+              </div>
+              <div className="block w-full sm:hidden">
+                <Button block size="large">
+                  Buat Proyek
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

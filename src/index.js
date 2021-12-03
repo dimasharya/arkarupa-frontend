@@ -7,6 +7,7 @@ import ThemedSuspense from './components/ThemedSuspense'
 import { Windmill } from '@windmill/react-ui'
 import * as serviceWorker from './serviceWorker'
 import CustomStyle from './assets/css/Customstyle'
+import 'react-dropzone-uploader/dist/styles.css'
 
 // if (process.env.NODE_ENV !== 'production') {
 //   const axe = require('react-axe')

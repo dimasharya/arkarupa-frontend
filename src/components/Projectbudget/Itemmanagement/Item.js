@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import NumberFormat from "react-number-format";
 import ItemData from "./ItemData";
+import ItemSearch from "./ItemSearch";
 
 export default function Item({ toggleEdit, data, toggleSubmit }) {
   const [dataItems, setDataItems] = useState({
@@ -16,6 +17,25 @@ export default function Item({ toggleEdit, data, toggleSubmit }) {
     desc: data.data.desc,
     mode: data.mode,
   });
+
+  const [displayedIngredients, setDispledIngredients] = useState(
+    dataItems.ingredients
+  );
+
+  const addItem = (props) => {
+    const dataItemToAdd = {
+      item: props.item,
+      category: props.category,
+      coefficient: 0,
+      unit: props.unit,
+      price: props.price,
+      total: 0,
+    };
+
+    let newData = [];
+    newData = [...dataItems.ingredients, dataItemToAdd];
+    setDataItems({ ...dataItems, ingredients: newData });
+  };
 
   const editItem = (props) => {
     const editedData = {
@@ -56,6 +76,11 @@ export default function Item({ toggleEdit, data, toggleSubmit }) {
     setDataItems({ ...dataItems, price: sum });
   }, [dataItems.ingredients]);
 
+  /// hapus item on display belum work
+  useEffect(() => {
+    setDispledIngredients(dataItems.ingredients);
+  }, [dataItems]);
+
   const submit = () => {
     data.mode === "edit"
       ? toggleSubmit({ ...dataItems, index: data.index })
@@ -65,7 +90,6 @@ export default function Item({ toggleEdit, data, toggleSubmit }) {
 
   return (
     <>
-      <div className="mt-4 mb-2 text-lg font-semibold text-gray-700 dark:text-gray-300"></div>
       <div className="mb-6 text-sm text-black dark:text-gray-400">
         <div className="grid grid-flow-col grid-cols-2 gap-4">
           <div>
@@ -76,6 +100,7 @@ export default function Item({ toggleEdit, data, toggleSubmit }) {
                 defaultValue={dataItems.nama}
                 onChange={onChange}
                 className="mt-1"
+                required
               />
             </Label>
             <Label className="mt-2">
@@ -85,6 +110,7 @@ export default function Item({ toggleEdit, data, toggleSubmit }) {
                 defaultChecked={dataItems.category}
                 onChange={onChange}
                 className="block w-full mt-1 truncate"
+                required
               >
                 <option>Persiapan Dan Tanah</option>
                 <option>Struktur Utama</option>
@@ -103,6 +129,7 @@ export default function Item({ toggleEdit, data, toggleSubmit }) {
                 defaultValue={dataItems.unit}
                 onChange={onChange}
                 className="mt-1"
+                required
               />
             </Label>
             <Label className="mt-2">
@@ -131,14 +158,12 @@ export default function Item({ toggleEdit, data, toggleSubmit }) {
                 </td>
               </tr>
             </thead>
-            <tbody className="mt-1 relative h-60 overflow-y-auto">
-              {
-              dataItems.ingredients ?
-              dataItems.ingredients.map((item, indexitem) => {
+            <tbody className="mt-1 relative h-60 overflow-y-scroll">
+              {displayedIngredients.map((item, indexitem) => {
                 return (
                   <>
                     <ItemData
-                      key={indexitem}
+                      key={`ingredients${indexitem}`}
                       idx={indexitem}
                       item={item.item}
                       category={item.category}
@@ -151,7 +176,7 @@ export default function Item({ toggleEdit, data, toggleSubmit }) {
                     />
                   </>
                 );
-              }) : null}
+              })}
             </tbody>
             <tfoot className="border-t p-2 bottom-0 text-sm font-semibold text-black bg-white">
               <tr className="flex justify-between inset-x-0">
@@ -171,7 +196,7 @@ export default function Item({ toggleEdit, data, toggleSubmit }) {
               </tr>
             </tfoot>
           </table>
-          <div className="mt-2 overflow-y-auto rounded-md"></div>
+          <ItemSearch addItem={addItem} />
         </div>
       </div>
       <div className="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row bg-gray-50 dark:bg-gray-800">

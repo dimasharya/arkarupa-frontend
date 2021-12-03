@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
 import Workspace from "../projectbudgeting/Workspace";
-import Itemmanagement from "./Itemmanagement";
+import CategoryManagement from "./CategoryManagement";
+import Itemmanagement from "./ItemManagement";
+import MaterialManagement from "./MaterialManagement";
 
 function ProjectBudgeting() {
-
   // Tabs Handler
 
-  const tabs = ["lembar kerja", "manajemen item pekerjaan", "manajemen material", "kategori"];
+  const tabs = [
+    "lembar kerja",
+    "manajemen item pekerjaan",
+    "manajemen material",
+    "kategori",
+  ];
   const [tabActive, setTabactive] = useState(tabs[0]);
 
   return (
@@ -22,7 +28,7 @@ function ProjectBudgeting() {
                     (tabActive === item
                       ? "py-2 px-4 border-b-2 border-black text-black"
                       : "py-2 px-4  text-gray-500") +
-                    " font-bold transition duration-500 ease-in-out"
+                    " font-bold transition duration-500 ease-in-out hover:text-black"
                   }
                   onClick={(e) => {
                     e.preventDefault();
@@ -36,16 +42,27 @@ function ProjectBudgeting() {
             })}
           </ul>
         </div>
-          <div
-            className={tabActive === "lembar kerja" ? "block" : "hidden"}
-            id="Overview"
-          >
-            <Workspace />
-          </div>
-          <div className={tabActive === "manajemen item pekerjaan" ? "block" : "hidden" }>
-            <Itemmanagement />
-          </div>
+        <div className={tabActive === "lembar kerja" ? "block" : "hidden"}>
+          <Workspace />
         </div>
+        <div
+          className={
+            tabActive === "manajemen item pekerjaan" ? "block" : "hidden"
+          }
+        >
+          <Itemmanagement />
+        </div>
+        <div
+          className={tabActive === "manajemen material" ? "block" : "hidden"}
+        >
+          <MaterialManagement />
+        </div>
+        <div
+          className={tabActive === "kategori" ? "block" : "hidden"}
+        >
+          <CategoryManagement />
+        </div>
+      </div>
     </>
   );
 }

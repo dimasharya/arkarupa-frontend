@@ -34,6 +34,7 @@ import { ReactComponent as MinusCirlce } from './minus-circle-solid.svg'
 import { ReactComponent as ChevronLeft } from './chevron-left-solid.svg'
 import { ReactComponent as PlusCircle } from './plus-circle-solid.svg'
 import { ReactComponent as Check } from './check-solid.svg'
+import { ReactComponent as Download } from './file-download-solid.svg'
 
 export {
   ButtonsIcon,
@@ -71,5 +72,6 @@ export {
   MinusCirlce,
   ChevronLeft,
   PlusCircle,
-  Check
+  Check,
+  Download
 }

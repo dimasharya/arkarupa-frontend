@@ -69,7 +69,7 @@ export default function ItemData({
 
   return (
     <>
-      <tr key={idx} className="inline-flex w-full items-center">
+      <tr key={`ingredient${idx}`} className="inline-flex w-full items-center">
         <td className="w-4/12 pl-2 py-1 truncate">{data.item}</td>
         <td className="w-2/12 text-center items-center">
           {editState ? (
