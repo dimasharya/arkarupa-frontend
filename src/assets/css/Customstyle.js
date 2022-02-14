@@ -206,6 +206,11 @@ export default {
             'active:bg-transparent hover:bg-gray-100 focus:ring focus:ring-gray-300 dark:hover:bg-gray-500 dark:hover:text-gray-300 dark:hover:bg-opacity-10',
           disabled: 'opacity-50 cursor-not-allowed',
         },
+        danger: {
+          base: 'text-white bg-red-600 border border-transparent',
+          active: 'active:bg-red-600 hover:bg-red-700 focus:ring focus:ring-red-300',
+          disabled: 'opacity-50 cursor-not-allowed',
+        },
         // this is the button that lives inside the DropdownItem
         dropdownItem: {
           base:

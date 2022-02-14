@@ -26,6 +26,11 @@ const routes = [
     icon: "FormsIcon",
     name: "Penjadwalan",
   },
+  {
+    path: "/app/usermanagement",
+    icon: "FormsIcon",
+    name: "Pengguna",
+  },
   // {
   //   path: '/app/forms',
   //   icon: 'FormsIcon',

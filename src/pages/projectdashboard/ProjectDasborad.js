@@ -1,4 +1,4 @@
-import { Button, Label, Input } from "@windmill/react-ui";
+import { Button, Label, Input, HelperText } from "@windmill/react-ui";
 import React, { useState } from "react";
 import ProjectCard from "../../components/Cards/ProjectCard";
 import { Check, PlusCircle } from "../../icons";
@@ -130,7 +130,7 @@ function ProjectDasborad() {
             <span className="text-xs">Buat Proyek Baru</span>
           </Button>
         </div>
-        <div className="border col-span-2 rounded-lg bg-green-700"></div>
+        <div className="border col-span-2 rounded-lg "></div>
       </div>
       <div className="m-auto max-w-screen-xl">
         <ul className="flex my-2 p-4 flex-nowrap overflow-x-scroll overscroll-contain relative gap-6 scrollbar-hide">
@@ -200,18 +200,19 @@ function ProjectDasborad() {
         <div className="fixed inset-0 z-40 flex items-end bg-black bg-opacity-20 sm:items-center sm:justify-center">
           <div className=" w-6/12 mx-auto overflow-hidden bg-white rounded-lg px-6 py-4 shadow-lg">
             <div className="p-4">
-              <h2 className="text-2xl font-bold">Buat Proyek Baru</h2>
-              <div className="grid grid-cols-3 ">
-                <div className="col-span-2">
+              <div className="grid">
+                <div className="col-span-3 py-2">
                   <Label className="mt-2">
                     <span className="font-semibold text-xs">NAMA PROYEK</span>
                     <Input
                       name="nama_proyek"
                       className="mt-1"
-                      placeholder="Perumahan Anggrek"
+                      placeholder="ex: Perumahan Anggrek"
                       required
                     />
                   </Label>
+                </div>
+                <div className="col-span-3 py-2">
                   <Label className="mt-2">
                     <span className="font-semibold text-xs">PEMILIK</span>
                     <Input
@@ -222,7 +223,20 @@ function ProjectDasborad() {
                     />
                   </Label>
                 </div>
-                <div className="col-span-3">
+                <div className="col-span-3 py-2">
+                  <Label className="mt-2">
+                    <span className="font-semibold text-xs">
+                      KATEGORI PROYEK
+                    </span>
+                    <Input
+                      name="kategori_proyek"
+                      className="mt-1"
+                      placeholder="ex: Perumahan"
+                      required
+                    />
+                  </Label>
+                </div>
+                <div className="col-span-3 py-2">
                   <Label className="mt-2">
                     <span className="font-semibold text-xs">ALAMAT</span>
                     <Input
@@ -235,25 +249,38 @@ function ProjectDasborad() {
                   <div className="grid grid-cols-3 gap-4">
                     <Label className="mt-2">
                       <span className="font-semibold text-xs">KOTA</span>
-                      <Input name="nama_proyek" className="mt-1" required />
+                      <Input
+                        name="alamat_kota_proyek"
+                        className="mt-1"
+                        required
+                      />
                     </Label>
                     <Label className="mt-2">
                       <span className="font-semibold text-xs">PROVINSI</span>
-                      <Input name="nama_proyek" className="mt-1" required />
+                      <Input
+                        name="alamat_provinsi_proyek"
+                        className="mt-1"
+                        required
+                      />
                     </Label>
                     <Label className="mt-2">
                       <span className="font-semibold text-xs">KODE POS</span>
-                      <Input name="nama_proyek" className="mt-1" required />
+                      <Input
+                        name="kode_pos_alamat_proyek"
+                        className="mt-1"
+                        required
+                      />
                     </Label>
                   </div>
                 </div>
               </div>
-              <Label className="mt-2">
-                <span className="font-semibold text-xs">BERKAS</span>
+              {/* <Label className="mt-2">
+                <span className="font-semibold text-xs">BERKAS KONTRAK</span>
                 <Uploader />
               </Label>
+              <HelperText valid>* Jika Terdapat Berkas</HelperText> */}
             </div>
-            <div className="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row bg-gray-50 dark:bg-gray-800">
+            <div className="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row bg-white">
               <div className="hidden sm:block">
                 <Button layout="outline" onClick={() => setIsOpen(!isOpen)}>
                   Batal

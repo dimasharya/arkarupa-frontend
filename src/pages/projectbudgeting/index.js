@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Workspace from "../projectbudgeting/Workspace";
 import CategoryManagement from "./CategoryManagement";
-import Itemmanagement from "./ItemManagement";
+import ItemManagement from "./ItemManagement";
 import MaterialManagement from "./MaterialManagement";
 
 function ProjectBudgeting() {
@@ -50,7 +50,7 @@ function ProjectBudgeting() {
             tabActive === "manajemen item pekerjaan" ? "block" : "hidden"
           }
         >
-          <Itemmanagement />
+          <ItemManagement />
         </div>
         <div
           className={tabActive === "manajemen material" ? "block" : "hidden"}
