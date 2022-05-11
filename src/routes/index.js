@@ -6,6 +6,7 @@ const ProjectDashboard = lazy(() => import('../pages/projectdashboard/ProjectDas
 const ProjectBudgeting = lazy(() => import('../pages/projectbudgeting'))
 const Schedule = lazy(() => import('../pages/schedule/Schedule'))
 const UserManagement = lazy(() => import('../pages/user/UserManagement'))
+const PermitToWork = lazy(() => import('../pages/permittowork/PermitToWork'))
 const Forms = lazy(() => import('../pages/Forms'))
 const Cards = lazy(() => import('../pages/Cards'))
 const Charts = lazy(() => import('../pages/Charts'))
@@ -45,6 +46,10 @@ const routes = [
   {
     path: '/usermanagement',
     component: UserManagement
+  },
+  {
+    path: '/permittowork',
+    component: PermitToWork
   },
   // {
   //   path: '/forms',

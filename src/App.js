@@ -4,7 +4,7 @@ import AccessibleNavigationAnnouncer from './components/AccessibleNavigationAnno
 import { Toaster } from 'react-hot-toast'
 
 const Layout = lazy(() => import('./containers/Layout'))
-const Login = lazy(() => import('./pages/Login'))
+const Login = lazy(() => import('./pages/authentication/Login'))
 const CreateAccount = lazy(() => import('./pages/CreateAccount'))
 const ForgotPassword = lazy(() => import('./pages/ForgotPassword'))
 

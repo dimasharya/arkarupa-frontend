@@ -33,28 +33,28 @@ export default function Schedule({ cellHeight, borders }) {
 
   return (
     <>
-      <div className="lex py-4 px-2">
-      <div className="flex gap-4 items-center">
-            <Button size="small" icon={ChevronLeft} layout="link" />
-            <label className="text-lg font-black">
-              BSD City Botanical Park
-              <span className="text-sm font-thin"> - Penjadwalan</span>
-            </label>
-          </div>
-        <div className="wx-default py-4">
-          <Gantt
-            cellHeight={cellHeight}
-            borders={borders}
-            tooltip={(data) => <MyTooltipContent data={data} />}
-            tasks={tasks}
-            links={links}
-            scales={scales}
-            columns={columns}
-            save={(data) => server.current.saveData(data)}
-            store={(ev) => (store.current = ev)}
-          />
+      <div className="flex py-4 px-2">
+        <div className="flex gap-4 items-center">
+          <Button size="small" icon={ChevronLeft} layout="link" />
+          <label className="text-lg font-black">
+            BSD City Botanical Park
+            <span className="text-sm font-thin"> - Penjadwalan</span>
+          </label>
         </div>
-      </div>
+          <div className="wx-default py-4 flex" style={{height: "800px"}}>
+            <Gantt
+              cellHeight={cellHeight}
+              borders={borders}
+              tooltip={(data) => <MyTooltipContent data={data} />}
+              tasks={tasks}
+              links={links}
+              scales={scales}
+              columns={columns}
+              save={(data) => server.current.saveData(data)}
+              store={(ev) => (store.current = ev)}
+            />
+          </div>
+        </div>
     </>
   );
 }
