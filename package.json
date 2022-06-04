@@ -58,14 +58,16 @@
   },
   "devDependencies": {
     "@release-it/conventional-changelog": "^3.3.0",
+    "@svgr/webpack": "^5.4.0",
     "commitizen": "^4.2.4",
     "cross-env": "^7.0.3",
     "cssnano": "^5.0.8",
     "cz-conventional-changelog": "^3.3.0",
+    "postcss-cli": "^7.1.1",
     "react-axe": "^3.5.4",
     "react-error-overlay": "^6.0.9",
     "release-it": "^14.11.6",
-    "tailwindcss": "^2.2.19",
+    "tailwindcss": "^2.2.16",
     "yarn-upgrade-all": "^0.5.4"
   },
   "release-it": {
