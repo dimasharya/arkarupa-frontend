@@ -3899,11 +3899,6 @@
   "resolved" "https://registry.npmjs.org/commander/-/commander-2.20.3.tgz"
   "version" "2.20.3"
 
-"commander@^5.1.0":
-  "integrity" "sha512-P0CysNDQ7rtVw4QIQtm+MRxV66vKFSvlsQvGYXZWR3qFU0jlMKHZZZgw8e+8DSah4UDKMqnknRDQz+xuQXQ/Zg=="
-  "resolved" "https://registry.npmjs.org/commander/-/commander-5.1.0.tgz"
-  "version" "5.1.0"
-
 "commander@^7.2.0":
   "integrity" "sha512-QrWXB+ZQSVPmIWIhtEO9H+gwHaMGYiF5ChvoJ+K9ZGHG/sVsa6yiesAD1GC/x46sET00Xlwo1u49RVVVzvcSkw=="
   "resolved" "https://registry.npmjs.org/commander/-/commander-7.2.0.tgz"
@@ -12406,14 +12401,6 @@
     "string-width" "^4.2.3"
     "y18n" "^5.0.5"
     "yargs-parser" "^21.0.0"
-
-"yarn-upgrade-all@^0.5.4":
-  "integrity" "sha512-XaFO3Yv6cXEBizancbRxJT3fdgHfiESNJoV/czWzXRXN2CZBk61IQIFbmeMRE6HhXcBGd+rVmnUg5Csw4axdDA=="
-  "resolved" "https://registry.npmjs.org/yarn-upgrade-all/-/yarn-upgrade-all-0.5.4.tgz"
-  "version" "0.5.4"
-  dependencies:
-    "chalk" "^4.1.0"
-    "commander" "^5.1.0"
 
 "yn@3.1.1":
   "integrity" "sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q=="

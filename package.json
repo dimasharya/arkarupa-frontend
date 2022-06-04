@@ -67,8 +67,7 @@
     "react-axe": "^3.5.4",
     "react-error-overlay": "^6.0.9",
     "release-it": "^14.11.6",
-    "tailwindcss": "^2.2.16",
-    "yarn-upgrade-all": "^0.5.4"
+    "tailwindcss": "^2.2.16"
   },
   "release-it": {
     "github": {

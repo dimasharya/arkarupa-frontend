@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Workspace from "../projectbudgeting/Workspace";
-import CategoryManagement from "./CategoryManagement";
-import ItemManagement from "./ItemManagement";
-import MaterialManagement from "./MaterialManagement";
+import CategoryManagement from "../projectbudgeting/CategoryManagement";
+import ItemManagement from "../projectbudgeting/ItemManagement";
+import MaterialManagement from "../projectbudgeting/MaterialManagement";
 
 function ProjectBudgeting() {
   // Tabs Handler
