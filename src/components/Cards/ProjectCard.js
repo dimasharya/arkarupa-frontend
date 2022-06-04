@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 import { Avatar, Button } from "@windmill/react-ui";
 import { ArrowCircleRight } from "../../icons/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,51 +6,58 @@ import { faMapMarkerAlt, faUserTie } from "@fortawesome/free-solid-svg-icons";
 import Tooltip from "react-tooltip";
 import ProgressBar from "../Progresbar/Progresbar";
 import Badge from "../Badge/Badge";
+import { Link, Outlet } from "react-router-dom";
 
-function ProjectCard ({name, category, loc, owner, team, pm, progress, status, date}) {
-    return (
-        <div className="overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 w-80 py-4 px-8 bg-white shadow-md rounded-3xl">
-          <div className="my-2">
-            <h2 className="block text-lg font-black truncate ...">
-              {name}
-            </h2>
-            <label className="text-xs font-semibold text-gray-500">
-              {category}
-            </label>
-          </div>
-          <div className="flex py-1 mt-2 items-center">
-            <div className="w-12 text-center">
-              <FontAwesomeIcon
-                className="text-gray-500"
-                icon={faMapMarkerAlt}
-                size="1x"
-              />
-            </div>
-            <div className="flex flex-col w-56">
-              <h6 className="text-xs font-semibold text-gray-500">
-                Lokasi
-              </h6>
-              <p className="text-xs font-bold leading-tight h-6">
-                {loc}
-              </p>
-            </div>
-          </div>
-          <div className="flex py-1 mt-2 items-center">
+function ProjectCard({
+  name,
+  category,
+  loc,
+  owner,
+  team,
+  pm,
+  progress,
+  status,
+  date,
+}) {
+  const projectLink = `idx`;
+  return (
+    <>
+      <div className="overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 w-80 py-4 px-8 bg-white shadow-md rounded-3xl">
+        <div className="my-2">
+          <h2 className="block text-lg font-black truncate ...">{name}</h2>
+          <label className="text-xs font-semibold text-gray-500">
+            {category}
+          </label>
+        </div>
+        <div className="flex py-1 mt-2 items-center">
           <div className="w-12 text-center">
-              <FontAwesomeIcon
-                className="text-gray-500"
-                icon={faUserTie}
-                size="1x"
-              />
-            </div>
-            <div className="flex flex-col">
-              <label className="text-xs font-semibold text-gray-500">
-                Pemilik
-              </label>
-              <div className="text-xs font-bold">{owner}</div>
-            </div>
+            <FontAwesomeIcon
+              className="text-gray-500"
+              icon={faMapMarkerAlt}
+              size="1x"
+            />
           </div>
-          {/* <div className="flex text-xs font-semibold text-gray-500 mt-2 pb-1">
+          <div className="flex flex-col w-56">
+            <h6 className="text-xs font-semibold text-gray-500">Lokasi</h6>
+            <p className="text-xs font-bold leading-tight h-6">{loc}</p>
+          </div>
+        </div>
+        <div className="flex py-1 mt-2 items-center">
+          <div className="w-12 text-center">
+            <FontAwesomeIcon
+              className="text-gray-500"
+              icon={faUserTie}
+              size="1x"
+            />
+          </div>
+          <div className="flex flex-col">
+            <label className="text-xs font-semibold text-gray-500">
+              Pemilik
+            </label>
+            <div className="text-xs font-bold">{owner}</div>
+          </div>
+        </div>
+        {/* <div className="flex text-xs font-semibold text-gray-500 mt-2 pb-1">
             <label className="w-10/12">Team</label>
             <label className="text-center w-2/12">PM</label>
           </div>
@@ -141,13 +148,17 @@ function ProjectCard ({name, category, loc, owner, team, pm, progress, status, d
               </button>
             </div>
           </div> */}
-          <ProgressBar progress={progress} />
-          <div className="flex justify-between items-center">
-            <Badge status={status} />
+        <ProgressBar progress={progress} />
+        <div className="flex justify-between items-center">
+          <Badge status={status} />
+          <Link to={projectLink}>
             <Button icon={ArrowCircleRight} layout="link" />
-          </div>
+          </Link>
         </div>
-    )
+      </div>
+      <Outlet />
+    </>
+  );
 }
 
 export default ProjectCard;

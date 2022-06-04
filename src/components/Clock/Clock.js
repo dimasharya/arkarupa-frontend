@@ -1,3 +1,5 @@
+import moment from "moment";
+import "moment/locale/id"
 import React, { useEffect, useState } from "react";
 import Moment from "react-moment"
 
@@ -6,13 +8,13 @@ export default function Clock() {
 
     useEffect(() => {
         setInterval(() => {
-            const date = new Date();
-            setClock(date.toLocaleString())
+            const date = moment().format();
+            setClock(date)
         })
     }, [])
     return (
         <>
-        <div className="text-black font-bold text-xs">{<Moment format="dddd, DD MMM HH:mm">{clock}</Moment>}</div>
+        <div className="text-black font-bold text-xs">{<Moment format="dddd, DD MMM HH:mm" locale="id">{clock}</Moment>}</div>
         </>
     )
 };

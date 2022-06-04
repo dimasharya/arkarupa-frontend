@@ -35,6 +35,7 @@ import { ReactComponent as ChevronLeft } from './chevron-left-solid.svg'
 import { ReactComponent as PlusCircle } from './plus-circle-solid.svg'
 import { ReactComponent as Check } from './check-solid.svg'
 import { ReactComponent as Download } from './file-download-solid.svg'
+import {ReactComponent as HeroPlusOutline} from "./hero-plus-outline.svg"
 
 export {
   ButtonsIcon,
@@ -73,5 +74,6 @@ export {
   ChevronLeft,
   PlusCircle,
   Check,
-  Download
+  Download,
+  HeroPlusOutline
 }

@@ -7,14 +7,8 @@ const ProjectBudgeting = lazy(() => import('../pages/projectbudgeting'))
 const Schedule = lazy(() => import('../pages/schedule/Schedule'))
 const UserManagement = lazy(() => import('../pages/user/UserManagement'))
 const PermitToWork = lazy(() => import('../pages/permittowork/PermitToWork'))
-const Forms = lazy(() => import('../pages/Forms'))
-const Cards = lazy(() => import('../pages/Cards'))
-const Charts = lazy(() => import('../pages/Charts'))
-const Buttons = lazy(() => import('../pages/Buttons'))
+const Project = lazy(() => import("../pages/projectdashboard/Project"))
 const Modals = lazy(() => import('../pages/Modals'))
-const Tables = lazy(() => import('../pages/Tables'))
-const Page404 = lazy(() => import('../pages/404'))
-const Blank = lazy(() => import('../pages/Blank'))
 
 /**
  * ⚠ These are internal routes!
@@ -34,6 +28,10 @@ const routes = [
   {
     path: '/project',
     component: ProjectDashboard
+  },
+  {
+    path: '/project/:projectId',
+    component: Project
   },
   {
     path: '/projectbudgeting',

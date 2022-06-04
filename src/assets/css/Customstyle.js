@@ -2,14 +2,14 @@ export default {
     alert: {
         base: 'p-4 pl-12 relative rounded-lg leading-5',
         withClose: 'pr-12',
-        success: 'bg-green-50 text-green-900 dark:bg-green-600 dark:text-white',
+        success: 'bg-teal-50 text-teal-900 dark:bg-teal-600 dark:text-white',
         danger: 'bg-red-50 text-red-900 dark:bg-red-600 dark:text-white',
         warning: 'bg-yellow-50 text-yellow-900 dark:bg-yellow-600 dark:text-white',
         neutral: 'bg-gray-50 text-gray-800 dark:bg-gray-700 dark:text-gray-300',
         info: 'bg-blue-50 text-blue-900 dark:bg-blue-600 dark:text-white',
         icon: {
           base: 'h-5 w-5',
-          success: 'text-green-400 dark:text-green-300',
+          success: 'text-teal-400 dark:text-teal-300',
           danger: 'text-red-400 dark:text-red-300',
           warning: 'text-yellow-400 dark:text-yellow-100',
           neutral: 'text-gray-400 dark:text-gray-500',
@@ -92,11 +92,11 @@ export default {
       // Badge
       badge: {
         base: 'inline-flex px-2 text-xs font-medium leading-5 rounded-full',
-        success: 'text-green-700 bg-green-100 dark:bg-green-700 dark:text-green-100',
+        success: 'text-teal-700 bg-teal-100 dark:bg-teal-700 dark:text-teal-100',
         danger: 'text-red-700 bg-red-100 dark:text-red-100 dark:bg-red-700',
         warning: 'text-orange-700 bg-orange-100 dark:text-white dark:bg-orange-600',
         neutral: 'text-gray-700 bg-gray-100 dark:text-gray-100 dark:bg-gray-700',
-        primary: 'text-green-700 bg-green-100 dark:text-white dark:bg-green-600',
+        primary: 'text-teal-700 bg-teal-100 dark:text-white dark:bg-teal-600',
       },
       // Backdrop
       backdrop: {
@@ -107,10 +107,10 @@ export default {
       textarea: {
         base: 'block w-full text-sm dark:text-gray-300 rounded-md focus:outline-none',
         active:
-          'focus:border-green-400 border-gray-300 dark:border-gray-600 dark:focus:border-gray-600 dark:bg-gray-700 dark:focus:ring-gray-300 focus:ring focus:ring-green-300',
+          'focus:border-teal-400 border-gray-300 dark:border-gray-600 dark:focus:border-gray-600 dark:bg-gray-700 dark:focus:ring-gray-300 focus:ring focus:ring-teal-300',
         disabled: 'cursor-not-allowed opacity-50 bg-gray-300 dark:bg-gray-800',
         valid:
-          'border-green-600 dark:bg-gray-700 focus:border-green-400 dark:focus:border-green-400 focus:ring focus:ring-green-200 dark:focus:ring-green-200',
+          'border-teal-600 dark:bg-gray-700 focus:border-teal-400 dark:focus:border-teal-400 focus:ring focus:ring-teal-200 dark:focus:ring-teal-200',
         invalid:
           'border-red-600 dark:bg-gray-700 focus:border-red-400 dark:focus:border-red-400 focus:ring focus:ring-red-200 dark:focus:ring-red-200',
       },
@@ -118,11 +118,11 @@ export default {
       select: {
         base: 'text-sm dark:text-gray-300 focus:outline-none rounded-md',
         active:
-          'focus:border-green-400 border-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:ring focus:ring-green-300 dark:focus:ring-gray-300 dark:focus:border-gray-600',
+          'focus:border-teal-400 border-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:ring focus:ring-teal-300 dark:focus:ring-gray-300 dark:focus:border-gray-600',
         select: 'leading-5',
         disabled: 'cursor-not-allowed opacity-50 bg-gray-300 dark:bg-gray-800',
         valid:
-          'border-green-600 dark:bg-gray-700 focus:border-green-400 dark:focus:border-green-400 focus:ring focus:ring-green-200 dark:focus:ring-green-200',
+          'border-teal-600 dark:bg-gray-700 focus:border-teal-400 dark:focus:border-teal-400 focus:ring focus:ring-teal-200 dark:focus:ring-teal-200',
         invalid:
           'border-red-600 dark:bg-gray-700 focus:border-red-400 dark:focus:border-red-400 focus:ring focus:ring-red-200 dark:focus:ring-red-200',
       },
@@ -137,21 +137,21 @@ export default {
       input: {
         base: 'block w-full text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md',
         active:
-          'focus:border-green-400 border-gray-300 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-600 dark:focus:ring-gray-300 dark:bg-gray-700',
+          'focus:border-teal-400 border-gray-300 dark:border-gray-600 focus:ring focus:ring-teal-300 dark:focus:border-gray-600 dark:focus:ring-gray-300 dark:bg-gray-700',
         disabled: 'cursor-not-allowed opacity-50 bg-gray-300 dark:bg-gray-800',
         valid:
-          'border-green-600 dark:bg-gray-700 focus:border-green-400 dark:focus:border-green-400 focus:ring focus:ring-green-200 dark:focus:ring-green-200',
+          'border-teal-600 dark:bg-gray-700 focus:border-teal-400 dark:focus:border-teal-400 focus:ring focus:ring-teal-200 dark:focus:ring-teal-200',
         invalid:
           'border-red-600 dark:bg-gray-700 focus:border-red-400 dark:focus:border-red-400 focus:ring focus:ring-red-200 dark:focus:ring-red-200',
         radio:
-          'text-green-600 form-radio focus:border-green-400 focus:outline-none focus:ring focus:ring-green-300 focus:ring-offset-0 dark:focus:ring-gray-300',
+          'text-teal-600 form-radio focus:border-teal-400 focus:outline-none focus:ring focus:ring-teal-300 focus:ring-offset-0 dark:focus:ring-gray-300',
         checkbox:
-          'text-green-600 form-checkbox focus:border-green-400 focus:outline-none focus:ring focus:ring-green-300 focus:ring-offset-0 rounded dark:focus:ring-gray-300',
+          'text-teal-600 form-checkbox focus:border-teal-400 focus:outline-none focus:ring focus:ring-teal-300 focus:ring-offset-0 rounded dark:focus:ring-gray-300',
       },
       // HelperText
       helperText: {
         base: 'text-xs',
-        valid: 'text-green-600 dark:text-green-400',
+        valid: 'text-teal-600 dark:text-teal-400',
         invalid: 'text-red-600 dark:text-red-400',
       },
       // Card
@@ -190,8 +190,8 @@ export default {
           right: 'ml-2 -mr-1',
         },
         primary: {
-          base: 'text-white bg-green-600 border border-transparent',
-          active: 'active:bg-green-600 hover:bg-green-700 focus:ring focus:ring-green-300',
+          base: 'text-white bg-teal-600 border border-transparent',
+          active: 'active:bg-teal-600 hover:bg-teal-700 focus:ring focus:ring-teal-300',
           disabled: 'opacity-50 cursor-not-allowed',
         },
         outline: {
