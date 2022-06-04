@@ -16,7 +16,7 @@ import { faSearch, faCog } from "@fortawesome/free-solid-svg-icons";
 import NumberFormat from "react-number-format";
 import Item from "../../components/Projectbudget/Itemmanagement/Item";
 
-export default function Itemmanagement() {
+export default function ItemManagement() {
   const data = [
     {
       nama: "Pemasangan Besi Bertingkat Dengan Bekisting",
