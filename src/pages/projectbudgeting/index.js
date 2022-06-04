@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Workspace from "../projectbudgeting/Workspace";
 import CategoryManagement from "../projectbudgeting/CategoryManagement";
-import ItemManagement from "../projectbudgeting/ItemManagement";
+import ItemManagement from "./Itemmanagement";
 import MaterialManagement from "../projectbudgeting/MaterialManagement";
 
 function ProjectBudgeting() {
