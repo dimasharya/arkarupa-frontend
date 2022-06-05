@@ -34,11 +34,7 @@ export default function Tim({dataTim}) {
                         </p>
                       </div>
                       <div className="">
-                        <Button
-                          iconLeft={TrashIcon}
-                          size="small"
-                          layout="outline"
-                        />
+                      <Button className="text-white bg-red-700 border border-transparent active:bg-red-600 hover:bg-red-700 focus:ring focus:ring-red-300" icon={TrashIcon} size="small" layout="danger" />
                       </div>
                     </div>
                   </li>
