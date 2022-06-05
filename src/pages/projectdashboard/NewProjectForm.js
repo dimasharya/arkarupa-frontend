@@ -45,6 +45,16 @@ export default function NewProjectForm({ isOpen, setIsOpen }) {
             </div>
             <div className="col-span-3 py-2">
               <Label className="mt-2">
+                <span className="font-semibold text-xs">Akronim Proyek</span>
+                <Input
+                  className="mt-1"
+                  placeholder="ex: BBG"
+                  {...register("akronim_proyek", { required: true })}
+                />
+              </Label>
+            </div>
+            <div className="col-span-3 py-2">
+              <Label className="mt-2">
                 <span className="font-semibold text-xs">Pemilik</span>
                 <Input
                   className="mt-1"

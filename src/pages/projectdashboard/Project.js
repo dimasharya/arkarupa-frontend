@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "windmill-react-ui-kit";
 import ProgressBar from "../../components/Progresbar/Progresbar";
+import Tim from "../../components/Project/Tim";
 import Table, {
   DisplayBadgeStatus,
   DisplayProgressBarSmall,
@@ -9,9 +10,27 @@ import Table, {
 import { HeroPlusOutline, ChevronLeft } from "../../icons";
 
 export default function Project() {
+  const dataTim = [
+    {
+      nama: "Albert Suyono",
+      role: "Site Manager",
+      pic: "https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82",
+    },
+    {
+      nama: "William Kartawijaya",
+      role: "Supervisor",
+      pic: "https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82",
+    },
+    {
+      nama: "Suhadi Mustakim",
+      role: "Supervisor",
+      pic: "https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82",
+    },
+  ];
+
   const [data, setData] = useState([
     {
-      kode_pekerjaan: "AWL00001",
+      kode_pekerjaan: "BBG00001",
       item_pekerjaan: "Galian Tanah 50 CM",
       tanggal_pelaksanaan: "2022-06-10",
       pelaksana: "Albert Suyono",
@@ -263,41 +282,7 @@ export default function Project() {
               <Table columns={columns} data={data} />
             </div>
           </div>
-          <div className="col-span-2 p-6 max-w-md bg-white rounded-lg border">
-            <div className="flex justify-between items-center mb-4">
-              <h5 className="font-semibold leading-none text-gray-900 dark:text-white">
-                Tim
-              </h5>
-              <Button
-                iconLeft={HeroPlusOutline}
-                size="regular"
-                layout="outline"
-              ></Button>
-            </div>
-            <div className="flow-root">
-              <ul className="relative h-60 px-2 overflow-y-auto divide-y divide-gray-200 dark:divide-gray-700">
-                <li className="py-2">
-                  <div className="flex items-center space-x-4">
-                    <div className="flex-shrink-0">
-                      <img
-                        className="w-8 h-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"
-                        alt="Neil"
-                      />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
-                        Albert Suyono
-                      </p>
-                      <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                        Supervisor
-                      </p>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
+          <Tim dataTim={dataTim} />
         </div>
       </div>
     </>
