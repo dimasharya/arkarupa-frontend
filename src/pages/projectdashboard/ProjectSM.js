@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "windmill-react-ui-kit";
-import TaskCardBerlangsung from "../../components/Cards/Supervisor/TaskCardBerlangsung";
-import TaskCardDijadwalkan from "../../components/Cards/Supervisor/TaskCardDijadwalkan";
-import TaskCardSelesai from "../../components/Cards/Supervisor/TaskCardSelesai";
+import TaskCardBerlangsung from "../../components/Cards/SiteManager/TaskCardBerlangsung";
+import TaskCardDijadwalkan from "../../components/Cards/SiteManager/TaskCardDijadwalkan";
+import TaskCardSelesai from "../../components/Cards/SiteManager/TaskCardSelesai";
 import ProgressBar from "../../components/Progresbar/Progresbar";
 import { ChevronLeft } from "../../icons";
 
-export default function ProjectSPV() {
+export default function ProjectSM() {
   const dataDijadwalkan = [
     {
       id: "xxxx",

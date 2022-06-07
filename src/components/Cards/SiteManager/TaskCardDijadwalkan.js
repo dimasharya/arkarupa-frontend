@@ -1,6 +1,6 @@
 import Moment from "react-moment";
 import { Button } from "@windmill/react-ui";
-import { Play, QrCOde } from "../../icons";
+import { Play, QrCOde } from "../../../icons";
 
 export default function TaskCardDijadwalkan({ dataTask }) {
   const {

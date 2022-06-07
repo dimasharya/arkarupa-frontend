@@ -1,6 +1,6 @@
 import Moment from "react-moment";
-import BadgeTaskStatus from "../Badge/BadgeTaskStatus";
-import ProgressBar from "../Progresbar/Progresbar";
+import BadgeTaskStatus from "../../Badge/BadgeTaskStatus";
+import ProgressBar from "../../Progresbar/Progresbar";
 
 export default function TaskCardSelesai({ dataTask }) {
   const {

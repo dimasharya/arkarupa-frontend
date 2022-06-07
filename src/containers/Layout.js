@@ -7,7 +7,6 @@ import Header from "../components/Header";
 import Main from "../containers/Main";
 import ThemedSuspense from "../components/ThemedSuspense";
 import { SidebarContext } from "../context/SidebarContext";
-import ProjectSPV from "../pages/projectdashboard/ProjectSPV";
 
 const Dashboard = lazy(() => import("../pages/Dashboard"));
 const ProjectDashboard = lazy(() =>
@@ -18,6 +17,8 @@ const Schedule = lazy(() => import("../pages/schedule/Schedule"));
 const UserManagement = lazy(() => import("../pages/user/UserManagement"));
 const PermitToWork = lazy(() => import("../pages/permittowork/PermitToWork"));
 const Project = lazy(() => import("../pages/projectdashboard/Project"));
+const ProjectSPV = lazy(() => import("../pages/projectdashboard/ProjectSPV"))
+const ProjectSM = lazy(() => import("../pages/projectdashboard/ProjectSM"))
 
 const Page404 = lazy(() => import("../pages/404"));
 
@@ -42,7 +43,7 @@ function Layout() {
           <Suspense fallback={<ThemedSuspense />}>
             <Routes>
               <Route path="project" exact element={<ProjectDashboard />}/>
-              <Route path="project/:projectId" element={<ProjectSPV />} />
+              <Route path="project/:projectId" element={<ProjectSM />} />
               <Route path="projectbudgeting" element={<ProjectBudgeting />} />
               <Route path="schedule" element={<Schedule />} />
               <Route path="usermanagement" element={<UserManagement />} />

@@ -1,8 +1,8 @@
 import Moment from "react-moment";
 import { Button } from "@windmill/react-ui";
-import { Play, Pause, Stop } from "../../icons";
-import BadgeTaskStatus from "../Badge/BadgeTaskStatus";
-import ProgressBar from "../Progresbar/Progresbar";
+import { Play, Pause, Stop } from "../../../icons";
+import BadgeTaskStatus from "../../Badge/BadgeTaskStatus";
+import ProgressBar from "../../Progresbar/Progresbar";
 
 export default function TaskCardBerlangsung({ dataTask }) {
   const {
