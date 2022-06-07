@@ -36,6 +36,10 @@ import { ReactComponent as PlusCircle } from './plus-circle-solid.svg'
 import { ReactComponent as Check } from './check-solid.svg'
 import { ReactComponent as Download } from './file-download-solid.svg'
 import {ReactComponent as HeroPlusOutline} from "./hero-plus-outline.svg"
+import {ReactComponent as QrCOde} from "./qr-code.svg"
+import {ReactComponent as Play} from "./play.svg"
+import {ReactComponent as Pause} from "./pause.svg"
+import {ReactComponent as Stop} from "./stop.svg"
 
 export {
   ButtonsIcon,
@@ -75,5 +79,9 @@ export {
   PlusCircle,
   Check,
   Download,
-  HeroPlusOutline
+  HeroPlusOutline,
+  QrCOde,
+  Play,
+  Pause,
+  Stop
 }

@@ -4,7 +4,7 @@ export default function ProgressBar(props) {
   const progress = props.progress+"%"
   return (
     <>
-      <div className="relative my-2">
+      <div className="relative">
         <div className="flex mb-1 justify-end">
           <label className="text-xs font-semibold inline-block text-gray-600">
               {progress}
