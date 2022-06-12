@@ -7,7 +7,7 @@ const ProjectBudgeting = lazy(() => import('../pages/projectbudgeting'))
 const Schedule = lazy(() => import('../pages/schedule/Schedule'))
 const UserManagement = lazy(() => import('../pages/user/UserManagement'))
 const PermitToWork = lazy(() => import('../pages/permittowork/PermitToWork'))
-const Project = lazy(() => import("../pages/projectdashboard/Project"))
+const Project = lazy(() => import("../pages/projectdashboard/ProjectPM"))
 const Modals = lazy(() => import('../pages/Modals'))
 
 /**

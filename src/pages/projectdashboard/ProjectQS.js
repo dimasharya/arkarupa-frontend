@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "windmill-react-ui-kit";
+import TaskCard from "../../components/Cards/QuantitiySurveyor/TaskCard";
+import UpdateForm from "../../components/Cards/QuantitiySurveyor/UpdateForm";
 import ProjectInfoCard from "../../components/Cards/SiteManager/ProjectInfoCard";
-import TaskCardBerlangsung from "../../components/Cards/SiteManager/TaskCardBerlangsung";
-import TaskCardDijadwalkan from "../../components/Cards/SiteManager/TaskCardDijadwalkan";
-import TaskCardSelesai from "../../components/Cards/SiteManager/TaskCardSelesai";
 import { ChevronLeft } from "../../icons";
 
-export default function ProjectSM() {
+export default function ProjectQS() {
     const dataProyek = {
         nama_proyek: "BSD Botanical Garden",
         pemilik: "PT. Bukit Serpong Damai",
@@ -47,7 +46,7 @@ export default function ProjectSM() {
       tanggal_selesai_rencana: "2022-06-10",
       tanggal_mulai: "2022-06-06",
       tanggal_selesai: "2022-06-10",
-      status: "Dijadwalkan",
+      status: "Selesai",
       penanggung_jawab: "",
       progress: "40",
       permit_to_work: "null",
@@ -68,75 +67,13 @@ export default function ProjectSM() {
       permit_to_work: "null",
     },
   ];
-  const dataBerlangsung = [
-    {
-      id: "xxxx",
-      kode_pekerjaan: "BBG000001",
-      nama_pekerjaan: "Galian Tanah 60 CM",
-      volume: 245,
-      satuan: "m3",
-      tanggal_mulai_rencana: "2022-06-06",
-      tanggal_selesai_rencana: "2022-06-10",
-      tanggal_mulai: "2022-06-06",
-      tanggal_selesai: "2022-06-10",
-      status: "Dimulai",
-      penanggung_jawab: "Sentot Wibisono",
-      progress: "40",
-      permit_to_work: "null",
-    },
-    {
-      id: "xxxx",
-      kode_pekerjaan: "BBG000001",
-      nama_pekerjaan: "Galian Tanah 60 CM",
-      volume: 245,
-      satuan: "m3",
-      tanggal_mulai_rencana: "2022-06-06",
-      tanggal_selesai_rencana: "2022-06-10",
-      tanggal_mulai: "2022-06-06",
-      tanggal_selesai: "2022-06-10",
-      status: "Dimulai",
-      penanggung_jawab: "Sentot Wibisono",
-      progress: "40",
-      permit_to_work: "null",
-    },
-    {
-      id: "xxxx",
-      kode_pekerjaan: "BBG000001",
-      nama_pekerjaan: "Galian Tanah 60 CM",
-      volume: 245,
-      satuan: "m3",
-      tanggal_mulai_rencana: "2022-06-06",
-      tanggal_selesai_rencana: "2022-06-10",
-      tanggal_mulai: "2022-06-06",
-      tanggal_selesai: "2022-06-10",
-      status: "Dimulai",
-      penanggung_jawab: "Sentot Wibisono",
-      progress: "40",
-      permit_to_work: "null",
-    },
-  ];
-  const dataSelesai = [
-    {
-      id: "xxxx",
-      kode_pekerjaan: "BBG000001",
-      nama_pekerjaan: "Galian Tanah 60 CM",
-      volume: 245,
-      satuan: "m3",
-      tanggal_mulai_rencana: "2022-06-06",
-      tanggal_selesai_rencana: "2022-06-10",
-      tanggal_mulai: "2022-06-06",
-      tanggal_selesai: "2022-06-10",
-      status: "Selesai",
-      penanggung_jawab: "Sentot Wibisono",
-      progress: "100",
-      permit_to_work: "null",
-    },
-  ];
+
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
       <div className="flex gap-4 items-center my-2">
-        <Link to="/app/sm/project">
+        <Link to="/app/qs/project">
           <Button size="small" icon={ChevronLeft} layout="link" />
         </Link>
         <label className="text-base font-bold">Proyek</label>
@@ -166,7 +103,7 @@ export default function ProjectSM() {
                 Pekerjaan
               </h5>
             </div>
-            <div className="grid grid-cols-3 gap-6 px-2">
+            <div className="grid gap-6 px-2">
               <div className="grid">
                 <div className="flex items-center gap-2 mb-3">
                   <div className="rounded-full bg-orange-400 w-3 h-3" />
@@ -175,45 +112,7 @@ export default function ProjectSM() {
                 <div className="flex gap-2 flex-col relative overflow-y-auto h-96 scrollbar-hide">
                   {dataDijadwalkan.map((item, idx) => {
                     if (dataDijadwalkan.length !== 0) {
-                      return <TaskCardDijadwalkan key={idx} dataTask={item} />;
-                    } else {
-                      return (
-                        <>
-                          <p className="text-center text-xs">Tidak Ada Data</p>
-                        </>
-                      );
-                    }
-                  })}
-                </div>
-              </div>
-              <div className="grid">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="rounded-full bg-blue-400 w-3 h-3" />
-                  <h2 className="text-sm font-bold">Berlangsung</h2>
-                </div>
-                <div className="flex gap-2 flex-col relative overflow-y-auto h-96 scrollbar-hide">
-                  {dataBerlangsung.map((item, idx) => {
-                    if (dataBerlangsung.length !== 0) {
-                      return <TaskCardBerlangsung key={idx} dataTask={item} />;
-                    } else {
-                      return (
-                        <>
-                          <p className="text-center text-xs">Tidak Ada Data</p>
-                        </>
-                      );
-                    }
-                  })}
-                </div>
-              </div>
-              <div className="grid">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="rounded-full bg-green-400 w-3 h-3" />
-                  <h2 className="text-sm font-bold">Selesai</h2>
-                </div>
-                <div className="flex gap-2 flex-col relative overflow-y-auto h-96 scrollbar-hide">
-                {dataSelesai.map((item, idx) => {
-                    if (dataSelesai.length !== 0) {
-                      return <TaskCardSelesai key={idx} dataTask={item} />;
+                      return <TaskCard key={idx} dataTask={item} setIsOpen={setIsOpen} isOpen={isOpen} />;
                     } else {
                       return (
                         <>
@@ -228,6 +127,7 @@ export default function ProjectSM() {
           </div>
         </div>
       </div>
+      {isOpen && <UpdateForm setIsOpen={setIsOpen} isOpen={isOpen} />}
     </>
   );
 }

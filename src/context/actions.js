@@ -9,7 +9,7 @@ export async function loginUser(dispatch, loginPayload) {
   //   };
 
   if (
-    loginPayload.username === "admin" &&
+    loginPayload.email === "admin@admin.com" &&
     loginPayload.password === "admin123"
   ) {
       const token = uniqid()

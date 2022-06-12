@@ -5,7 +5,7 @@ import { Transition, Backdrop } from '@windmill/react-ui'
 
 import { SidebarContext } from '../../context/SidebarContext'
 
-function MobileSidebar() {
+function MobileSidebar({route}) {
   const { isSidebarOpen, closeSidebar } = useContext(SidebarContext)
 
   return (
@@ -31,7 +31,7 @@ function MobileSidebar() {
           leaveTo="opacity-0 transform -translate-x-20"
         >
           <aside className="fixed inset-y-0 z-50 flex-shrink-0 w-64 mt-16 overflow-y-auto bg-white dark:bg-gray-800 lg:hidden">
-            <SidebarContent />
+            <SidebarContent route={route}  />
           </aside>
         </Transition>
       </>

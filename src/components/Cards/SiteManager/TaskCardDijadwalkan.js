@@ -6,7 +6,8 @@ export default function TaskCardDijadwalkan({ dataTask }) {
   const {
     kode_pekerjaan,
     nama_pekerjaan,
-    tanggal_mulai,
+    tanggal_mulai_rencana,
+    tanggal_selesai_rencana,
     volume,
     satuan,
     status,
@@ -61,10 +62,10 @@ export default function TaskCardDijadwalkan({ dataTask }) {
             <p className="text-sm">{kode_pekerjaan}</p>
           </div>
           <div className="text-left pt-1">
-            <p className="text-xs font-semibold text-gray-500">Tanggal Mulai</p>
+            <p className="text-xs font-semibold text-gray-500">Rencana Tanggal Mulai</p>
             <p className="text-sm">
               <Moment format="ll" locale="id">
-                {tanggal_mulai}
+                {tanggal_mulai_rencana}
               </Moment>
             </p>
           </div>
@@ -77,12 +78,20 @@ export default function TaskCardDijadwalkan({ dataTask }) {
             </p>
           </div>
           <div className="text-left pt-1">
+            <p className="text-xs font-semibold text-gray-500">Rencana Tanggal Selesai</p>
+            <p className="text-sm">
+            <Moment format="ll" locale="id">
+                {tanggal_selesai_rencana}
+              </Moment>
+            </p>
+          </div>
+        </div>
+        <div className="text-left pt-1">
             <p className="text-xs font-semibold text-gray-500">
               Penanggung Jawab
             </p>
             <p className="text-sm">{penanggungJawab()}</p>
           </div>
-        </div>
         <div className="flex justify-end mt-3">{tombolAssign()}</div>
       </div>
     </>

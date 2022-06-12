@@ -2,11 +2,11 @@ import React from 'react'
 import DesktopSidebar from './DesktopSidebar'
 import MobileSidebar from './MobileSidebar'
 
-function Sidebar() {
+function Sidebar({route}) {
   return (
     <>
-      <DesktopSidebar />
-      <MobileSidebar />
+      <DesktopSidebar route={route} />
+      <MobileSidebar route={route} />
     </>
   )
 }

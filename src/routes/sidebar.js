@@ -5,37 +5,17 @@
  * If you're looking to actual Router routes, go to
  * `routes/index.js`
  */
-const routes = [
+export const routePM = [
   // {
   //   path: "/app/dashboard", // the url
   //   icon: "HomeIcon", // the component being exported from icons/index.js
   //   name: "Dashboard", // name that appear in Sidebar
   // },
   {
-    path: "/app/project",
+    path: "/app/pm/project",
     icon: "FormsIcon",
     name: "Proyek",
-  },
-  {
-    path: "/app/projectbudgeting",
-    icon: "FormsIcon",
-    name: "Biaya Proyek",
-  },
-  {
-    path: "/app/schedule",
-    icon: "FormsIcon",
-    name: "Penjadwalan",
-  },
-  {
-    path: "/app/usermanagement",
-    icon: "FormsIcon",
-    name: "Pengguna",
-  },
-  {
-    path: "/app/permittowork",
-    icon: "FormsIcon",
-    name: "Permit To Work",
-  },
+  }
   // {
   //   path: '/app/forms',
   //   icon: 'FormsIcon',
@@ -95,4 +75,57 @@ const routes = [
   // },
 ];
 
-export default routes;
+export const routeSM = [
+  {
+    path: "/app/sm/project",
+    icon: "FormsIcon",
+    name: "Proyek",
+  },
+  {
+    path: "/app/sm/permittowork",
+    icon: "FormsIcon",
+    name: "Permit To Work",
+  },
+]
+
+export const routeSPV = [
+  {
+    path: "/app/spv/project",
+    icon: "FormsIcon",
+    name: "Proyek",
+  },
+  {
+    path: "/app/spv/permittowork",
+    icon: "FormsIcon",
+    name: "Permit To Work",
+  },
+]
+
+export const routeSE = [
+  {
+    path: "/app/se/projectbudgeting",
+    icon: "FormsIcon",
+    name: "Biaya Proyek",
+  },
+]
+
+export const routeQS = [
+  {
+    path: "/app/qs/project",
+    icon: "FormsIcon",
+    name: "Proyek",
+  },
+]
+
+export const routeADM = [
+  {
+    path: "/app/adm/schedule",
+    icon: "FormsIcon",
+    name: "Penjadwalan",
+  },
+  {
+    path: "/app/adm/usermanagement",
+    icon: "FormsIcon",
+    name: "Pengguna",
+  },
+]

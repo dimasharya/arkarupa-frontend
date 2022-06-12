@@ -3,7 +3,7 @@ import ProgressBar from "../../Progresbar/Progresbar"
 export default function ProjectInfoCard({dataProyek}) {
   const {nama_proyek, kategori, pemilik, alamat, progress, pekerjaan} = dataProyek
     return(
-        <div className="grid grid-flow-col gap-4">
+        <div className="grid col-span-3 grid-flow-col gap-4">
           <div className=" p-6 border border-gray-100 rounded-md bg-gradient-to-tr from-teal-200 to-lime-200">
             <div className="grid grid-cols-9 gap-4">
               <div className="pl-2 col-span-5">

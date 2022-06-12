@@ -1,9 +1,8 @@
 import React from "react";
-import { Avatar, Button } from "@windmill/react-ui";
+import { Button } from "@windmill/react-ui";
 import { ArrowCircleRight } from "../../icons/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt, faUserTie } from "@fortawesome/free-solid-svg-icons";
-import Tooltip from "react-tooltip";
 import ProgressBar from "../Progresbar/Progresbar";
 import Badge from "../Badge/Badge";
 import { Link, Outlet } from "react-router-dom";
@@ -22,9 +21,9 @@ function ProjectCard({
   const projectLink = `idx`;
   return (
     <>
-      <div className="overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 w-80 py-4 px-8 bg-white shadow-md rounded-3xl">
+      <div className="overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 w-80 py-4 px-8 bg-white border shadow-md rounded-3xl">
         <div className="my-2">
-          <h2 className="block text-lg font-black truncate ...">{name}</h2>
+          <h2 className="block text-lg font-black truncate">{name}</h2>
           <label className="text-xs font-semibold text-gray-500">
             {category}
           </label>

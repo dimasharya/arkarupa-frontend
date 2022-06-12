@@ -1,32 +1,41 @@
-import React, { useContext, useState } from 'react'
-import { SidebarContext } from '../context/SidebarContext'
+import React, { useContext, useState } from "react";
+import { SidebarContext } from "../context/SidebarContext";
+import { MenuIcon, OutlinePersonIcon, OutlineLogoutIcon } from "../icons";
 import {
-  //SearchIcon,
-  MoonIcon,
-  SunIcon,
-  BellIcon,
-  MenuIcon,
-  OutlinePersonIcon,
-  OutlineCogIcon,
-  OutlineLogoutIcon,
-} from '../icons'
-import { Avatar, Badge, Input, Dropdown, DropdownItem, WindmillContext } from '@windmill/react-ui'
-import Clock from './Clock/Clock'
+  Avatar,
+  Dropdown,
+  DropdownItem,
+  WindmillContext,
+} from "@windmill/react-ui";
+import Clock from "./Clock/Clock";
+// import { useAuthDispatch, logout } from '../context'
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, selectUser } from "../reducer/AuthSlice";
 
 function Header() {
-  const { mode, toggleMode } = useContext(WindmillContext)
-  const { toggleSidebar } = useContext(SidebarContext)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector(selectUser);
 
-  const [isNotificationsMenuOpen, setIsNotificationsMenuOpen] = useState(false)
-  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false)
+  //const { mode, toggleMode } = useContext(WindmillContext)
+  const { toggleSidebar } = useContext(SidebarContext);
 
-  function handleNotificationsClick() {
-    setIsNotificationsMenuOpen(!isNotificationsMenuOpen)
-  }
+  // const [isNotificationsMenuOpen, setIsNotificationsMenuOpen] = useState(false)
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+
+  // function handleNotificationsClick() {
+  //   setIsNotificationsMenuOpen(!isNotificationsMenuOpen)
+  // }
 
   function handleProfileClick() {
-    setIsProfileMenuOpen(!isProfileMenuOpen)
+    setIsProfileMenuOpen(!isProfileMenuOpen);
   }
+
+  const logoutAction = () => {
+    dispatch(logout());
+    navigate("/login");
+  };
 
   return (
     <header className="z-40 py-4 dark:bg-gray-800">
@@ -104,7 +113,7 @@ function Header() {
             <Clock />
           </li>
           <li>
-            <h4 className="text-xs font-black">Sentot Wibisono</h4>
+            <h4 className="text-xs font-black">{user.name}</h4>
           </li>
           {/* <!-- Profile menu --> */}
           <li className="relative">
@@ -116,7 +125,7 @@ function Header() {
             >
               <Avatar
                 className="align-middle"
-                src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"
+                src={user.avatar}
                 alt=""
                 aria-hidden="true"
               />
@@ -126,12 +135,20 @@ function Header() {
               isOpen={isProfileMenuOpen}
               onClose={() => setIsProfileMenuOpen(false)}
             >
-              <DropdownItem tag="a" href="#">
-                <OutlinePersonIcon className="w-4 h-4 mr-3" aria-hidden="true" />
-                <span>Profile</span>
-              </DropdownItem>
-              <DropdownItem>
-                <OutlineLogoutIcon className="w-4 h-4 mr-3" aria-hidden="true" />
+              <Link to="/app/profile">
+                <DropdownItem>
+                  <OutlinePersonIcon
+                    className="w-4 h-4 mr-3"
+                    aria-hidden="true"
+                  />
+                  <span>Profile</span>
+                </DropdownItem>
+              </Link>
+              <DropdownItem onClick={logoutAction}>
+                <OutlineLogoutIcon
+                  className="w-4 h-4 mr-3"
+                  aria-hidden="true"
+                />
                 <span>Log out</span>
               </DropdownItem>
             </Dropdown>
@@ -139,7 +156,7 @@ function Header() {
         </ul>
       </div>
     </header>
-  )
+  );
 }
 
-export default Header
+export default Header;

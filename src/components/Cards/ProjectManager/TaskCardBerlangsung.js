@@ -9,13 +9,20 @@ export default function TaskCardBerlangsung({ dataTask }) {
     kode_pekerjaan,
     nama_pekerjaan,
     tanggal_mulai,
-    tanggal_selesai_rencana,
     volume,
     satuan,
     status,
-    penanggung_jawab,
+    permit_to_work,
     progress,
   } = dataTask;
+  let button_mulai, button_jeda;
+  if (status === "Dimulai") {
+    button_mulai = true;
+    button_jeda = false;
+  } else {
+    button_mulai = false;
+    button_jeda = true;
+  }
   return (
     <>
       <div className="flex flex-col border rounded-md p-4 bg-white shadow-md">
@@ -39,21 +46,24 @@ export default function TaskCardBerlangsung({ dataTask }) {
             </p>
           </div>
         </div>
-        <div className="grid grid-cols-2">
-          <div className="text-left pt-1">
-            <p className="text-xs font-semibold text-gray-500">Volume</p>
-            <p className="text-sm">
-              {volume} <span>{satuan}</span>
-            </p>
-          </div>
-          <div className="text-left pt-1">
-            <p className="text-xs font-semibold text-gray-500">
-              Penanggung Jawab
-            </p>
-            <p className="text-sm">{penanggung_jawab}</p>
-          </div>
+        <div className="text-left pt-1">
+          <p className="text-xs font-semibold text-gray-500">Volume</p>
+          <p className="text-sm">
+            {volume} <span>{satuan}</span>
+          </p>
         </div>
         <ProgressBar progress={progress} />
+        <div className="flex gap-2 pt-3 justify-end">
+          <Button disabled={button_mulai} iconLeft={Play} layout="outline" size="small">
+            Mulai
+          </Button>
+          <Button disabled={button_jeda} iconLeft={Pause} layout="outline" size="small">
+            Jeda
+          </Button>
+          <Button iconLeft={Stop} layout="outline" size="small">
+            Akhiri
+          </Button>
+        </div>
       </div>
     </>
   );

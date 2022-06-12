@@ -1,33 +1,17 @@
-import React, { Suspense } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import "./assets/css/tailwind.output.css";
 import "./assets/css/Custom.css";
 import App from "./App";
-import { SidebarProvider } from "./context/SidebarContext";
-import ThemedSuspense from "./components/ThemedSuspense";
-import { Windmill } from "@windmill/react-ui";
-import * as serviceWorker from "./serviceWorker";
-import CustomStyle from "./assets/css/Customstyle";
 import "react-dropzone-uploader/dist/styles.css";
-import { AuthProvider } from "./context";
+import * as serviceWorker from "./serviceWorker";
 
 // if (process.env.NODE_ENV !== 'production') {
 //   const axe = require('react-axe')
 //   axe(React, ReactDOM, 1000)
 // }
 
-ReactDOM.render(
-  <AuthProvider>
-    <SidebarProvider>
-      <Suspense fallback={<ThemedSuspense />}>
-        <Windmill theme={CustomStyle}>
-          <App />
-        </Windmill>
-      </Suspense>
-    </SidebarProvider>
-  </AuthProvider>,
-  document.getElementById("root")
-);
+ReactDOM.render(<App />, document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

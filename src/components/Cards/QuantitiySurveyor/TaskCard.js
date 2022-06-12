@@ -1,29 +1,34 @@
 import Moment from "react-moment";
 import { Button } from "@windmill/react-ui";
-import { Play, Pause, Stop } from "../../../icons";
+import { Pencil } from "../../../icons";
+import ProgressbarSmall from "../../Progresbar/ProgressbarSmall";
 import BadgeTaskStatus from "../../Badge/BadgeTaskStatus";
-import ProgressBar from "../../Progresbar/Progresbar";
+import { useState } from "react";
 
-export default function TaskCardBerlangsung({ dataTask }) {
+export default function TaskCard({ dataTask, setIsOpen, isOpen }) {
   const {
     kode_pekerjaan,
     nama_pekerjaan,
     tanggal_mulai,
-    tanggal_selesai_rencana,
     volume,
     satuan,
     status,
-    penanggung_jawab,
     progress,
   } = dataTask;
+  let button_update;
+  if (status === "Dimulai" || status === "Selesai") {
+    button_update = false;
+  } else {
+    button_update = true;
+  }
+
   return (
     <>
       <div className="flex flex-col border rounded-md p-4 bg-white shadow-md">
         <div className="flex justify-between items-center mb-1">
           <p className="font-bold truncate">{nama_pekerjaan}</p>
-          <BadgeTaskStatus status={status} />
         </div>
-        <div className="grid grid-cols-2">
+        <div className="grid grid-cols-6 gap-2 items-center">
           <div className="text-left pt-1">
             <p className="text-xs font-semibold text-gray-500">
               Kode Pekerjaan
@@ -38,22 +43,30 @@ export default function TaskCardBerlangsung({ dataTask }) {
               </Moment>
             </p>
           </div>
-        </div>
-        <div className="grid grid-cols-2">
-          <div className="text-left pt-1">
+          <div className="text-center pt-1">
             <p className="text-xs font-semibold text-gray-500">Volume</p>
             <p className="text-sm">
               {volume} <span>{satuan}</span>
             </p>
           </div>
+          <div className="flex justify-center pt-1">
+            <BadgeTaskStatus status={status} />
+          </div>
           <div className="text-left pt-1">
-            <p className="text-xs font-semibold text-gray-500">
-              Penanggung Jawab
-            </p>
-            <p className="text-sm">{penanggung_jawab}</p>
+            <ProgressbarSmall progress={progress} />
+          </div>
+          <div className="flex justify-center pt-1">
+            <Button
+              onClick={() => setIsOpen(!isOpen)}
+              disabled={button_update}
+              iconLeft={Pencil}
+              layout="outline"
+              size="small"
+            >
+              Update
+            </Button>
           </div>
         </div>
-        <ProgressBar progress={progress} />
       </div>
     </>
   );

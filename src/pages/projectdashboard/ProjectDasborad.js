@@ -7,6 +7,7 @@ import "moment/locale/id";
 import NewProjectForm from "./NewProjectForm";
 
 function ProjectDasborad() {
+
   const dataProject = [
     {
       name: "BSD City Botanical Park",
@@ -166,9 +167,29 @@ function ProjectDasborad() {
           </div>
         </div>
       </div>
-      <div className="bg-white mt-4 rounded-lg shadow-md">
-        <div className="flex px-8 py-6 justify-between items-center border-b shadow-sm">
-          <p className="text-base font-bold">Proyek</p>
+      <div className="bg-white mt-4 rounded-lg border">
+        <div className="flex px-8 py-6 justify-between items-center">
+          <div className="flex items-center gap-2">
+            <div className="p-1.5 w-7 h-7 rounded-full bg-black">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4 text-white"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                />
+              </svg>
+            </div>
+            <h5 className="font-semibold leading-none text-gray-900 dark:text-white">
+              Proyek
+            </h5>
+          </div>
           <Button
             onClick={() => setIsOpen(!isOpen)}
             size="small"

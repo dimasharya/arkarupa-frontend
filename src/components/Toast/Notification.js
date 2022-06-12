@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { setNotification } from "../../reducer/NotificationSlice";
 
 export default function Notification () {
-    <Toaster postion="top-right" />
+    const dispatch = useDispatch()
+    
+    
+    return(
+        <Toaster postion="top-right" />
+    )
 }

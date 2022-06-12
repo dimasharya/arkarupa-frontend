@@ -6,7 +6,7 @@ export default function ProjectInfoCard({dataProyek}) {
         <div className="grid grid-flow-col gap-4">
           <div className=" p-6 border border-gray-100 rounded-md bg-gradient-to-tr from-teal-200 to-lime-200">
             <div className="grid grid-cols-9 gap-4">
-              <div className="pl-2 col-span-6">
+              <div className="pl-2 col-span-5">
                 <p className="text-2xl font-bold truncate">
                   {nama_proyek}
                 </p>
@@ -58,7 +58,7 @@ export default function ProjectInfoCard({dataProyek}) {
                   <ProgressBar progress={progress} />
                 </div>
               </div>
-              <div className="col-span-3 grid grid-cols-3 gap-2">
+              <div className="col-span-4 grid grid-cols-3 gap-2">
                 <div className="flex flex-col p-4 rounded-md bg-black text-white">
                   <div className="p-1 w-6 h-6 rounded-full bg-white">
                     <svg
