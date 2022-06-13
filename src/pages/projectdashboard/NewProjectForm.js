@@ -8,21 +8,21 @@ export default function NewProjectForm({ isOpen, setIsOpen }) {
 
   const onSubmit = (data) => console.log(data);
 
-  // specify upload params and url for your files
-  const getUploadParams = ({ meta }) => {
-    return { url: "https://httpbin.org/post" };
-  };
+  // // specify upload params and url for your files
+  // const getUploadParams = ({ meta }) => {
+  //   return { url: "https://httpbin.org/post" };
+  // };
 
-  // called every time a file's `status` changes
-  const handleChangeStatus = ({ meta, file }, status) => {
-    console.log(status, meta, file);
-  };
+  // // called every time a file's `status` changes
+  // const handleChangeStatus = ({ meta, file }, status) => {
+  //   console.log(status, meta, file);
+  // };
 
-  // receives array of files that are done uploading when submit button is clicked
-  const handleUpload = (files, allFiles) => {
-    console.log(files.map((f) => f.meta));
-    allFiles.forEach((f) => f.remove());
-  };
+  // // receives array of files that are done uploading when submit button is clicked
+  // const handleUpload = (files, allFiles) => {
+  //   console.log(files.map((f) => f.meta));
+  //   allFiles.forEach((f) => f.remove());
+  // };
 
   return (
     <div className="fixed inset-0 z-40 flex items-end bg-black bg-opacity-20 sm:items-center sm:justify-center">
@@ -110,14 +110,18 @@ export default function NewProjectForm({ isOpen, setIsOpen }) {
               </div>
             </div>
             <div className=" col-span-3">
-            <Label className="mt-2">
-                  <span className="font-semibold text-xs">Berkas Kontrak</span>
-                </Label>
-              <Dropzone
+              <Label className="mt-2">
+                <span className="font-semibold text-xs">Berkas Kontrak</span>
+              </Label>
+              <input
+                className="block mb-5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none file:bg-black file:text-white"
+                type="file"
+              />
+              {/* <Dropzone
                 getUploadParams={getUploadParams}
                 onChangeStatus={handleChangeStatus}
                 onSubmit={handleUpload}
-              />
+              /> */}
             </div>
           </div>
           {/* <Label className="mt-2">
