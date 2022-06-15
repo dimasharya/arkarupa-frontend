@@ -1,7 +1,7 @@
 import ProgressBar from "../../Progresbar/Progresbar"
 
 export default function ProjectInfoCard({dataProyek}) {
-  const {nama_proyek, kategori, pemilik, alamat, progress, pekerjaan} = dataProyek
+  const {nama_proyek, kategori, pemilik, alamat, progress} = dataProyek
     return(
         <div className="grid col-span-3 grid-flow-col gap-4">
           <div className=" p-6 border border-gray-100 rounded-md bg-gradient-to-tr from-teal-200 to-lime-200">
@@ -76,7 +76,7 @@ export default function ProjectInfoCard({dataProyek}) {
                       />
                     </svg>
                   </div>
-                  <h3 className="mt-4 w-26 text-4xl font-bold">{pekerjaan.total_pekerjaan}</h3>
+                  <h3 className="mt-4 w-26 text-4xl font-bold">{0}</h3>
                   <h4 className="mt-2 text-sm leading-none font-bold">
                     Total Pekerjaan
                   </h4>
@@ -98,7 +98,7 @@ export default function ProjectInfoCard({dataProyek}) {
                       />
                     </svg>
                   </div>
-                  <h3 className="mt-4 w-26 text-4xl font-bold">{pekerjaan.pekerjaan_berlangsung}</h3>
+                  <h3 className="mt-4 w-26 text-4xl font-bold">{0}</h3>
                   <h4 className="mt-2 text-sm leading-none font-bold">
                     Pekerjaan Berlangsung
                   </h4>
@@ -120,7 +120,7 @@ export default function ProjectInfoCard({dataProyek}) {
                       />
                     </svg>
                   </div>
-                  <h3 className="mt-4 w-26 text-4xl font-bold">{pekerjaan.pekerjaan_selesai}</h3>
+                  <h3 className="mt-4 w-26 text-4xl font-bold">{0}</h3>
                   <h4 className="mt-2 text-sm leading-none font-bold">
                     Pekerjaan Selesai
                   </h4>

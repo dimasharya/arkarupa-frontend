@@ -1,6 +1,6 @@
 import Moment from "react-moment";
 import { Button } from "@windmill/react-ui";
-import { Play, QrCOde } from "../../../icons";
+import { Pencil, QrCOde } from "../../../icons";
 
 export default function TaskCardDijadwalkan({ dataTask }) {
   const {
@@ -10,16 +10,13 @@ export default function TaskCardDijadwalkan({ dataTask }) {
     tanggal_selesai_rencana,
     volume,
     satuan,
-    status,
-    permit_to_work,
+    status
   } = dataTask;
-  let button_ptw, button_mulai;
-  if (permit_to_work !== "null") {
-    button_ptw = true;
-    button_mulai = false;
+  let button_ubah;
+  if (status === "Dijadwalkan") {
+    button_ubah = false;
   } else {
-    button_ptw = false;
-    button_mulai = true;
+    button_ubah = true;
   }
   return (
     <>
@@ -66,20 +63,12 @@ export default function TaskCardDijadwalkan({ dataTask }) {
         </div>
         <div className="flex gap-2 pt-3 justify-end">
           <Button
-            disabled={button_ptw}
-            layout="outline"
-            iconLeft={QrCOde}
-            size="small"
-          >
-            Permit To Work
-          </Button>
-          <Button
-            disabled={button_mulai}
-            iconLeft={Play}
+            disabled={button_ubah}
+            iconLeft={Pencil}
             layout="outline"
             size="small"
           >
-            Mulai
+            Ubah
           </Button>
         </div>
       </div>

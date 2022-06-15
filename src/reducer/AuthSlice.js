@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { setNotification } from "./NotificationSlice";
 import Api from "./Api";
 import setAuthToken from "../utils/setAuthToken";
+import { loadUserProject } from "./ProjectSlice";
 
 // let user = localStorage.getItem("theArkarupaSecureAuth")
 //   ? JSON.parse(localStorage.getItem("theArkarupaSecureAuth")).user
@@ -40,32 +41,33 @@ export const login = createAsyncThunk(
 );
 
 export const loadUser = createAsyncThunk(
-    "auth/requestloaduser",
-    async (thunkAPI) => {
-      const token = JSON.parse(
-        localStorage.getItem("theArkarupaSecureAuth")
-      ).token;
-      if (token) {
-        setAuthToken(token);
+  "auth/requestloaduser",
+  async (thunkAPI) => {
+    const token = JSON.parse(
+      localStorage.getItem("theArkarupaSecureAuth")
+    ).token;
+    if (token) {
+      setAuthToken(token);
+    }
+
+    try {
+      const response = await Api.get("/api/auth");
+      if (response) {
+        return response.data;
       }
-      try {
-        const response = await Api.get("/api/auth");
-        if (response) {
-          return response.data;
-        }
-      } catch (error) {
-        let message;
-        if (error.response) {
-          error.response.data.errors.forEach((element) => {
-            message = element.msg;
-          });
-          thunkAPI.dispatch(setNotification({ type: "error", message: message }));
-        }
+    } catch (error) {
+      let message;
+      if (error.response) {
+        error.response.data.errors.forEach((element) => {
+          message = element.msg;
+        });
+        thunkAPI.dispatch(setNotification({ type: "error", message: message }));
       }
     }
-  );
+  }
+);
 
-export const logout = createAsyncThunk("auth/logout", async thunkAPI => {
+export const logout = createAsyncThunk("auth/logout", async (thunkAPI) => {
   localStorage.removeItem("theArkarupaSecureAuth");
 });
 
@@ -75,7 +77,7 @@ let token = localStorage.getItem("theArkarupaSecureAuth")
 
 const initialState = {
   token: "" || token,
-  user: ""
+  user: "",
 };
 
 //const authEntity = createEntityAdapter()
@@ -91,11 +93,11 @@ const AuthSlice = createSlice({
       state.token = "";
     },
     [loadUser.fulfilled]: (state, action) => {
-        state.user = action.payload
+      state.user = action.payload;
     },
     [logout.fulfilled]: (state) => {
       state.token = "";
-      state.user = ""
+      state.user = "";
     },
   },
 });

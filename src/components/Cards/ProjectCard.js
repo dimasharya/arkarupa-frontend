@@ -7,25 +7,17 @@ import ProgressBar from "../Progresbar/Progresbar";
 import Badge from "../Badge/Badge";
 import { Link, Outlet } from "react-router-dom";
 
-function ProjectCard({
-  name,
-  category,
-  loc,
-  owner,
-  team,
-  pm,
-  progress,
-  status,
-  date,
-}) {
-  const projectLink = `idx`;
+function ProjectCard({dataProyek}) {
+
+  const {_id, nama_proyek, kategori, progress, alamat, pemilik} = dataProyek
+  const status = "on progress"
   return (
     <>
       <div className="overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 w-80 py-4 px-8 bg-white border shadow-md rounded-3xl">
         <div className="my-2">
-          <h2 className="block text-lg font-black truncate">{name}</h2>
+          <h2 className="block text-lg font-black truncate">{nama_proyek}</h2>
           <label className="text-xs font-semibold text-gray-500">
-            {category}
+            {kategori}
           </label>
         </div>
         <div className="flex py-1 mt-2 items-center">
@@ -38,7 +30,7 @@ function ProjectCard({
           </div>
           <div className="flex flex-col w-56">
             <h6 className="text-xs font-semibold text-gray-500">Lokasi</h6>
-            <p className="text-xs font-bold leading-tight h-6">{loc}</p>
+            <p className="text-xs font-bold leading-tight">{alamat}</p>
           </div>
         </div>
         <div className="flex py-1 mt-2 items-center">
@@ -53,104 +45,13 @@ function ProjectCard({
             <label className="text-xs font-semibold text-gray-500">
               Pemilik
             </label>
-            <div className="text-xs font-bold">{owner}</div>
+            <div className="text-xs font-bold">{pemilik}</div>
           </div>
         </div>
-        {/* <div className="flex text-xs font-semibold text-gray-500 mt-2 pb-1">
-            <label className="w-10/12">Team</label>
-            <label className="text-center w-2/12">PM</label>
-          </div>
-          <div className="flex mb-1">
-            <div className="w-10/12">
-              <button className="rounded-full" data-tip data-for="btn-1">
-                <div
-                  className="relative rounded-full inline-block w-9 h-9 align-midle border-2 border-white"
-                  aria-hidden="true"
-                >
-                  <img
-                    className="object-cover w-full h-full rounded-full"
-                    src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"
-                    alt=""
-                    loading="lazy"
-                  />
-                </div>
-              </button>
-              <Tooltip id="btn-1" place="top" effect="solid">
-                Sentod Wibisono
-              </Tooltip>
-              <button className="rounded-full">
-                <div
-                  className="relative rounded-full inline-block w-9 h-9 align-midle -ml-2 border-2 border-white"
-                  aria-hidden="true"
-                >
-                  <img
-                    className="object-cover w-full h-full rounded-full"
-                    src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"
-                    alt=""
-                    loading="lazy"
-                  />
-                </div>
-              </button>
-              <button className="rounded-full">
-                <div
-                  className="relative rounded-full inline-block w-9 h-9 align-midle -ml-2 border-2 border-white"
-                  aria-hidden="true"
-                >
-                  <img
-                    className="object-cover w-full h-full rounded-full"
-                    src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"
-                    alt=""
-                    loading="lazy"
-                  />
-                </div>
-              </button>
-              <button className="rounded-full">
-                <div
-                  className="relative rounded-full inline-block w-9 h-9 align-midle -ml-2 border-2 border-white"
-                  aria-hidden="true"
-                >
-                  <img
-                    className="object-cover w-full h-full rounded-full"
-                    src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"
-                    alt=""
-                    loading="lazy"
-                  />
-                </div>
-              </button>
-              <button className="rounded-full">
-                <div
-                  className="relative rounded-full inline-block w-9 h-9 align-midle -ml-2 border-2 border-white"
-                  aria-hidden="true"
-                >
-                  <img
-                    className="object-cover w-full h-full rounded-full"
-                    src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"
-                    alt=""
-                    loading="lazy"
-                  />
-                </div>
-              </button>
-            </div>
-            <div className="text-center w-2/12">
-              <button className="rounded-full">
-                <div
-                  className="relative rounded-full inline-block w-9 h-9 align-midle border-2 border-white"
-                  aria-hidden="true"
-                >
-                  <img
-                    className="object-cover w-full h-full rounded-full"
-                    src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"
-                    alt=""
-                    loading="lazy"
-                  />
-                </div>
-              </button>
-            </div>
-          </div> */}
         <ProgressBar progress={progress} />
         <div className="flex justify-between items-center">
           <Badge status={status} />
-          <Link to={projectLink}>
+          <Link to={_id}>
             <Button icon={ArrowCircleRight} layout="link" />
           </Link>
         </div>

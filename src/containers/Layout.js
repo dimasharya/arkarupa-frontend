@@ -77,7 +77,8 @@ function Layout() {
                 <Route path="spv/permittowork" element={<PermitToWork />} />
               </Route>
               <Route element={<RoleBased allowedRole={"se"} />}>
-                <Route path="se/projectbudgeting" element={<ProjectBudgeting />} />
+                <Route path="se/projectbudgeting" exact element={<ProjectBudgeting />} />
+                <Route path="se/projectbudgeting/:projectId" element={<ProjectBudgeting />} />
                 <Route path="se/schedule" element={<Schedule />} />
               </Route>
               <Route element={<RoleBased allowedRole={"sm"} />}>

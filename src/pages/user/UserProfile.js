@@ -13,6 +13,14 @@ export default function UserProfile(params) {
     role = "Project Manager";
   } else if (user.role === "spv") {
     role = "Supervisor";
+  }else if (user.role === "sm") {
+    role = "Site Manager";
+  }else if (user.role === "qs") {
+    role = "Quantity Surveyor";
+  }else if (user.role === "se") {
+    role = "Staff Engineer";
+  }else if (user.role === "adm") {
+    role = "Administrator";
   }
 
   return (

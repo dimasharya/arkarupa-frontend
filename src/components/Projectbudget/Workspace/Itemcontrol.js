@@ -8,31 +8,35 @@ import {
   faDollarSign,
   faRulerHorizontal,
 } from "@fortawesome/free-solid-svg-icons";
+import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import {
+  addRancanganAnggaran,
+  updateRancanganAnggaran,
+} from "../../../reducer/ProjectBudgetSelectedSlice";
+import { useParams } from "react-router-dom";
 
-export default function Itemcontrol({
-  index,
-  nama,
-  unit,
-  category,
-  price,
-  volume,
-  total,
-  closeItemControl,
-  submitItem,
-  mode
-}) {
+export default function Itemcontrol({ data, closeItemControl, mode }) {
+  let { _id, volume, nama_pekerjaan, kategori, simbol, satuan, harga, total } =
+    data;
+  const { handleSubmit, register } = useForm();
+
+  const { projectId } = useParams();
+
+  const dispatch = useDispatch();
+
   if (volume === "") {
     volume = 0;
   }
 
-  let headTitle, btnSubmit
+  let headTitle, btnSubmit;
 
-  if (mode === "edit"){
-    headTitle = "UBAH ITEM PEKERJAAN"
-    btnSubmit = "SUBMIT"
+  if (mode === "edit") {
+    headTitle = "UBAH ITEM PEKERJAAN";
+    btnSubmit = "SUBMIT";
   } else {
-    headTitle = "TAMBAH ITEM PEKERJAAN"
-    btnSubmit = "TAMBAH ITEM PEKERJAAN"
+    headTitle = "TAMBAH ITEM PEKERJAAN";
+    btnSubmit = "TAMBAH ITEM PEKERJAAN";
   }
 
   const [volumeAmount, setVolumeAmount] = useState(volume);
@@ -40,24 +44,38 @@ export default function Itemcontrol({
 
   function volumeOnchange(props) {
     let vol = props.target.value;
-    //vol.replace(/,/g, '.')
     setVolumeAmount(vol);
-    console.log(vol);
     //desimal belum bisa
-    vol !== "" ? setTotalAmound(parseFloat(vol) * price) : setTotalAmound(0);
+    vol !== "" ? setTotalAmound(parseFloat(vol) * harga) : setTotalAmound(0);
   }
 
-  function submitItemControl() {
-    submitItem({
-      index,
-      mode,
-      nama,
-      unit,
-      category,
-      price,
-      volume: volumeAmount,
-      total: totalAmount,
-    });
+  function submitItemControl(props) {
+    if (mode === "add") {
+      const data = {
+        volume: props.volume,
+        nama_pekerjaan,
+        kategori,
+        simbol,
+        satuan,
+        harga,
+        total: totalAmount,
+      };
+      dispatch(addRancanganAnggaran({ id_anggaran: projectId, data: data }));
+      closeItemControl();
+    } else {
+      const data = {
+        _id,
+        volume: props.volume,
+        nama_pekerjaan,
+        kategori,
+        simbol,
+        satuan,
+        harga,
+        total: totalAmount,
+      };
+      dispatch(updateRancanganAnggaran({ id_anggaran: projectId, data: data }));
+      closeItemControl();
+    }
   }
 
   return (
@@ -87,7 +105,7 @@ export default function Itemcontrol({
             </svg>
           </button>
         </div>
-        <div className="py-3 px-4">
+        <form onSubmit={handleSubmit(submitItemControl)} className="py-3 px-4">
           <div className="flex py-1 items-center">
             <div className="p-2 text-center w-2/12">
               <FontAwesomeIcon icon={faPaintRoller} size="sm" />
@@ -96,7 +114,7 @@ export default function Itemcontrol({
               <label className="block text-xs font-light text-gray-500">
                 Item Pekerjaan
               </label>
-              <p className="text-sm font-medium">{nama}</p>
+              <p className="text-sm font-medium">{nama_pekerjaan}</p>
             </div>
           </div>
           <div className="flex py-1 items-center">
@@ -107,7 +125,7 @@ export default function Itemcontrol({
               <label className="block text-xs font-light text-gray-500">
                 Kategori
               </label>
-              <p className="text-sm font-medium leading-none">{category}</p>
+              <p className="text-sm font-medium leading-none">{simbol}</p>
             </div>
           </div>
           <div className="flex py-1 items-center">
@@ -120,7 +138,7 @@ export default function Itemcontrol({
               </label>
               <p className="text-sm font-medium leading-none">
                 <NumberFormat
-                  value={price}
+                  defaultValue={harga}
                   thousandSeparator
                   prefix={"Rp. "}
                   displayType={"text"}
@@ -138,12 +156,13 @@ export default function Itemcontrol({
               </label>
               <div className="flex items-center">
                 <input
+                  {...register("volume")}
                   className="border w-20 border-white rounded-md text-sm font-medium px-2 py-1 hover:border-gray-200"
                   placeholder="0"
                   defaultValue={volumeAmount}
                   onChange={volumeOnchange}
                 />
-                <h4 className="text-xs font-medium mx-2">{unit}</h4>
+                <h4 className="text-xs font-medium mx-2">{satuan}</h4>
               </div>
             </div>
           </div>
@@ -165,11 +184,11 @@ export default function Itemcontrol({
             </h4>
           </div>
           <div className="my-2">
-            <Button className="w-full" size="small" onClick={submitItemControl}>
+            <Button type="submit" className="w-full" size="small">
               {btnSubmit}
             </Button>
           </div>
-        </div>
+        </form>
       </div>
     </>
   );

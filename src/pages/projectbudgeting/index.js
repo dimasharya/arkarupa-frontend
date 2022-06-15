@@ -1,10 +1,21 @@
-import React, { useState, useEffect } from "react";
-import Workspace from "../projectbudgeting/Workspace";
-import CategoryManagement from "../projectbudgeting/CategoryManagement";
+import React, { useEffect, useState } from "react";
+import Workspace from "./Workspace";
+import CategoryManagement from "./CategoryManagement";
 import ItemManagement from "./Itemmanagement";
-import MaterialManagement from "../projectbudgeting/MaterialManagement";
+import MaterialManagement from "./MaterialManagement";
+import { useParams } from "react-router-dom";
+import BudgetDocuments from "./BudgetDocument";
+import { useDispatch } from "react-redux";
+import { loadProjectBudget } from "../../reducer/ProjectBudgetSlice";
 
 function ProjectBudgeting() {
+
+  const {projectId} = useParams()
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(loadProjectBudget())
+  }, [])
   // Tabs Handler
 
   const tabs = [
@@ -43,7 +54,7 @@ function ProjectBudgeting() {
           </ul>
         </div>
         <div className={tabActive === "lembar kerja" ? "block" : "hidden"}>
-          <Workspace />
+          {projectId ? <BudgetDocuments /> : <Workspace />}
         </div>
         <div
           className={

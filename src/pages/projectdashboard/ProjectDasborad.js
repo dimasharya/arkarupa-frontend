@@ -1,62 +1,39 @@
 import { Button } from "@windmill/react-ui";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProjectCard from "../../components/Cards/ProjectCard";
 import { PlusCircle } from "../../icons";
-import Moment from "react-moment";
 import "moment/locale/id";
 import NewProjectForm from "./NewProjectForm";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser } from "../../reducer/AuthSlice";
+import { loadUserProject, projectSelectors, selectProject } from "../../reducer/ProjectSlice";
+import {CollectionIcon, RefreshIcon, CheckIcon, UsersIcon, BriefcaseIcon} from "@heroicons/react/outline"
 
 function ProjectDasborad() {
 
-  const dataProject = [
-    {
-      name: "BSD City Botanical Park",
-      category: "Area Publik",
-      loc: "Sampora, Cisauk, Tanggerang, Banten",
-      owner: "PT. Bukit Serpong Damai",
-      team: "4",
-      pm: "1",
-      progress: 30,
-      status: "On Progress",
-      date: "20 July 2021",
-    },
-    {
-      name: "Greenwood Mideterrania",
-      category: "Perumahan",
-      loc: "Widodomartani, Ngemplak, Sleman, Yogyakarta",
-      owner: "PT. Barokah Jaya Realty",
-      team: "4",
-      pm: "1",
-      progress: 80,
-      status: "On Progress",
-      date: "3 January 2021",
-    },
-    {
-      name: "Mojopurno Eco Living",
-      category: "Perumahan",
-      loc: "Mojopurno, Wungu, Madiun",
-      owner: "PT. Barokah Jaya Realty",
-      team: "4",
-      pm: "1",
-      progress: 80,
-      status: "On Progress",
-      date: "3 January 2021",
-    },
-    {
-      name: "Boulevard Hijau Raya",
-      category: "Perumahan",
-      loc: "Pejuang, Medan Satria, Kota Bekasi",
-      owner: "PT. Barokah Jaya Realty",
-      team: "4",
-      pm: "1",
-      progress: 80,
-      status: "On Progress",
-      date: "3 January 2021",
-    },
-  ];
-
-  const [project, setProject] = useState(dataProject);
   const [isOpen, setIsOpen] = useState(false);
+
+  const user = useSelector(selectUser)
+  const userProject = useSelector(projectSelectors.selectAll)
+  const selectorProject = useSelector(selectProject)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(loadUserProject({id: user._id}))
+  }, [dispatch])
+
+  function tonggleTambahProyek() {
+    return(
+      <Button
+      onClick={() => setIsOpen(!isOpen)}
+      size="small"
+      iconLeft={PlusCircle}
+      layout="outline"
+    >
+      <span className="text-xs">Tambah Proyek</span>
+    </Button>
+    )
+  }
 
   return (
     <>
@@ -80,86 +57,34 @@ function ProjectDasborad() {
           <div className="col-span-3 grid grid-cols-4 gap-2">
             <div className="flex flex-col p-4 rounded-md bg-black text-white">
               <div className="p-1 w-6 h-6 rounded-full bg-white">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 text-black"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
-                  />
-                </svg>
+                <CollectionIcon className="h-4 w-4 text-black" />
               </div>
-              <h3 className="mt-4 w-26 text-4xl font-bold">10</h3>
+              <h3 className="mt-4 w-26 text-4xl font-bold">{selectorProject.total_proyek}</h3>
               <h4 className="mt-2 text-sm leading-none font-bold">
                 Total Proyek
               </h4>
             </div>
             <div className="flex flex-col p-4 rounded-md  bg-black text-white">
               <div className="p-1 w-6 h-6 rounded-full bg-white">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 text-black"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                  />
-                </svg>
+              <RefreshIcon className="h-4 w-4 text-black" />
               </div>
-              <h3 className="mt-4 w-26 text-4xl font-bold">10</h3>
+              <h3 className="mt-4 w-26 text-4xl font-bold">{selectorProject.proyek_berlangsung}</h3>
               <h4 className="mt-2 text-sm leading-none font-bold">
                 Proyek Berlangsung
               </h4>
             </div>
             <div className="flex flex-col p-4 rounded-md  bg-black text-white">
               <div className="p-1 w-6 h-6 rounded-full bg-white">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 text-black"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
+              <CheckIcon className="h-4 w-4 text-black" />
               </div>
-              <h3 className="mt-4 w-26 text-4xl font-bold">10</h3>
+              <h3 className="mt-4 w-26 text-4xl font-bold">{selectorProject.proyek_selesai}</h3>
               <h4 className="mt-2 text-sm leading-none font-bold">
                 Proyek Selesai
               </h4>
             </div>
             <div className="flex flex-col p-4 rounded-md  bg-black text-white">
               <div className="p-1 w-6 h-6 rounded-full bg-white">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 text-black"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
-                  />
-                </svg>
+              <UsersIcon className="h-4 w-4 text-black" />
               </div>
               <h3 className="mt-4 w-26 text-4xl font-bold">10</h3>
               <h4 className="mt-2 text-sm leading-none font-bold">Pekerja</h4>
@@ -171,53 +96,23 @@ function ProjectDasborad() {
         <div className="flex px-8 py-6 justify-between items-center">
           <div className="flex items-center gap-2">
             <div className="p-1.5 w-7 h-7 rounded-full bg-black">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4 text-white"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                />
-              </svg>
+              <BriefcaseIcon className="h-4 w-4 text-white" />
             </div>
             <h5 className="font-semibold leading-none text-gray-900 dark:text-white">
               Proyek
             </h5>
           </div>
-          <Button
-            onClick={() => setIsOpen(!isOpen)}
-            size="small"
-            iconLeft={PlusCircle}
-            layout="outline"
-          >
-            <span className="text-xs">Tambah Proyek</span>
-          </Button>
+          {user.role === "pm" ? tonggleTambahProyek():""}
         </div>
         <div className="m-auto max-w-screen-xl">
           <ul className="flex my-2 p-4 flex-nowrap overflow-x-scroll overscroll-contain relative gap-6 scrollbar-hide">
-            {project.map((item, idx) => {
+            {userProject ? userProject.map((item, idx) => {
               return (
                 <li key={idx}>
-                  <ProjectCard
-                    name={item.name}
-                    category={item.category}
-                    loc={item.loc}
-                    owner={item.owner}
-                    team={item.team}
-                    pm={item.pm}
-                    progress={item.progress}
-                    status={item.status}
-                    date={item.date}
-                  />
+                  <ProjectCard dataProyek={item} />
                 </li>
               );
-            })}
+            }) : ""}
           </ul>
         </div>
       </div>

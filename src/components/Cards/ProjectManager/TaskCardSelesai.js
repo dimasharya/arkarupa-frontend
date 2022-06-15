@@ -11,7 +11,7 @@ export default function TaskCardSelesai({ dataTask }) {
     volume,
     satuan,
     status,
-    permit_to_work,
+    penanggung_jawab,
     progress,
   } = dataTask;
   return (
@@ -59,6 +59,12 @@ export default function TaskCardSelesai({ dataTask }) {
               </Moment>
             </p>
           </div>
+        </div>
+        <div className="text-left pt-1">
+          <p className="text-xs font-semibold text-gray-500">
+            Penanggung Jawab
+          </p>
+          <p className="text-sm">{penanggung_jawab}</p>
         </div>
         <ProgressBar progress={progress} />
       </div>

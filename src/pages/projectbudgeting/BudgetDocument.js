@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@windmill/react-ui";
 import {
   Print,
-  FilePdf,
-  EditIcon,
-  ChevronLeft,
+  Download,
+  Pencil,
   TrashIcon,
+  ChevronLeft,
 } from "../../icons/index";
 import {
   Table,
@@ -23,56 +23,49 @@ import Tooltip from "react-tooltip";
 import Searchboxitems from "../../components/Searchbox/Searchboxitems";
 import Itemcontrol from "../../components/Projectbudget/Workspace/Itemcontrol";
 import NumberFormat from "react-number-format";
+import { Link, useLocation, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  clearProjectBudgetSelected,
+  deleteRancanganAnggaran,
+  loadProjectBudgetSelected,
+  projectBudgetSelectedSelectorById,
+  rancanganAnggaranSelectorAll,
+} from "../../reducer/ProjectBudgetSelectedSlice";
+import Moment from "react-moment";
 
 export default function BudgetDocuments() {
-  const data = [
-    {
-      nama: "Pemasangan Besi Bertingkat Dengan Bekisting",
-      category: "PAW",
-      unit: "m2",
-      volume: 200,
-      price: 345000,
-      total: 69000000,
-    },
-    {
-      nama: "Pagar sementara seng gelombang tinggi 2 m",
-      category: "PAW",
-      unit: "m2",
-      volume: 200,
-      price: 345000,
-      total: 69000000,
-    },
-    {
-      nama: "Pengukuran dan pemasangan bowplank",
-      category: "PAW",
-      unit: "m2",
-      volume: 200,
-      price: 345000,
-      total: 69000000,
-    },
-    {
-      nama: "Pembongkaran Plesteran dengan Membersihkan",
-      category: "PAW",
-      unit: "m2",
-      volume: 200,
-      price: 345000,
-      total: 69000000,
-    },
-    {
-      nama: "Membersihkan Parit Samping Jalan Menggunakan Buruh",
-      category: "PAW",
-      unit: "m2",
-      volume: 200,
-      price: 345000,
-      total: 69000000,
-    },
-  ];
+  const { projectId } = useParams();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadProjectBudgetSelected({ projectId: projectId }))
+  }, []);
+
+  // const location = useLocation()
+
+  // useEffect(() => {
+  //   // dispatch(clearProjectBudgetSelected())
+  //   // console.log("lokasi berubah");
+  //   window.addEventListener("unload", console.log("leaving"))
+  //   return () => {
+  //     window.removeEventListener("unload", console.log("leaving"))
+  //     console.log("pergi");
+  //   }
+  // }, [])
+
+  const Proyek = useSelector((state) =>
+    projectBudgetSelectedSelectorById(state, projectId)
+  );
+
+  const AnggaranBiaya = useSelector(rancanganAnggaranSelectorAll);
 
   /// Table Area
-  const [itemTable, setItemTable] = useState(data);
+  // const [itemTable, setItemTable] = useState([]);
   const [pageTable, setPageTable] = useState(1);
   const [dataTable, setDataTable] = useState([]);
-  const [totalResults, setTotalResult] = useState(itemTable.length);
+  const [totalResults, setTotalResult] = useState(AnggaranBiaya.length);
 
   function onPageChangeTable(p) {
     setPageTable(p);
@@ -84,24 +77,28 @@ export default function BudgetDocuments() {
 
   useEffect(() => {
     setDataTable(
-      itemTable.slice(
-        (pageTable - 1) * resultsPerPage,
-        pageTable * resultsPerPage
-      )
+      AnggaranBiaya.slice((pageTable - 1) * resultsPerPage, pageTable * resultsPerPage)
     );
-  }, [pageTable, totalResults, itemTable]);
+  }, [pageTable])
 
   // Total Display
 
   const [totalDisplay, setTotalDisplay] = useState(0);
 
   useEffect(() => {
+    setDataTable(
+      AnggaranBiaya.slice(
+        (pageTable - 1) * resultsPerPage,
+        pageTable * resultsPerPage
+      )
+    );
     let sum = 0;
-    for (let i = 0; i < itemTable.length; i++) {
-      sum = sum + parseFloat(itemTable[i].total);
+    for (let i = 0; i < AnggaranBiaya.length; i++) {
+      sum = sum + parseFloat(AnggaranBiaya[i].total);
     }
     setTotalDisplay(sum);
-  }, [itemTable]);
+    setTotalResult(AnggaranBiaya.length)
+  }, [AnggaranBiaya]);
 
   /// Item Control Area
 
@@ -109,16 +106,7 @@ export default function BudgetDocuments() {
   const [isItemControl, setisItemcontrol] = useState(false);
 
   function hapusClick(props) {
-    const data = [...itemTable];
-    let indexData = 0;
-    if (pageTable !== 0) {
-      indexData = (pageTable - 1) * 10 + props;
-    } else {
-      indexData = props;
-    }
-    data.splice(indexData, 1);
-    setTotalResult(data.length);
-    setItemTable(data);
+    dispatch(deleteRancanganAnggaran({id_anggaran: projectId, _id: props}))
   }
 
   function itemControlHandler(props) {
@@ -130,52 +118,18 @@ export default function BudgetDocuments() {
   }
 
   function editClick(props) {
-    const data = dataTable[props];
     const dataEdit = {
-      index: props,
-      nama: data.nama,
-      unit: data.unit,
-      category: data.category,
-      price: data.price,
-      volume: data.volume,
-      total: data.total,
       mode: "edit",
-    };
+      data: props
+    }
     setItemcontrol(dataEdit);
     setisItemcontrol(true);
   }
 
-  function submitItem(props) {
-    const changedData = {
-      nama: props.nama,
-      unit: props.unit,
-      category: props.category,
-      price: props.price,
-      volume: props.volume,
-      total: props.total,
-    };
-
-    let newData = [];
-    if (props.mode === "edit") {
-      let indexData = 0;
-      if (pageTable !== 0) {
-        indexData = (pageTable - 1) * 10 + props.index;
-      } else {
-        indexData = props.index;
-      }
-
-      for (let index = 0; index < itemTable.length; index++) {
-        if (index === indexData) {
-          newData[index] = changedData;
-        } else {
-          newData[index] = itemTable[index];
-        }
-      }
-    } else {
-      newData = [...itemTable, changedData];
-    }
-    setItemTable(newData);
-    setisItemcontrol(false);
+  function addItem(props) {
+    const item = { data: props, mode: "add" };
+    setItemcontrol(item);
+    setisItemcontrol(true);
   }
 
   function closeItemControl() {
@@ -187,28 +141,22 @@ export default function BudgetDocuments() {
 
   const searchItem = [
     {
-      id: "507f1f77bcf86cd799439011",
-      nama: "Pemasangan Besi Bertingkat Dengan Bekisting",
-      category: "PAW",
-      unit: "m2",
-      price: "345000",
+      _id: "507f1f77bcf86cd799439011",
+      nama_pekerjaan: "Pemasangan Besi Bertingkat Dengan Bekisting",
+      simbol: "PAW",
+      kategori: "Pekerjaan Awalan",
+      satuan: "m2",
+      harga: "345000",
     },
     {
-      id: "507f191e810c19729de860ea",
-      nama: "Pekerjaan Urugan Pasir Batu",
-      category: "PAW",
-      unit: "m3",
-      price: "345000",
+      _id: "507f191e810c19729de860ea",
+      nama_pekerjaan: "Pekerjaan Urugan Pasir Batu",
+      simbol: "PAW",
+      kategori: "Pekerjaan Awalan",
+      satuan: "m3",
+      harga: "345000",
     },
   ];
-
-  function addItem(props) {
-    const itemId = props;
-    let item = searchItem.find((item) => item.id === itemId);
-    item = { ...item, mode: "add" };
-    setItemcontrol(item);
-    setisItemcontrol(true);
-  }
 
   const [searchResult, setSearchresult] = useState(searchItem);
 
@@ -229,26 +177,32 @@ export default function BudgetDocuments() {
       <div className="flex py-2 px-2">
         <div className="flex flex-auto justify-between items-center">
           <div className="flex gap-4 items-center">
-            <Button size="small" icon={ChevronLeft} layout="link" />
+            <Link to="/app/se/projectbudgeting">
+              <Button size="small" icon={ChevronLeft} layout="link" />
+            </Link>
             <label className=" text-base font-bold">
-              BSD City Botanical Park
-              <span className="text-sm font-thin"> - Biaya Proyek</span>
+              {Proyek ? Proyek.nama_dokumen : ""}
             </label>
           </div>
           <div className="flex gap-4 items-center">
             <label className="text-xs">
-              Terakhir Diperbaharui : 22 Aug 2021 18.45 PM
+              Terakhir Diperbarui :{" "}
+              <span>
+                <Moment format="LLLL" locale="id">
+                  {Proyek ? Proyek.terakhir_diubah : ""}
+                </Moment>
+              </span>
             </label>
             <Button size="small" iconLeft={Print} layout="outline">
               <span>Cetak</span>
             </Button>
-            <Button size="small" iconLeft={FilePdf} layout="outline">
+            <Button size="small" iconLeft={Download} layout="outline">
               <span>Unduh</span>
             </Button>
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-5 inline-flex gap-4 my-4">
+      <div className="grid grid-cols-5 gap-4 my-4">
         <div className="col-span-4">
           <TableContainer>
             <Table>
@@ -266,14 +220,14 @@ export default function BudgetDocuments() {
                 </tr>
               </TableHeader>
               <TableBody className="text-sm overflow-scroll">
-                {dataTable.length !== 0 ? (
-                  dataTable.map((idx, i) => (
+                {AnggaranBiaya ? (
+                  dataTable.map((item, idx) => (
                     <TableRow
-                      key={i}
+                      key={idx}
                       className="hover:bg-yellow-50 focus:bg-yellow-100 "
                     >
                       <TableCell>
-                        <p className="truncate">{idx.nama}</p>
+                        <p className="truncate">{item.nama_pekerjaan}</p>
                       </TableCell>
                       <TableCell className="text-center">
                         <label
@@ -281,19 +235,21 @@ export default function BudgetDocuments() {
                           data-tip
                           data-for="table-cat"
                         >
-                          {idx.category}
+                          {item.simbol}
                         </label>
                         <Tooltip id="table-cat" place="top" effect="solid">
                           Pekerjaan Awalan
                         </Tooltip>
                       </TableCell>
-                      <TableCell className="text-center">{idx.unit}</TableCell>
                       <TableCell className="text-center">
-                        {idx.volume}
+                        {item.satuan}
+                      </TableCell>
+                      <TableCell className="text-center">
+                        {item.volume}
                       </TableCell>
                       <TableCell>
                         <NumberFormat
-                          value={idx.price}
+                          value={item.harga}
                           displayType={"text"}
                           thousandSeparator
                           prefix={"Rp. "}
@@ -301,7 +257,7 @@ export default function BudgetDocuments() {
                       </TableCell>
                       <TableCell>
                         <NumberFormat
-                          value={idx.total}
+                          value={item.total}
                           displayType={"text"}
                           thousandSeparator
                           prefix={"Rp. "}
@@ -311,15 +267,15 @@ export default function BudgetDocuments() {
                         <Button
                           className="hover:text-green-600"
                           onClick={() =>
-                            itemControlHandler({ data: i, mode: "edit" })
+                            itemControlHandler({ data: item, mode: "edit" })
                           }
                           size="small"
-                          icon={EditIcon}
+                          icon={Pencil}
                           layout="link"
                         />
                         <Button
                           className="hover:text-red-700"
-                          onClick={() => hapusClick(i)}
+                          onClick={() => hapusClick(item._id)}
                           size="small"
                           icon={TrashIcon}
                           layout="link"
@@ -380,28 +336,30 @@ export default function BudgetDocuments() {
                   <Searchboxitems
                     key={idx}
                     idx={idx}
-                    nama={item.nama}
-                    category={item.category}
+                    nama={item.nama_pekerjaan}
+                    category={item.simbol}
                     addItem={() =>
-                      itemControlHandler({ data: item.id, mode: "add" })
+                      itemControlHandler({ data: item, mode: "add" })
                     }
                   />
                 ))}
               </div>
             </div>
           </div>
+          {/* <button onClick={() => console.log(Proyek)} >cekdata</button> */}
           {isItemControl ? (
             <Itemcontrol
-              index={itemControl.index}
-              nama={itemControl.nama}
-              unit={itemControl.unit}
-              category={itemControl.category}
-              price={itemControl.price}
-              volume={itemControl.volume}
-              total={itemControl.total}
+              // index={itemControl.index}
+              // nama={itemControl.nama}
+              // unit={itemControl.unit}
+              // category={itemControl.category}
+              // price={itemControl.price}
+              // volume={itemControl.volume}
+              // total={itemControl.total}
+              data={itemControl.data}
               mode={itemControl.mode}
               closeItemControl={closeItemControl}
-              submitItem={submitItem}
+              // submitItem={submitItem}
             />
           ) : null}
         </div>
