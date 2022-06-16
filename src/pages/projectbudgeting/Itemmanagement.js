@@ -46,6 +46,10 @@ export default function Itemmanagement() {
     },
   ];
 
+  useEffect(() => {
+    
+  })
+
   /// Table Area
   const [itemTable, setItemTable] = useState(data);
   const [pageTable, setPageTable] = useState(1);
