@@ -1,7 +1,7 @@
 import React from "react";
 import Tooltip from "react-tooltip";
 
-export default function Searchboxitems({nama, category, idx, addItem}) {
+export default function Searchboxitems({data, idx, addItem}) {
   const item = `item${idx}`;
   const cat = `cat${idx}`
 
@@ -18,7 +18,7 @@ export default function Searchboxitems({nama, category, idx, addItem}) {
           data-tip
           data-for={cat}
         >
-          {category}
+          {data.simbol}
         </label>
         <label
           role="button"
@@ -26,13 +26,13 @@ export default function Searchboxitems({nama, category, idx, addItem}) {
           data-tip
           data-for={item}
         >
-          {nama}
+          {data.nama_pekerjaan}
         </label>
         <Tooltip id={cat} place="top" effect="solid">
-          {category}
+          {data.kategori}
         </Tooltip>
-        <Tooltip id={item} place="bottom" effect="solid">
-          {nama}
+        <Tooltip id={item} place="top" effect="solid">
+          {data.nama_pekerjaan}
         </Tooltip>
       </div>
     </>

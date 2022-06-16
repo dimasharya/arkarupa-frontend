@@ -53,8 +53,8 @@ function ProjectDasborad() {
             Arkarupa Project Management App
           </p>
         </div>
-        <div className="col-span-3 py-4 px-6 text-black">
-          <div className="col-span-3 grid grid-cols-4 gap-2">
+        <div className="col-span-2 py-4 px-6 text-black">
+          <div className="col-span-3 grid grid-cols-3 gap-2">
             <div className="flex flex-col p-4 rounded-md bg-black text-white">
               <div className="p-1 w-6 h-6 rounded-full bg-white">
                 <CollectionIcon className="h-4 w-4 text-black" />
@@ -82,13 +82,13 @@ function ProjectDasborad() {
                 Proyek Selesai
               </h4>
             </div>
-            <div className="flex flex-col p-4 rounded-md  bg-black text-white">
+            {/* <div className="flex flex-col p-4 rounded-md  bg-black text-white">
               <div className="p-1 w-6 h-6 rounded-full bg-white">
               <UsersIcon className="h-4 w-4 text-black" />
               </div>
               <h3 className="mt-4 w-26 text-4xl font-bold">10</h3>
               <h4 className="mt-2 text-sm leading-none font-bold">Pekerja</h4>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

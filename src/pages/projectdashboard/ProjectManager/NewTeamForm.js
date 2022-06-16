@@ -3,12 +3,11 @@ import { Label, Select, Button, Avatar } from "@windmill/react-ui";
 import Api from "../../../reducer/Api";
 import { useEffect, useState } from "react";
 import { getRoles } from "../../../utils/getRoles";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   addTeam,
   projectSelectedSelectorTeam,
 } from "../../../reducer/ProjectSelectedSlice";
-import { setNotification } from "../../../reducer/NotificationSlice";
 
 export default function NewTeamForm({ modalNewTeam, setModalNewTeam, projectId }) {
   const { handleSubmit, register } = useForm();
@@ -39,12 +38,7 @@ export default function NewTeamForm({ modalNewTeam, setModalNewTeam, projectId }
       data.users.forEach((element) => {
         dataUser.forEach((el) => {
           if (element === el._id) {
-            users.push({
-              id: el._id,
-              nama: el.name,
-              avatar: el.avatar,
-              role: el.role,
-            });
+            users.push(el);
           }
         });
       });
@@ -111,7 +105,7 @@ export default function NewTeamForm({ modalNewTeam, setModalNewTeam, projectId }
               Batal
             </Button>
             <Button type="submit" layout="primary">
-              Buat Pekerjaan
+              Tambah Team
             </Button>
           </div>
         </form>

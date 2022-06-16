@@ -12,7 +12,6 @@ const NewRABForm = ({ modalNewRab, setModalNewRab }) => {
   const { handleSubmit, register } = useForm();
   const [project, setProject] = useState("");
   const dispatch = useDispatch()
-  const navigate = useNavigate()
   const user = useSelector(selectUser)
 
   const getAllProject = async () => {
@@ -27,12 +26,12 @@ const NewRABForm = ({ modalNewRab, setModalNewRab }) => {
   }, []);
 
   const onSubmit = (data) => {
-      if(data.project !== ""){
+      if(data.project !== "" && data.project !== "default"){
         const proyek = project.find(el => el.nama_proyek === data.project)
         dispatch(addProjectBudget({nama_proyek: proyek.nama_proyek, id_proyek: proyek._id}))
         setModalNewRab(!modalNewRab)
       }else{
-          dispatch(setNotification({type: "error", message: "Tidak Ada Data"}))
+          dispatch(setNotification({type: "error", message: "Pilih salah satu proyek"}))
       }
   };
 
@@ -49,11 +48,12 @@ const NewRABForm = ({ modalNewRab, setModalNewRab }) => {
               <Label>
                 <span className="font-semibold text-xs">Pilih Proyek</span>
               </Label>
-              <Select {...register("project")}>
+              <Select defaultValue={"default"} {...register("project")}>
+              <option value={"default"} disabled>Pilih Proyek</option>
                 {project !== "" ? (
                   project.map((item, idx) => {
                     let opt;
-                    if (item.rancangan_anggaran === "") {
+                    if (item.rancangan_anggaran === null) {
                       opt = <option key={idx}>{item.nama_proyek}</option>;
                     }
                     return opt;

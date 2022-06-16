@@ -5,72 +5,88 @@ import { faSearch, faCog } from "@fortawesome/free-solid-svg-icons";
 import { Select, Button } from "@windmill/react-ui";
 import { PlusCircle } from "../../../icons";
 import { Tooltip } from "chart.js";
+import Api from "../../../reducer/Api";
 
 export default function ItemSearch({ addItem }) {
-  const data = [
-    {
-      item: "Mandor",
-      category: "Pekerja",
-      unit: "O.H",
-      price: 90000,
-    },
-    {
-      item: "Pekerja/Buruh Tak Terampil",
-      category: "Pekerja",
-      unit: "O.H",
-      price: 55000,
-    },
-    {
-      item: "Kepala Tukang Batu",
-      category: "Pekerja",
-      unit: "O.H",
-      price: 80000,
-    },
-    {
-      item: "Tukang Batu",
-      category: "Pekerja",
-      unit: "O.H",
-      price: 65000,
-    },
-    {
-      item: "Kayu Meranti",
-      category: "Bahan",
-      unit: "m3",
-      price: 3654050,
-    },
-    {
-      item: "Multipleks Tebal 9 mm",
-      category: "Bahan",
-      unit: "Lembar",
-      price: 157500,
-    },
-  ];
+  // const data = [
+  //   {
+  //     item: "Mandor",
+  //     category: "Pekerja",
+  //     unit: "O.H",
+  //     price: 90000,
+  //   },
+  //   {
+  //     item: "Pekerja/Buruh Tak Terampil",
+  //     category: "Pekerja",
+  //     unit: "O.H",
+  //     price: 55000,
+  //   },
+  //   {
+  //     item: "Kepala Tukang Batu",
+  //     category: "Pekerja",
+  //     unit: "O.H",
+  //     price: 80000,
+  //   },
+  //   {
+  //     item: "Tukang Batu",
+  //     category: "Pekerja",
+  //     unit: "O.H",
+  //     price: 65000,
+  //   },
+  //   {
+  //     item: "Kayu Meranti",
+  //     category: "Bahan",
+  //     unit: "m3",
+  //     price: 3654050,
+  //   },
+  //   {
+  //     item: "Multipleks Tebal 9 mm",
+  //     category: "Bahan",
+  //     unit: "Lembar",
+  //     price: 157500,
+  //   },
+  // ];
 
-  const [displayedItem, setDisplayedItem] = useState(data);
-  const [selectedCategory, setSelectedCategory] = useState("Semua Kategori");
+  const [dataMaterial, setDataMaterial] = useState([])
   const [searchKey, setSearchKey] = useState("");
+
+  const fetchData = async (data) => {
+    await Api.get("/api/projectbudgetmanagement/material", {
+      params: { key: data },
+    }).then((res) => {
+      setDataMaterial(res.data)
+    });
+  };
+
+  useEffect(() => {
+    fetchData(searchKey)
+  }, [searchKey]);
+
+  const [displayedItem, setDisplayedItem] = useState(dataMaterial);
+  const [selectedCategory, setSelectedCategory] = useState("");
+
 
   const searchResult = (category, keyword) => {
     let filtered;
     if (keyword !== "") {
       if (category !== "Semua Kategori") {
-        filtered = data.filter((item) => {
+        filtered = dataMaterial.filter((item) => {
           return (
-            item.item.toLowerCase().includes(keyword.toLowerCase()) &&
-            item.category.toLowerCase().includes(category.toLowerCase())
+            item.nama_item.toLowerCase().includes(keyword.toLowerCase()) &&
+            item.kategori.toLowerCase().includes(category.toLowerCase())
           );
         });
       } else {
-        filtered = data.filter((item) => {
-          return item.item.toLowerCase().includes(keyword.toLowerCase());
+        filtered = dataMaterial.filter((item) => {
+          return item.nama_item.toLowerCase().includes(keyword.toLowerCase());
         });
       }
     } else if (category !== "Semua Kategori") {
-      filtered = data.filter((item) => {
-        return item.category.toLowerCase().includes(category.toLowerCase());
+      filtered = dataMaterial.filter((item) => {
+        return item.kategori.toLowerCase().includes(category.toLowerCase());
       });
     } else {
-      filtered = data;
+      filtered = dataMaterial;
     }
     setDisplayedItem(filtered);
   };
@@ -103,8 +119,9 @@ export default function ItemSearch({ addItem }) {
             <Select
               onChange={(props) => setSelectedCategory(props.target.value)}
               className="w-40 truncate"
+              defaultValue={"Semua Kategori"}
             >
-              <option>Semua Kategori</option>
+              <option value={"Semua Kategori"}>Semua Kategori</option>
               <option>Pekerja</option>
               <option>Alat</option>
               <option>Bahan</option>
@@ -129,12 +146,12 @@ export default function ItemSearch({ addItem }) {
                     key={index}
                     className="text-sm py-1 items-center inline-flex w-full hover:bg-yellow-50"
                   >
-                    <td className="w-5/12 py-1 pl-2 truncate">{item.item}</td>
-                    <td className="w-2/12 text-center">{item.category}</td>
-                    <td className="w-2/12 text-center">{item.unit}</td>
+                    <td className="w-5/12 py-1 pl-2 truncate">{item.nama_item}</td>
+                    <td className="w-2/12 text-center">{item.kategori}</td>
+                    <td className="w-2/12 text-center">{item.satuan}</td>
                     <td className="w-2/12">
                       <NumberFormat
-                        value={item.price}
+                        value={item.harga}
                         displayType={"text"}
                         thousandSeparator
                         prefix={"Rp. "}

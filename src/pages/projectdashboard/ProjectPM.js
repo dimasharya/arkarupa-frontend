@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { Button } from "@windmill/react-ui";
 import ProjectInfoCard from "../../components/Cards/ProjectManager/ProjectInfoCard";
 import TaskCardBerlangsung from "../../components/Cards/ProjectManager/TaskCardBerlangsung";
@@ -27,9 +27,11 @@ export default function Project() {
   let { projectId } = useParams();
   const dispatch = useDispatch();
 
+  const location = useLocation()
+
   useEffect(() => {
     dispatch(loadProjectSelected({ id: projectId }));
-  }, []);
+  }, [location]);
 
   const Proyek = useSelector(projectSelectedSelector.selectAll);
   const Team = useSelector(projectSelectedSelectorTeam.selectAll);

@@ -26,13 +26,13 @@ import NumberFormat from "react-number-format";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  clearProjectBudgetSelected,
   deleteRancanganAnggaran,
   loadProjectBudgetSelected,
   projectBudgetSelectedSelectorById,
   rancanganAnggaranSelectorAll,
 } from "../../reducer/ProjectBudgetSelectedSlice";
 import Moment from "react-moment";
+import Api from "../../reducer/Api";
 
 export default function BudgetDocuments() {
   const { projectId } = useParams();
@@ -40,8 +40,8 @@ export default function BudgetDocuments() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadProjectBudgetSelected({ projectId: projectId }))
-  }, []);
+    dispatch(loadProjectBudgetSelected({ projectId: projectId }));
+  }, [dispatch]);
 
   // const location = useLocation()
 
@@ -77,9 +77,12 @@ export default function BudgetDocuments() {
 
   useEffect(() => {
     setDataTable(
-      AnggaranBiaya.slice((pageTable - 1) * resultsPerPage, pageTable * resultsPerPage)
+      AnggaranBiaya.slice(
+        (pageTable - 1) * resultsPerPage,
+        pageTable * resultsPerPage
+      )
     );
-  }, [pageTable])
+  }, [pageTable]);
 
   // Total Display
 
@@ -97,7 +100,7 @@ export default function BudgetDocuments() {
       sum = sum + parseFloat(AnggaranBiaya[i].total);
     }
     setTotalDisplay(sum);
-    setTotalResult(AnggaranBiaya.length)
+    setTotalResult(AnggaranBiaya.length);
   }, [AnggaranBiaya]);
 
   /// Item Control Area
@@ -106,7 +109,7 @@ export default function BudgetDocuments() {
   const [isItemControl, setisItemcontrol] = useState(false);
 
   function hapusClick(props) {
-    dispatch(deleteRancanganAnggaran({id_anggaran: projectId, _id: props}))
+    dispatch(deleteRancanganAnggaran({ id_anggaran: projectId, _id: props }));
   }
 
   function itemControlHandler(props) {
@@ -120,8 +123,8 @@ export default function BudgetDocuments() {
   function editClick(props) {
     const dataEdit = {
       mode: "edit",
-      data: props
-    }
+      data: props,
+    };
     setItemcontrol(dataEdit);
     setisItemcontrol(true);
   }
@@ -139,37 +142,24 @@ export default function BudgetDocuments() {
 
   /// Search Area
 
-  const searchItem = [
-    {
-      _id: "507f1f77bcf86cd799439011",
-      nama_pekerjaan: "Pemasangan Besi Bertingkat Dengan Bekisting",
-      simbol: "PAW",
-      kategori: "Pekerjaan Awalan",
-      satuan: "m2",
-      harga: "345000",
-    },
-    {
-      _id: "507f191e810c19729de860ea",
-      nama_pekerjaan: "Pekerjaan Urugan Pasir Batu",
-      simbol: "PAW",
-      kategori: "Pekerjaan Awalan",
-      satuan: "m3",
-      harga: "345000",
-    },
-  ];
+  const [dataPekerjaan, setDataPekerjaan] = useState([]);
+  const [key, setKey] = useState("");
 
-  const [searchResult, setSearchresult] = useState(searchItem);
+  const fetchData = async (data) => {
+    await Api.get("/api/projectbudgetmanagement/itempekerjaan", {
+      params: { key: data },
+    }).then((res) => {
+      setDataPekerjaan(res.data)
+    });
+  };
+
+  useEffect(() => {
+    fetchData(key)
+  }, [key]);
 
   function searchResultcontrol(props) {
     const searchKey = props.target.value;
-    const filtered = searchItem.filter((item) => {
-      return item.nama.toLowerCase().includes(searchKey.toLowerCase());
-    });
-    if (searchKey !== "") {
-      setSearchresult(filtered);
-    } else {
-      setSearchresult(searchItem);
-    }
+    setKey(searchKey)
   }
 
   return (
@@ -317,7 +307,7 @@ export default function BudgetDocuments() {
           <div className="border rounded-lg bg-white">
             <div className="bg-gray-50 rounded-t-lg border-b">
               <h4 className="py-3 text-center text-xs font-semibold text-gray-500">
-                PENCARIAN ITEM PEKERJAAN
+                TAMBAH ITEM PEKERJAAN
               </h4>
             </div>
             <div className="grid gap-2 my-3 mx-4">
@@ -332,12 +322,10 @@ export default function BudgetDocuments() {
                 />
               </div>
               <div className="border rounded-md h-32 overflow-y-scroll divide-y divide-gray-200">
-                {searchResult.map((item, idx) => (
+                {dataPekerjaan.map((item, idx) => (
                   <Searchboxitems
                     key={idx}
-                    idx={idx}
-                    nama={item.nama_pekerjaan}
-                    category={item.simbol}
+                    data={item}
                     addItem={() =>
                       itemControlHandler({ data: item, mode: "add" })
                     }
@@ -346,20 +334,11 @@ export default function BudgetDocuments() {
               </div>
             </div>
           </div>
-          {/* <button onClick={() => console.log(Proyek)} >cekdata</button> */}
           {isItemControl ? (
             <Itemcontrol
-              // index={itemControl.index}
-              // nama={itemControl.nama}
-              // unit={itemControl.unit}
-              // category={itemControl.category}
-              // price={itemControl.price}
-              // volume={itemControl.volume}
-              // total={itemControl.total}
               data={itemControl.data}
               mode={itemControl.mode}
               closeItemControl={closeItemControl}
-              // submitItem={submitItem}
             />
           ) : null}
         </div>

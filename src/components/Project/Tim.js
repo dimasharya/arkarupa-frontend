@@ -26,10 +26,10 @@ export default function Tim({ dataTim, modalNewTeam, setModalNewTeam, projectId 
         </div>
         <div className="flow-root">
           <ul className="relative h-60 px-2 overflow-y-auto divide-y divide-gray-200 dark:divide-gray-700">
-            {dataTim.map((item) => {
+            {dataTim.map((item, idx) => {
               return (
                 <>
-                  <li key={item.id} className="py-2">
+                  <li key={idx} className="py-2">
                     <div className="flex items-center space-x-4">
                       <div className="flex-shrink-0">
                         <Avatar
@@ -41,7 +41,7 @@ export default function Tim({ dataTim, modalNewTeam, setModalNewTeam, projectId 
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
-                          {item.nama}
+                          {item.name}
                         </p>
                         <p className="text-sm text-gray-500 truncate dark:text-gray-400">
                           {getRoles(item.role)}
@@ -50,7 +50,7 @@ export default function Tim({ dataTim, modalNewTeam, setModalNewTeam, projectId 
                       <div className="">
                         {item.role !== "pm" ? (
                           <Button
-                            onClick={() => onDelete(item.id)}
+                            onClick={() => onDelete(item._id)}
                             className="text-white bg-red-700 border border-transparent active:bg-red-600 hover:bg-red-700 focus:ring focus:ring-red-300"
                             icon={TrashIcon}
                             size="small"

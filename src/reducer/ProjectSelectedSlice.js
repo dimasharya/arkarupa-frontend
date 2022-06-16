@@ -25,9 +25,13 @@ export const loadProjectSelected = createAsyncThunk(
 export const addTeam = createAsyncThunk(
   "projectselected/addTeam",
   async ({ id, data }, thunkAPI) => {
+    let dataforapi = []
+    data.map((item) => {
+      dataforapi.push(item._id)
+    })
     await Api.post("/api/project/addmember", {
       id,
-      data,
+      dataforapi,
     });
     thunkAPI.dispatch(
       setNotification({
@@ -55,7 +59,7 @@ const pekerjaanEntity = createEntityAdapter({
 });
 
 const teamEntity = createEntityAdapter({
-  selectId: (team) => team.id,
+  selectId: (team) => team._id,
 });
 
 const projectEntity = createEntityAdapter({
@@ -71,6 +75,8 @@ const projectSelectedSlice = createSlice({
     [loadProjectSelected.fulfilled]: (state, action) => {
       const payload = action.payload;
       projectEntity.setAll(state, payload.proyek);
+      // console.log(payload.proyek);
+      // console.log(payload.team);
       teamEntity.setAll(state.team, payload.team);
     },
     [addTeam.fulfilled]: (state, action) => {

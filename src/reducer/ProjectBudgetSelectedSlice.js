@@ -4,6 +4,8 @@ import {
   createEntityAdapter,
 } from "@reduxjs/toolkit";
 import Api from "./Api";
+import { setNotification } from "./NotificationSlice";
+import { loadProjectBudget } from "./ProjectBudgetSlice";
 
 export const loadProjectBudgetSelected = createAsyncThunk(
   "projectbudgetselected/load",
@@ -20,31 +22,59 @@ export const loadProjectBudgetSelected = createAsyncThunk(
 export const addRancanganAnggaran = createAsyncThunk(
   "projectbudgetselected/addrancangananggaran",
   async ({ id_anggaran, data }, thunkAPI) => {
-    let result;
+    let id, ra, terakhir_diubah;
     await Api.post("/api/projectbudget/addrencanaanggaran", {
       id_anggaran,
       data,
     }).then((res) => {
       const data = res.data;
+      terakhir_diubah = data.terakhir_diubah
+      id = data._id
       const rancangan_anggaran = data.rancangan_anggaran;
       const idx = rancangan_anggaran.length;
-      result = rancangan_anggaran[idx - 1];
+      ra = rancangan_anggaran[idx - 1];
+      thunkAPI.dispatch(setNotification({type: "success", message: "Data Berhasil Ditambahkan"}))
+      thunkAPI.dispatch(loadProjectBudget())
     });
-    return result;
+    return {id, ra, terakhir_diubah};
   }
 );
 
 export const updateRancanganAnggaran = createAsyncThunk(
-    "projectbudgetselected/updaterancangananggaran", async ({id_anggaran, data}, thunkAPI) => {
-        return data
-    }
-)
+  "projectbudgetselected/updaterancangananggaran",
+  async ({ id_anggaran, data }, thunkAPI) => {
+      let id, terakhir_diubah
+    await Api.put("/api/projectbudget/updaterencanaanggaran", {
+      id_anggaran,
+      data,
+    }).then((res) => {
+    const data = res.data;
+      terakhir_diubah = data.terakhir_diubah
+      id = data._id
+      thunkAPI.dispatch(setNotification({type: "success", message: "Data Berhasil Diperbarui"}))
+      thunkAPI.dispatch(loadProjectBudget())
+    });
+    return {id, data, terakhir_diubah};
+  }
+);
 
 export const deleteRancanganAnggaran = createAsyncThunk(
-    "projectbudgetselected/deleterancangananggaran", async ({id_anggaran, _id}, thunkAPI) => {
-        return _id
-    }
-)
+  "projectbudgetselected/deleterancangananggaran",
+  async ({ id_anggaran, _id }, thunkAPI) => {
+    let id, terakhir_diubah
+    await Api.put("/api/projectbudget/deleterencanaangaran", {
+      id_anggaran,
+      _id,
+    }).then((res) => {
+        const data = res.data;
+      terakhir_diubah = data.terakhir_diubah
+      id = data._id
+      thunkAPI.dispatch(setNotification({type: "success", message: "Data Berhasil Dihapus"}))
+      thunkAPI.dispatch(loadProjectBudget())
+    })
+    return {id, _id, terakhir_diubah};
+  }
+);
 
 const projectBudgetSelectedEntity = createEntityAdapter({
   selectId: (projectbudgetselected) => projectbudgetselected._id,
@@ -61,8 +91,8 @@ const ProjectBudgetSelectedSlice = createSlice({
   }),
   reducers: {
     clearProjectBudgetSelected: (state, action) => {
-      projectBudgetSelectedEntity.removeAll(state)
-      rancanganAnggaranEntity.removeAll(state.rancanganAnggaran)
+      projectBudgetSelectedEntity.removeAll(state);
+      rancanganAnggaranEntity.removeAll(state.rancanganAnggaran);
     },
   },
   extraReducers: {
@@ -74,14 +104,23 @@ const ProjectBudgetSelectedSlice = createSlice({
       );
     },
     [addRancanganAnggaran.fulfilled]: (state, action) => {
-      rancanganAnggaranEntity.addOne(state.rancanganAnggaran, action.payload);
+      rancanganAnggaranEntity.addOne(state.rancanganAnggaran, action.payload.ra);
+      projectBudgetSelectedEntity.updateOne(state, {id : action.payload.id, changes : {terakhir_diubah: action.payload.terakhir_diubah}})
     },
     [updateRancanganAnggaran.fulfilled]: (state, action) => {
-        rancanganAnggaranEntity.updateOne(state.rancanganAnggaran, {id: action.payload._id, changes: action.payload})
+      rancanganAnggaranEntity.updateOne(state.rancanganAnggaran, {
+        id: action.payload.data._id,
+        changes: action.payload.data,
+      });
+      projectBudgetSelectedEntity.updateOne(state, {id : action.payload.id, changes : {terakhir_diubah: action.payload.terakhir_diubah}})
     },
     [deleteRancanganAnggaran.fulfilled]: (state, action) => {
-        rancanganAnggaranEntity.removeOne(state.rancanganAnggaran, action.payload)
-    }
+      rancanganAnggaranEntity.removeOne(
+        state.rancanganAnggaran,
+        action.payload._id
+      );
+      projectBudgetSelectedEntity.updateOne(state, {id : action.payload.id, changes : {terakhir_diubah: action.payload.terakhir_diubah}})
+    },
   },
 });
 

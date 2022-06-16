@@ -125,7 +125,7 @@ export default function Itemcontrol({ data, closeItemControl, mode }) {
               <label className="block text-xs font-light text-gray-500">
                 Kategori
               </label>
-              <p className="text-sm font-medium leading-none">{simbol}</p>
+              <p className="text-sm font-medium leading-none">{kategori}</p>
             </div>
           </div>
           <div className="flex py-1 items-center">

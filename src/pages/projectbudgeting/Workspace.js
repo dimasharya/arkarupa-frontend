@@ -2,16 +2,25 @@ import { Label } from "@windmill/react-ui";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import NewRABForm from "./NewRABFrom";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { DocumentTextIcon } from "@heroicons/react/outline";
 import { projectBudgetSelector } from "../../reducer/ProjectBudgetSlice";
 import TableDataLong from "../../components/Projectbudget/Workspace/TableDataLong";
 import RecentProjectBudgetCard from "../../components/Projectbudget/Workspace/RecentProjectBudgetCard";
+import { clearProjectBudgetSelected } from "../../reducer/ProjectBudgetSelectedSlice";
+import { useLocation } from "react-router-dom";
 
 export default function Workspace() {
   const [modalNewRab, setModalNewRab] = useState(false);
   const projectBudget = useSelector(projectBudgetSelector.selectAll);
+
+  const dispatch = useDispatch()
+  const location = useLocation()
+
+  useEffect(() => {
+    dispatch(clearProjectBudgetSelected())
+  }, [location])
 
   return (
     <>
