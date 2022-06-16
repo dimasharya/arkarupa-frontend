@@ -13,8 +13,6 @@ import CustomStyle from "./assets/css/Customstyle";
 const RequiredAuth = lazy(() => import("./containers/RequiredAuth"));
 const Layout = lazy(() => import("./containers/Layout"));
 const Login = lazy(() => import("./pages/authentication/Login"));
-const CreateAccount = lazy(() => import("./pages/CreateAccount"));
-const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));
 
 const token = localStorage.getItem("theArkarupaSecureAuth");
 if (token) {
@@ -36,8 +34,8 @@ function App() {
               <BrowserRouter>
                 <Routes>
                   <Route path="/login" element={<Login />} />
-                  <Route path="/create-account" element={<CreateAccount />} />
-                  <Route path="/forgot-password" element={<ForgotPassword />} />
+                  {/* <Route path="/create-account" element={<CreateAccount />} /> */}
+                  {/* <Route path="/forgot-password" element={<ForgotPassword />} /> */}
                   {/* Place new routes over this */}
                   <Route element={<RequiredAuth />}>
                     <Route path="/app/*" element={<Layout />} />

@@ -1,5 +1,5 @@
 {
-  "name": "the-arkarupa-apps",
+  "name": "arkarupa_project_management_app",
   "version": "1.0.0",
   "description": "Project Management",
   "private": true,
@@ -12,8 +12,6 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
-    "@dhtmlx/gantt-data-provider": "^0.2.0",
-    "@dhtmlx/trial-react-gantt": "^1.1.4",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
@@ -24,7 +22,6 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.3.0",
-    "@themesberg/tailwind-datepicker": "^1.1.0",
     "@windmill/react-ui": "^0.6.0",
     "@wojtekmaj/react-daterange-picker": "^3.4.0",
     "axios": "^0.27.2",
@@ -69,8 +66,7 @@
     "react-axe": "^3.5.4",
     "react-error-overlay": "^6.0.9",
     "release-it": "^14.11.6",
-    "tailwindcss": "^2.2.16",
-    "yarn-upgrade-all": "^0.5.4"
+    "tailwindcss": "^2.2.16"
   },
   "release-it": {
     "github": {
