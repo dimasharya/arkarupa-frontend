@@ -9,11 +9,13 @@ export default function TaskCardSelesai({ dataTask }) {
     tanggal_mulai,
     tanggal_selesai,
     volume,
+    volume_sekarang,
     satuan,
     status,
     penanggung_jawab,
-    progress,
   } = dataTask;
+
+  const progress = volume_sekarang/volume
   return (
     <>
       <div className="flex flex-col border rounded-md p-4 bg-white shadow-md">
@@ -64,7 +66,7 @@ export default function TaskCardSelesai({ dataTask }) {
           <p className="text-xs font-semibold text-gray-500">
             Penanggung Jawab
           </p>
-          <p className="text-sm">{penanggung_jawab}</p>
+          <p className="text-sm">{penanggung_jawab !== null ? penanggung_jawab.name : ""}</p>
         </div>
         <ProgressBar progress={progress} />
       </div>

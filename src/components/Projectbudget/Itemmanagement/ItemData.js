@@ -5,23 +5,20 @@ import NumberFormat from "react-number-format";
 
 export default function ItemData({
   idx,
-  item,
-  category,
-  coefficient,
-  unit,
-  price,
-  total,
+  koefisien,
+  material,
   editItem,
   deleteItem
 }) {
   const [data, setData] = useState({
     idx: idx,
-    item: item,
-    category: category,
-    coefficient: coefficient,
-    unit: unit,
-    price: price,
-    total: total,
+    nama_item: material.nama_item,
+    kategori: material.kategori,
+    koefisien: koefisien,
+    satuan: material.satuan,
+    harga: material.harga,
+    total: parseFloat(Math.floor(koefisien.replace(",", ".") * material.harga)),
+    _id: material._id
   });
 
   const [editState, setEditState] = useState(false);
@@ -36,24 +33,28 @@ export default function ItemData({
     let coef = props.target.value;
     if (coef !== "") {
       coef = parseFloat(coef.replace(",", "."));
-      coef !== "" ? (totalNext = Math.floor(coef * data.price)) : (totalNext = 0);
+      coef !== "" ? (totalNext = Math.floor(coef * data.harga)) : (totalNext = 0);
     } else {
       totalNext = 0;
     }
     const newData = {
       idx: idx,
-      item: data.item,
-      category: data.category,
-      coefficient: props.target.value,
-      unit: data.unit,
-      price: data.price,
+      nama_item: data.nama_item,
+      kategori: data.kategori,
+      koefisien: props.target.value,
+      satuan: data.satuan,
+      harga: data.harga,
       total: totalNext,
     };
     setData(newData);
   };
 
   const toggleSubmit = () => {
-    editItem(data);
+    const dataToSubmit = {
+      idx: data.idx,
+      koefisien: data.koefisien
+    }
+    editItem(dataToSubmit);
     setEditState(!editState);
   };
 
@@ -70,23 +71,23 @@ export default function ItemData({
   return (
     <>
       <tr key={`ingredient${idx}`} className="inline-flex w-full items-center">
-        <td className="w-4/12 pl-2 py-1 truncate">{data.item}</td>
+        <td className="w-4/12 pl-2 py-1 truncate">{data.nama_item}</td>
         <td className="w-2/12 text-center items-center">
           {editState ? (
             <Input
               className="text-center h-6"
               onChange={coefficientChangeHandler}
               ref={editRef}
-              defaultValue={data.coefficient}
+              defaultValue={data.koefisien}
             />
           ) : (
-            data.coefficient
+            data.koefisien
           )}
         </td>
-        <td className="w-2/12 text-center">{data.unit}</td>
+        <td className="w-2/12 text-center">{data.satuan}</td>
         <td className="w-3/12">
           <NumberFormat
-            value={data.price}
+            value={data.harga}
             displayType={"text"}
             thousandSeparator
             prefix={"Rp. "}

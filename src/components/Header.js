@@ -12,6 +12,7 @@ import Clock from "./Clock/Clock";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, selectUser } from "../reducer/AuthSlice";
+import { getRoles } from "../utils/getRoles";
 
 function Header() {
   const dispatch = useDispatch();
@@ -113,7 +114,7 @@ function Header() {
             <Clock />
           </li>
           <li>
-            <h4 className="text-xs font-black">{user.name}</h4>
+            <h4 className="text-xs font-black">{user.name}<span> - {getRoles(user.role)}</span></h4>
           </li>
           {/* <!-- Profile menu --> */}
           <li className="relative">

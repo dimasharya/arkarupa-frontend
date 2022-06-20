@@ -8,14 +8,16 @@ import TaskCardDijadwalkan from "../../components/Cards/ProjectManager/TaskCardD
 import TaskCardSelesai from "../../components/Cards/ProjectManager/TaskCardSelesai";
 import Tim from "../../components/Project/Tim";
 import NewPekerjaanForm from "./ProjectManager/NewPekerjaanForm";
+import EditPekerjaanForm from "./ProjectManager/EditPekerjaanForm";
 // import Table, {
 //   DisplayBadgeStatus,
 //   DisplayProgressBarSmall,
 // } from "../../components/Table/Table";
 import { HeroPlusOutline, ChevronLeft } from "../../icons";
 import {
+  loadPekerjaan,
   loadProjectSelected,
-  projectSelectedSelector,
+  projectSelectedSelectorPekerjaan,
   projectSelectedSelectorTeam,
 } from "../../reducer/ProjectSelectedSlice";
 import NewTeamForm from "./ProjectManager/NewTeamForm";
@@ -23,147 +25,29 @@ import NewTeamForm from "./ProjectManager/NewTeamForm";
 export default function Project() {
   const [modalNewPekerjaan, setModalNewPekerjaan] = useState(false);
   const [modalNewTeam, setModalNewTeam] = useState(false);
+  const [modalEditPekerjaan, setModalEditPekerjaan] = useState(false);
 
   let { projectId } = useParams();
   const dispatch = useDispatch();
 
-  const location = useLocation()
+  const location = useLocation();
 
   useEffect(() => {
     dispatch(loadProjectSelected({ id: projectId }));
+    dispatch(loadPekerjaan({ id_proyek: projectId }));
   }, [location]);
 
-  const Proyek = useSelector(projectSelectedSelector.selectAll);
   const Team = useSelector(projectSelectedSelectorTeam.selectAll);
 
-  const dataDijadwalkan = [
-    {
-      id: "xxxx",
-      kode_pekerjaan: "BBG000001",
-      nama_pekerjaan: "Galian Tanah 60 CM",
-      volume: 245,
-      satuan: "m3",
-      tanggal_mulai_rencana: "2022-06-06",
-      tanggal_selesai_rencana: "2022-06-10",
-      tanggal_mulai: "2022-06-06",
-      tanggal_selesai: "2022-06-10",
-      status: "Dijadwalkan",
-      penanggung_jawab: "Sentot Wibisono",
-      progress: "40",
-      permit_to_work: "null",
-    },
-    {
-      id: "xxxx",
-      kode_pekerjaan: "BBG000001",
-      nama_pekerjaan: "Galian Tanah 60 CM",
-      volume: 245,
-      satuan: "m3",
-      tanggal_mulai_rencana: "2022-06-06",
-      tanggal_selesai_rencana: "2022-06-10",
-      tanggal_mulai: "2022-06-06",
-      tanggal_selesai: "2022-06-10",
-      status: "Dijadwalkan",
-      penanggung_jawab: "Sentot Wibisono",
-      progress: "40",
-      permit_to_work: "null",
-    },
-    {
-      id: "xxxx",
-      kode_pekerjaan: "BBG000001",
-      nama_pekerjaan: "Galian Tanah 60 CM",
-      volume: 245,
-      satuan: "m3",
-      tanggal_mulai_rencana: "2022-06-06",
-      tanggal_selesai_rencana: "2022-06-10",
-      tanggal_mulai: "2022-06-06",
-      tanggal_selesai: "2022-06-10",
-      status: "Dijadwalkan",
-      penanggung_jawab: "Sentot Wibisono",
-      progress: "40",
-      permit_to_work: "null",
-    },
-  ];
-  const dataBerlangsung = [
-    {
-      id: "xxxx",
-      kode_pekerjaan: "BBG000001",
-      nama_pekerjaan: "Galian Tanah 60 CM",
-      volume: 245,
-      satuan: "m3",
-      tanggal_mulai_rencana: "2022-06-06",
-      tanggal_selesai_rencana: "2022-06-10",
-      tanggal_mulai: "2022-06-06",
-      tanggal_selesai: "2022-06-10",
-      status: "Dimulai",
-      penanggung_jawab: "Sentot Wibisono",
-      progress: "40",
-      permit_to_work: "null",
-    },
-    {
-      id: "xxxx",
-      kode_pekerjaan: "BBG000001",
-      nama_pekerjaan: "Galian Tanah 60 CM",
-      volume: 245,
-      satuan: "m3",
-      tanggal_mulai_rencana: "2022-06-06",
-      tanggal_selesai_rencana: "2022-06-10",
-      tanggal_mulai: "2022-06-06",
-      tanggal_selesai: "2022-06-10",
-      status: "Dimulai",
-      penanggung_jawab: "Sentot Wibisono",
-      progress: "40",
-      permit_to_work: "null",
-    },
-    {
-      id: "xxxx",
-      kode_pekerjaan: "BBG000001",
-      nama_pekerjaan: "Galian Tanah 60 CM",
-      volume: 245,
-      satuan: "m3",
-      tanggal_mulai_rencana: "2022-06-06",
-      tanggal_selesai_rencana: "2022-06-10",
-      tanggal_mulai: "2022-06-06",
-      tanggal_selesai: "2022-06-10",
-      status: "Dimulai",
-      penanggung_jawab: "Sentot Wibisono",
-      progress: "40",
-      permit_to_work: "null",
-    },
-  ];
-  const dataSelesai = [
-    {
-      id: "xxxx",
-      kode_pekerjaan: "BBG000001",
-      nama_pekerjaan: "Galian Tanah 60 CM",
-      volume: 245,
-      satuan: "m3",
-      tanggal_mulai_rencana: "2022-06-06",
-      tanggal_selesai_rencana: "2022-06-10",
-      tanggal_mulai: "2022-06-06",
-      tanggal_selesai: "2022-06-10",
-      status: "Selesai",
-      penanggung_jawab: "Sentot Wibisono",
-      progress: "100",
-      permit_to_work: "null",
-    },
-  ];
+  const DataPekerjaan = useSelector(projectSelectedSelectorPekerjaan.selectAll);
 
-  const [data, setData] = useState([
-    {
-      kode_pekerjaan: "BBG00001",
-      item_pekerjaan: "Galian Tanah 50 CM",
-      tanggal_pelaksanaan: "2022-06-10",
-      pelaksana: "Albert Suyono",
-      status: "Dijadwalkan",
-      progress: "30",
-    },
-  ]);
+  const [dataEdit, setDataEdit] = useState("");
 
-  // function cekData () {
-  //   Proyek.map(item => {
-  //     console.log(item);
-  //   })
-  // }
+  const editPekerjaan = (data) => {
+    setModalEditPekerjaan(!modalEditPekerjaan);
+    setDataEdit(data);
+  };
+
   return (
     <>
       <div className="flex gap-4 items-center my-2">
@@ -174,11 +58,7 @@ export default function Project() {
       </div>
       <div className="flex flex-col gap-4">
         <div className="grid grid-cols-4 grid-flow-col gap-4">
-          {Proyek.length !== 0 ? (
-            <ProjectInfoCard dataProyek={Proyek[0]} />
-          ) : (
-            ""
-          )}
+            <ProjectInfoCard />
           <div className="col-span-1 py-4 px-6 rounded-md text-white bg-gradient-to-b from-gray-900 to-gray-600 bg-gradient-to-r">
             <h2 className="font-semibold mb-4">Data Proyek</h2>
             <div className="grid grid-cols-2 gap-2">
@@ -227,8 +107,8 @@ export default function Project() {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-8 gap-4">
-          <div className=" col-span-6 p-6 bg-white rounded-lg border">
+        <div className="grid grid-cols-4 gap-4">
+          <div className=" col-span-3 p-6 bg-white rounded-lg border">
             <div className="flex justify-between pb-3 mb-3 px-2 items-center gap-2">
               <div className="flex items-center gap-2">
                 <div className="p-1.5 w-7 h-7 rounded-full bg-black">
@@ -267,17 +147,19 @@ export default function Project() {
                   <h2 className="text-sm font-bold">Semua Pekerjaan</h2>
                 </div>
                 <div className="flex gap-2 flex-col relative overflow-y-auto h-96 scrollbar-hide">
-                  {dataDijadwalkan.map((item, idx) => {
-                    if (dataDijadwalkan.length !== 0) {
-                      return <TaskCardDijadwalkan key={idx} dataTask={item} />;
-                    } else {
-                      return (
-                        <>
-                          <p className="text-center text-xs">Tidak Ada Data</p>
-                        </>
-                      );
-                    }
-                  })}
+                  {DataPekerjaan.length !== 0 ? (
+                    DataPekerjaan.map((item, idx) => {
+                        return (
+                          <TaskCardDijadwalkan
+                            key={idx}
+                            dataTask={item}
+                            editPekerjaan={editPekerjaan}
+                          />
+                        );
+                    })
+                  ) : (
+                    <p className="text-center text-xs">Tidak Ada Data</p>
+                  )}
                 </div>
               </div>
               <div className="grid">
@@ -286,17 +168,20 @@ export default function Project() {
                   <h2 className="text-sm font-bold">Berlangsung</h2>
                 </div>
                 <div className="flex gap-2 flex-col relative overflow-y-auto h-96 scrollbar-hide">
-                  {dataBerlangsung.map((item, idx) => {
-                    if (dataBerlangsung.length !== 0) {
-                      return <TaskCardBerlangsung key={idx} dataTask={item} />;
-                    } else {
-                      return (
-                        <>
-                          <p className="text-center text-xs">Tidak Ada Data</p>
-                        </>
-                      );
-                    }
-                  })}
+                  {DataPekerjaan.length !== 0 ? (
+                    DataPekerjaan.map((item, idx) => {
+                      if (
+                        item.status === "Dimulai" ||
+                        item.status === "Dijeda"
+                      ) {
+                        return (
+                          <TaskCardBerlangsung key={idx} dataTask={item} />
+                        );
+                      }
+                    })
+                  ) : (
+                    <p className="text-center text-xs">Tidak Ada Data</p>
+                  )}
                 </div>
               </div>
               <div className="grid">
@@ -305,17 +190,15 @@ export default function Project() {
                   <h2 className="text-sm font-bold">Selesai</h2>
                 </div>
                 <div className="flex gap-2 flex-col relative overflow-y-auto h-96 scrollbar-hide">
-                  {dataSelesai.map((item, idx) => {
-                    if (dataSelesai.length !== 0) {
-                      return <TaskCardSelesai key={idx} dataTask={item} />;
-                    } else {
-                      return (
-                        <>
-                          <p className="text-center text-xs">Tidak Ada Data</p>
-                        </>
-                      );
-                    }
-                  })}
+                  {DataPekerjaan.length !== 0 ? (
+                    DataPekerjaan.map((item, idx) => {
+                      if (item.status === "Selesai") {
+                        return <TaskCardSelesai key={idx} dataTask={item} />;
+                      }
+                    })
+                  ) : (
+                    <p className="text-center text-xs">Tidak Ada Data</p>
+                  )}
                 </div>
               </div>
             </div>
@@ -337,6 +220,13 @@ export default function Project() {
         <NewPekerjaanForm
           modalNewPekerjaan={modalNewPekerjaan}
           setModalNewPekerjaan={setModalNewPekerjaan}
+        />
+      )}
+      {modalEditPekerjaan && (
+        <EditPekerjaanForm
+          modalEditPekerjaan={modalEditPekerjaan}
+          setModalEditPekerjaan={setModalEditPekerjaan}
+          dataPekerjaan={dataEdit}
         />
       )}
       {modalNewTeam && (

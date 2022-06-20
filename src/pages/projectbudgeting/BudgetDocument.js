@@ -121,9 +121,16 @@ export default function BudgetDocuments() {
   }
 
   function editClick(props) {
+    const data = {
+      ...props,
+      nama_pekerjaan: props.item_pekerjaan.nama_pekerjaan,
+      kategori: props.item_pekerjaan.kategori,
+      simbol: props.item_pekerjaan.simbol,
+      harga: props.item_pekerjaan.harga
+    };
     const dataEdit = {
       mode: "edit",
-      data: props,
+      data: data,
     };
     setItemcontrol(dataEdit);
     setisItemcontrol(true);
@@ -149,17 +156,17 @@ export default function BudgetDocuments() {
     await Api.get("/api/projectbudgetmanagement/itempekerjaan", {
       params: { key: data },
     }).then((res) => {
-      setDataPekerjaan(res.data)
+      setDataPekerjaan(res.data);
     });
   };
 
   useEffect(() => {
-    fetchData(key)
+    fetchData(key);
   }, [key]);
 
   function searchResultcontrol(props) {
     const searchKey = props.target.value;
-    setKey(searchKey)
+    setKey(searchKey);
   }
 
   return (
@@ -217,7 +224,9 @@ export default function BudgetDocuments() {
                       className="hover:bg-yellow-50 focus:bg-yellow-100 "
                     >
                       <TableCell>
-                        <p className="truncate">{item.nama_pekerjaan}</p>
+                        <p className="truncate">
+                          {item.item_pekerjaan.nama_pekerjaan}
+                        </p>
                       </TableCell>
                       <TableCell className="text-center">
                         <label
@@ -225,21 +234,21 @@ export default function BudgetDocuments() {
                           data-tip
                           data-for="table-cat"
                         >
-                          {item.simbol}
+                          {item.item_pekerjaan.simbol}
                         </label>
                         <Tooltip id="table-cat" place="top" effect="solid">
                           Pekerjaan Awalan
                         </Tooltip>
                       </TableCell>
                       <TableCell className="text-center">
-                        {item.satuan}
+                        {item.item_pekerjaan.satuan}
                       </TableCell>
                       <TableCell className="text-center">
                         {item.volume}
                       </TableCell>
                       <TableCell>
                         <NumberFormat
-                          value={item.harga}
+                          value={item.item_pekerjaan.harga}
                           displayType={"text"}
                           thousandSeparator
                           prefix={"Rp. "}

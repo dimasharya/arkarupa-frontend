@@ -12,8 +12,11 @@ export default function TaskCardSelesai({ dataTask }) {
     satuan,
     status,
     penanggung_jawab,
-    progress,
+    volume_sekarang,
   } = dataTask;
+
+  const progress = volume_sekarang / volume
+
   return (
     <>
       <div className="flex flex-col border rounded-md p-4 bg-white shadow-md">

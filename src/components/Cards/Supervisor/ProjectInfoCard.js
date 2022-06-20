@@ -1,6 +1,15 @@
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom"
+import { projectSelectedSelectorById } from "../../../reducer/ProjectSelectedSlice";
 import ProgressBar from "../../Progresbar/Progresbar"
 
 export default function ProjectInfoCard({dataProyek}) {
+  let {projectId} = useParams()
+
+  const Proyek = useSelector((state) =>
+    projectSelectedSelectorById(state, projectId)
+  );
+
   const {nama_proyek, kategori, pemilik, alamat, progress, pekerjaan} = dataProyek
     return(
         <div className="grid grid-flow-col gap-4">
@@ -8,9 +17,9 @@ export default function ProjectInfoCard({dataProyek}) {
             <div className="grid grid-cols-9 gap-4">
               <div className="pl-2 col-span-5">
                 <p className="text-2xl font-bold truncate">
-                  {nama_proyek}
+                  {Proyek ? Proyek.nama_proyek : <p className="w-full animate-pulse bg-lime-700" />}
                 </p>
-                <h4 className="text-sm font-semibold mb-4">{kategori}</h4>
+                <h4 className="text-sm font-semibold mb-4">{Proyek ? Proyek.kategori : <p className="w-full animate-pulse bg-lime-700" />}</h4>
                 <div className="flex py-1 items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -27,7 +36,7 @@ export default function ProjectInfoCard({dataProyek}) {
                     />
                   </svg>
                   <p className="ml-2 text-sm font-semibold">
-                    {pemilik}
+                    {Proyek ? Proyek.pemilik : <p className="w-full animate-pulse bg-lime-700" />}
                   </p>
                 </div>
                 <div className="flex py-1 items-center">
@@ -51,11 +60,11 @@ export default function ProjectInfoCard({dataProyek}) {
                     />
                   </svg>
                   <p className="ml-2 text-sm font-semibold truncate">
-                    {alamat}
+                    {Proyek ? Proyek.alamat : <p className="w-full animate-pulse bg-lime-700" />}
                   </p>
                 </div>
                 <div className="mr-4">
-                  <ProgressBar progress={progress} />
+                  <ProgressBar progress={Proyek ? Proyek.progress : <p className="w-full animate-pulse bg-lime-700" />} />
                 </div>
               </div>
               <div className="col-span-4 grid grid-cols-3 gap-2">

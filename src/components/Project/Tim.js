@@ -12,7 +12,7 @@ export default function Tim({ dataTim, modalNewTeam, setModalNewTeam, projectId 
   };
   return (
     <>
-      <div className="col-span-2 p-6 max-w-md bg-white rounded-lg border">
+      <div className="flex flex-col p-6 max-w-md bg-white rounded-lg border">
         <div className="flex justify-between items-center mb-4">
           <h5 className="font-semibold leading-none text-gray-900 dark:text-white">
             Tim

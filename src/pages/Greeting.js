@@ -1,23 +1,24 @@
+import moment from "moment";
 import { useSelector } from "react-redux";
 import { selectUser } from "../reducer/AuthSlice";
 
 function Greeting() {
-  const date = new Date()
+  const date = moment().format("HH")
   let greeting, message;
   const user = useSelector(selectUser);
-  if(date.getHours() >= 0 && date.getHours() <= 5){
+  if(date > 0 && date < 5){
     greeting = "Tengah Malam"
-    message = "Segera istirahat, semoga tidur nyenyak :)"
-  }else if(date.getHours() >= 5 && date.getHours() <= 12){
+    message = "Segera Istirahat, semoga tidur nyenyak :)"
+  }else if(date > 5 && date < 12){
     greeting = "Pagi"
-    message = "Selamat Beraktifitas, Lets rokinn :)"
-  }else if(date.getHours() >= 12 && date.getHours() <= 13){
+    message = "Selamat Beraktivitas, Lets rokinn :)"
+  }else if(date > 12 && date < 13){
     greeting = "Siang"
     message = "Selamat Beristirahat, Get some coffee break :)"
-  }else if(date.getHours() >= 13 && date.getHours() <= 17){
+  }else if(date > 13 && date < 17){
     greeting = "Sore"
-    message = "Selamat Beraktifitas, Lets rokinn :)"
-  }else if(date.getHours() >= 17 && date.getHours() <= 24){
+    message = "Selamat Beraktivitas, Lets rokinn :)"
+  }else if(date > 17 && date < 24){
     greeting = "Malam"
     message = "Selamat Beristirahat, Have a nice sleep :)"
   }

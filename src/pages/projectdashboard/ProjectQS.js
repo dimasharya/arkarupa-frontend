@@ -1,72 +1,26 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Button } from "windmill-react-ui-kit";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, useParams } from "react-router-dom";
+import { Button } from "@windmill/react-ui";
 import TaskCard from "../../components/Cards/QuantitiySurveyor/TaskCard";
 import UpdateForm from "../../components/Cards/QuantitiySurveyor/UpdateForm";
 import ProjectInfoCard from "../../components/Cards/SiteManager/ProjectInfoCard";
 import { ChevronLeft } from "../../icons";
+import { useDispatch, useSelector } from "react-redux";
+import { loadPekerjaan, loadProjectSelected, projectSelectedSelectorPekerjaan } from "../../reducer/ProjectSelectedSlice";
 
 export default function ProjectQS() {
-    const dataProyek = {
-        nama_proyek: "BSD Botanical Garden",
-        pemilik: "PT. Bukit Serpong Damai",
-        kategori: "Area Publik",
-        alamat: "Jl. Telaga Golf Raya, Lengkong Gudang, Kec. Serpong, Kota Tangerang Selatan, Banten",
-        progress: 20,
-        pekerjaan: {
-            total_pekerjaan: 120,
-            pekerjaan_berlangsung: 10,
-            pekerjaan_selesai: 4
-        }
-    }
 
-  const dataDijadwalkan = [
-    {
-      id: "xxxx",
-      kode_pekerjaan: "BBG000001",
-      nama_pekerjaan: "Galian Tanah 60 CM",
-      volume: 245,
-      satuan: "m3",
-      tanggal_mulai_rencana: "2022-06-06",
-      tanggal_selesai_rencana: "2022-06-10",
-      tanggal_mulai: "2022-06-06",
-      tanggal_selesai: "2022-06-10",
-      status: "Dijadwalkan",
-      penanggung_jawab: "Sentot Wibisono",
-      progress: "40",
-      permit_to_work: "null",
-    },
-    {
-      id: "xxxx",
-      kode_pekerjaan: "BBG000001",
-      nama_pekerjaan: "Galian Tanah 60 CM",
-      volume: 245,
-      satuan: "m3",
-      tanggal_mulai_rencana: "2022-06-06",
-      tanggal_selesai_rencana: "2022-06-10",
-      tanggal_mulai: "2022-06-06",
-      tanggal_selesai: "2022-06-10",
-      status: "Selesai",
-      penanggung_jawab: "",
-      progress: "40",
-      permit_to_work: "null",
-    },
-    {
-      id: "xxxx",
-      kode_pekerjaan: "BBG000001",
-      nama_pekerjaan: "Galian Tanah 60 CM",
-      volume: 245,
-      satuan: "m3",
-      tanggal_mulai_rencana: "2022-06-06",
-      tanggal_selesai_rencana: "2022-06-10",
-      tanggal_mulai: "2022-06-06",
-      tanggal_selesai: "2022-06-10",
-      status: "Dimulai",
-      penanggung_jawab: "Sentot Wibisono",
-      progress: "40",
-      permit_to_work: "null",
-    },
-  ];
+  let { projectId } = useParams();
+  const dispatch = useDispatch();
+
+  const location = useLocation();
+
+  useEffect(() => {
+    dispatch(loadProjectSelected({ id: projectId }));
+    dispatch(loadPekerjaan({ id_proyek: projectId }));
+  }, [location]);
+
+  const DataPekerjaan = useSelector(projectSelectedSelectorPekerjaan.selectAll);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -79,7 +33,7 @@ export default function ProjectQS() {
         <label className="text-base font-bold">Proyek</label>
       </div>
       <div className="flex flex-col gap-4">
-        <ProjectInfoCard dataProyek={dataProyek} />
+        <ProjectInfoCard />
         <div className="grid ">
           <div className="p-6 bg-white rounded-lg border">
             <div className="flex pb-3 mb-3 px-2 items-center gap-2">
@@ -110,17 +64,18 @@ export default function ProjectQS() {
                   <h2 className="text-sm font-bold">Semua Pekerjaan</h2>
                 </div>
                 <div className="flex gap-2 flex-col relative overflow-y-auto h-96 scrollbar-hide">
-                  {dataDijadwalkan.map((item, idx) => {
-                    if (dataDijadwalkan.length !== 0) {
-                      return <TaskCard key={idx} dataTask={item} setIsOpen={setIsOpen} isOpen={isOpen} />;
-                    } else {
-                      return (
-                        <>
-                          <p className="text-center text-xs">Tidak Ada Data</p>
-                        </>
-                      );
-                    }
-                  })}
+                {DataPekerjaan.length !== 0 ? (
+                    DataPekerjaan.map((item, idx) => {
+                        return (
+                          <TaskCard
+                            key={idx}
+                            dataTask={item}
+                          />
+                        );
+                    })
+                  ) : (
+                    <p className="text-center text-xs">Tidak Ada Data</p>
+                  )}
                 </div>
               </div>
             </div>

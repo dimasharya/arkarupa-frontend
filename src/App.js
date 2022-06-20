@@ -10,6 +10,7 @@ import ThemedSuspense from "./components/ThemedSuspense";
 import { Windmill } from "@windmill/react-ui";
 import CustomStyle from "./assets/css/Customstyle";
 
+const LandingPage = lazy(() => import("./pages/LandingPage"))
 const RequiredAuth = lazy(() => import("./containers/RequiredAuth"));
 const Layout = lazy(() => import("./containers/Layout"));
 const Login = lazy(() => import("./pages/authentication/Login"));
@@ -33,6 +34,7 @@ function App() {
               <Toaster position="top-right" />
               <BrowserRouter>
                 <Routes>
+                  <Route path="/" element={<LandingPage />} />
                   <Route path="/login" element={<Login />} />
                   {/* <Route path="/create-account" element={<CreateAccount />} /> */}
                   {/* <Route path="/forgot-password" element={<ForgotPassword />} /> */}

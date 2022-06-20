@@ -1,13 +1,34 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Button } from "windmill-react-ui-kit";
-import ProjectInfoCard from "../../components/Cards/ProjectManager/ProjectInfoCard";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, useParams } from "react-router-dom";
+import { Button } from "@windmill/react-ui";
+import ProjectInfoCard from "../../components/Cards/Supervisor/ProjectInfoCard";
 import TaskCardBerlangsung from "../../components/Cards/Supervisor/TaskCardBerlangsung";
 import TaskCardDijadwalkan from "../../components/Cards/Supervisor/TaskCardDijadwalkan";
 import TaskCardSelesai from "../../components/Cards/Supervisor/TaskCardSelesai";
 import { ChevronLeft } from "../../icons";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  loadPekerjaanSpv,
+  loadProjectSelected,
+  projectSelectedSelectorPekerjaan,
+} from "../../reducer/ProjectSelectedSlice";
+import { selectUser } from "../../reducer/AuthSlice";
 
 export default function ProjectSPV() {
+  let { projectId } = useParams();
+  const dispatch = useDispatch();
+
+  const location = useLocation();
+
+  const User = useSelector(selectUser)
+
+  useEffect(() => {
+    dispatch(loadProjectSelected({ id: projectId }));
+    dispatch(loadPekerjaanSpv({ id_proyek: projectId, penanggung_jawab:  User._id}));
+  }, [location]);
+
+  const DataPekerjaan = useSelector(projectSelectedSelectorPekerjaan.selectAll);
+
   const dataProyek = {
     nama_proyek: "BSD Botanical Garden",
     pemilik: "PT. Bukit Serpong Damai",
@@ -173,17 +194,15 @@ export default function ProjectSPV() {
                   <h2 className="text-sm font-bold">Dijadwalkan</h2>
                 </div>
                 <div className="flex gap-2 flex-col relative overflow-y-auto h-96 scrollbar-hide">
-                  {dataDijadwalkan.map((item, idx) => {
-                    if (dataDijadwalkan.length !== 0) {
-                      return <TaskCardDijadwalkan key={idx} dataTask={item} />;
-                    } else {
-                      return (
-                        <>
-                          <p className="text-center text-xs">Tidak Ada Data</p>
-                        </>
-                      );
-                    }
-                  })}
+                  {DataPekerjaan.length !== 0 ? (
+                    DataPekerjaan.map((item, idx) => {
+                      if(item.status === "Dijadwlakan"){
+                        return <TaskCardDijadwalkan key={idx} dataTask={item} />;
+                      }
+                    })
+                  ) : (
+                    <p className="text-center text-xs">Tidak Ada Data</p>
+                  )}
                 </div>
               </div>
               <div className="grid">
@@ -192,17 +211,20 @@ export default function ProjectSPV() {
                   <h2 className="text-sm font-bold">Berlangsung</h2>
                 </div>
                 <div className="flex gap-2 flex-col relative overflow-y-auto h-96 scrollbar-hide">
-                  {dataBerlangsung.map((item, idx) => {
-                    if (dataBerlangsung.length !== 0) {
-                      return <TaskCardBerlangsung key={idx} dataTask={item} />;
-                    } else {
-                      return (
-                        <>
-                          <p className="text-center text-xs">Tidak Ada Data</p>
-                        </>
-                      );
-                    }
-                  })}
+                  {DataPekerjaan.length !== 0 ? (
+                    DataPekerjaan.map((item, idx) => {
+                      if (
+                        item.status === "Dimulai" ||
+                        item.status === "Dijeda"
+                      ) {
+                        return (
+                          <TaskCardBerlangsung key={idx} dataTask={item} />
+                        );
+                      }
+                    })
+                  ) : (
+                    <p className="text-center text-xs">Tidak Ada Data</p>
+                  )}
                 </div>
               </div>
               <div className="grid">
@@ -211,17 +233,15 @@ export default function ProjectSPV() {
                   <h2 className="text-sm font-bold">Selesai</h2>
                 </div>
                 <div className="flex gap-2 flex-col relative overflow-y-auto h-96 scrollbar-hide">
-                  {dataSelesai.map((item, idx) => {
-                    if (dataSelesai.length !== 0) {
-                      return <TaskCardSelesai key={idx} dataTask={item} />;
-                    } else {
-                      return (
-                        <>
-                          <p className="text-center text-xs">Tidak Ada Data</p>
-                        </>
-                      );
-                    }
-                  })}
+                  {DataPekerjaan.length !== 0 ? (
+                    DataPekerjaan.map((item, idx) => {
+                      if (item.status === "Selesai") {
+                        return <TaskCardSelesai key={idx} dataTask={item} />;
+                      }
+                    })
+                  ) : (
+                    <p className="text-center text-xs">Tidak Ada Data</p>
+                  )}
                 </div>
               </div>
             </div>

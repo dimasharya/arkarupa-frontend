@@ -52,8 +52,7 @@
     "react-transition-group": "^4.4.2",
     "redux": "^4.2.0",
     "tailwind-scrollbar-hide": "^1.0.3",
-    "uniqid": "^5.4.0",
-    "windmill-react-ui-kit": "^0.7.4"
+    "uniqid": "^5.4.0"
   },
   "devDependencies": {
     "@release-it/conventional-changelog": "^3.3.0",

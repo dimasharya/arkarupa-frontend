@@ -30,7 +30,7 @@ function ProjectCard({dataProyek}) {
           </div>
           <div className="flex flex-col w-56">
             <h6 className="text-xs font-semibold text-gray-500">Lokasi</h6>
-            <p className="text-xs font-bold leading-tight">{alamat}</p>
+            <p className="text-xs font-bold leading-tight truncate h-5 ">{alamat}</p>
           </div>
         </div>
         <div className="flex py-1 mt-2 items-center">

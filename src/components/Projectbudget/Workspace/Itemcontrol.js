@@ -44,20 +44,23 @@ export default function Itemcontrol({ data, closeItemControl, mode }) {
 
   function volumeOnchange(props) {
     let vol = props.target.value;
+    vol = parseFloat(vol.replace(",", "."))
     setVolumeAmount(vol);
+    
     //desimal belum bisa
-    vol !== "" ? setTotalAmound(parseFloat(vol) * harga) : setTotalAmound(0);
+    vol !== "" ? setTotalAmound(Math.floor((vol) * harga)) : setTotalAmound(0);
   }
 
   function submitItemControl(props) {
     if (mode === "add") {
       const data = {
         volume: props.volume,
-        nama_pekerjaan,
-        kategori,
-        simbol,
-        satuan,
-        harga,
+        // nama_pekerjaan,
+        // kategori,
+        // simbol,
+        // satuan,
+        // harga,
+        item_pekerjaan: _id,
         total: totalAmount,
       };
       dispatch(addRancanganAnggaran({ id_anggaran: projectId, data: data }));

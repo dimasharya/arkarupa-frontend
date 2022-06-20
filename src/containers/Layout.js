@@ -17,7 +17,7 @@ const ProjectDashboard = lazy(() =>
 const Greeting = lazy(() => import("../pages/Greeting"))
 const UserProfile = lazy(() => import("../pages/user/UserProfile"))
 const ProjectBudgeting = lazy(() => import("../pages/projectbudgeting"));
-const Schedule = lazy(() => import("../pages/schedule/Schedule"));
+// const Schedule = lazy(() => import("../pages/schedule/Schedule"));
 const UserManagement = lazy(() => import("../pages/user/UserManagement"));
 const PermitToWork = lazy(() => import("../pages/permittowork/PermitToWork"));
 const ProjectPM = lazy(() => import("../pages/projectdashboard/ProjectPM"));
@@ -79,7 +79,7 @@ function Layout() {
               <Route element={<RoleBased allowedRole={"se"} />}>
                 <Route path="se/projectbudgeting" exact element={<ProjectBudgeting />} />
                 <Route path="se/projectbudgeting/:projectId" element={<ProjectBudgeting />} />
-                <Route path="se/schedule" element={<Schedule />} />
+                {/* <Route path="se/schedule" element={<Schedule />} /> */}
               </Route>
               <Route element={<RoleBased allowedRole={"sm"} />}>
                 <Route path="sm/project" exact element={<ProjectDashboard />} />

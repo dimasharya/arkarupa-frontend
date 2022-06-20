@@ -10,10 +10,10 @@ export default function TaskCardBerlangsung({ dataTask }) {
     nama_pekerjaan,
     tanggal_mulai,
     volume,
+    volume_sekarang,
     satuan,
     status,
     permit_to_work,
-    progress,
   } = dataTask;
   let button_mulai, button_jeda;
   if (status === "Dimulai") {
@@ -23,6 +23,7 @@ export default function TaskCardBerlangsung({ dataTask }) {
     button_mulai = false;
     button_jeda = true;
   }
+  const progress = volume_sekarang/volume
   return (
     <>
       <div className="flex flex-col border rounded-md p-4 bg-white shadow-md">

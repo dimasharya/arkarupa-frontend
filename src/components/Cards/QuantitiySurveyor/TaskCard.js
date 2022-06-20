@@ -11,9 +11,9 @@ export default function TaskCard({ dataTask, setIsOpen, isOpen }) {
     nama_pekerjaan,
     tanggal_mulai,
     volume,
+    volume_sekarang,
     satuan,
     status,
-    progress,
   } = dataTask;
   let button_update;
   if (status === "Dimulai" || status === "Selesai") {
@@ -21,6 +21,8 @@ export default function TaskCard({ dataTask, setIsOpen, isOpen }) {
   } else {
     button_update = true;
   }
+
+  const progress = volume_sekarang / volume;
 
   return (
     <>
@@ -38,9 +40,13 @@ export default function TaskCard({ dataTask, setIsOpen, isOpen }) {
           <div className="text-left pt-1">
             <p className="text-xs font-semibold text-gray-500">Tanggal Mulai</p>
             <p className="text-sm">
-              <Moment format="ll" locale="id">
-                {tanggal_mulai}
-              </Moment>
+              {tanggal_mulai === null ? (
+                "Belum Dimulai"
+              ) : (
+                <Moment format="ll" locale="id">
+                  {tanggal_mulai}
+                </Moment>
+              )}
             </p>
           </div>
           <div className="text-center pt-1">

@@ -15,46 +15,23 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faCog } from "@fortawesome/free-solid-svg-icons";
 import NumberFormat from "react-number-format";
 import Item from "../../components/Projectbudget/Itemmanagement/Item";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteItem, loadItem, selectItem } from "../../reducer/ItemManagementSlice";
 
 export default function Itemmanagement() {
-  const data = [
-    {
-      nama: "Pemasangan Besi Bertingkat Dengan Bekisting",
-      category: "Struktur Utama",
-      sign: "STU",
-      unit: "m2",
-      ingredients: [
-        {
-          item: "Mandor",
-          category: "Pekerja",
-          coefficient: "0,8",
-          unit: "O.H",
-          price: 90000,
-          total: 72000,
-        },
-        {
-          item: "Solar",
-          category: "Bahan",
-          coefficient: "0,4",
-          unit: "Liter",
-          price: 6500,
-          total: 2600,
-        },
-      ],
-      price: 74600,
-      desc: "",
-    },
-  ];
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    
-  })
+    dispatch(loadItem());
+  }, []);
+
+  const Items = useSelector(selectItem.selectAll);
 
   /// Table Area
-  const [itemTable, setItemTable] = useState(data);
+  // const [itemTable, setItemTable] = useState(data);
   const [pageTable, setPageTable] = useState(1);
   const [dataTable, setDataTable] = useState([]);
-  const [totalResults, setTotalResult] = useState(itemTable.length);
+  const [totalResults, setTotalResult] = useState(Items.length);
   const [selectedCategory, setSelectedCategory] = useState("Semua Kategori");
   const [searchKey, setSearchKey] = useState("");
 
@@ -70,81 +47,38 @@ export default function Itemmanagement() {
   const [itemControl, setItemcontrol] = useState("");
 
   function hapusClick(props) {
-    const data = [...itemTable];
-    let indexData = 0;
-    if (pageTable !== 0) {
-      indexData = (pageTable - 1) * 10 + props;
-    } else {
-      indexData = props;
-    }
-    data.splice(indexData, 1);
-    setTotalResult(data.length);
-    setItemTable(data);
-  }
-
-  function toggleSubmit(props) {
-    const changedData = {
-      nama: props.nama,
-      category: props.category,
-      sign: props.sign,
-      unit: props.unit,
-      ingredients: props.ingredients,
-      price: props.price,
-      desc: props.desc,
-    };
-
-    let newData = [];
-    if (props.mode === "edit") {
-      let indexData = 0;
-      if (pageTable !== 0) {
-        indexData = (pageTable - 1) * 10 + props.index;
-      } else {
-        indexData = props.index;
-      }
-
-      for (let index = 0; index < itemTable.length; index++) {
-        if (index === indexData) {
-          newData[index] = changedData;
-        } else {
-          newData[index] = itemTable[index];
-        }
-      }
-    } else {
-      newData = [...itemTable, changedData];
-    }
-    setItemTable(newData);
+    dispatch(deleteItem({id_item: props}))
   }
 
   useEffect(() => {
     setDataTable(
-      itemTable.slice(
-        (pageTable - 1) * resultsPerPage,
-        pageTable * resultsPerPage
-      )
+      Items.slice((pageTable - 1) * resultsPerPage, pageTable * resultsPerPage)
     );
-  }, [pageTable, itemTable]);
+  }, [pageTable, Items]);
 
   function searchResultcontrol(category, keyword) {
     let filtered;
     if (keyword !== "") {
       if (category !== "Semua Kategori") {
-        filtered = itemTable.filter((item) => {
+        filtered = Items.filter((item) => {
           return (
-            item.nama.toLowerCase().includes(keyword.toLowerCase()) &&
-            item.category.toLowerCase().includes(category.toLowerCase())
+            item.nama_pekerjaan.toLowerCase().includes(keyword.toLowerCase()) &&
+            item.kategori.toLowerCase().includes(category.toLowerCase())
           );
         });
       } else {
-        filtered = itemTable.filter((item) => {
-          return item.nama.toLowerCase().includes(keyword.toLowerCase());
+        filtered = Items.filter((item) => {
+          return item.nama_pekerjaan
+            .toLowerCase()
+            .includes(keyword.toLowerCase());
         });
       }
     } else if (category !== "Semua Kategori") {
-      filtered = itemTable.filter((item) => {
-        return item.category.toLowerCase().includes(category.toLowerCase());
+      filtered = Items.filter((item) => {
+        return item.kategori.toLowerCase().includes(category.toLowerCase());
       });
     } else {
-      filtered = itemTable;
+      filtered = Items;
     }
     setDataTable(
       filtered.slice(
@@ -167,13 +101,12 @@ export default function Itemmanagement() {
 
   function toggleNew() {
     const data = {
-      nama: "",
-      category: "",
-      sign: "",
-      unit: "",
-      ingredients: [],
-      price: "",
-      desc: "",
+      nama_pekerjaan: "",
+      kategori: "",
+      simbol: "",
+      satuan: "",
+      harga: "",
+      material: [],
     };
     setItemcontrol({ data: data, mode: "new" });
     setIsOpen(!isOpen);
@@ -230,10 +163,10 @@ export default function Itemmanagement() {
                   className="hover:bg-yellow-50 focus:bg-yellow-100 "
                 >
                   <TableCell>
-                    <p className="truncate">{idx.nama}</p>
+                    <p className="truncate">{idx.nama_pekerjaan}</p>
                   </TableCell>
                   <TableCell className="text-center">
-                    <label>{idx.category}</label>
+                    <label>{idx.kategori}</label>
                   </TableCell>
                   <TableCell className="text-center">
                     <label
@@ -241,13 +174,13 @@ export default function Itemmanagement() {
                       data-tip
                       data-for="table-cat"
                     >
-                      {idx.sign}
+                      {idx.simbol}
                     </label>
                   </TableCell>
-                  <TableCell className="text-center">{idx.unit}</TableCell>
+                  <TableCell className="text-center">{idx.satuan}</TableCell>
                   <TableCell>
                     <NumberFormat
-                      value={idx.price}
+                      value={idx.harga}
                       displayType={"text"}
                       thousandSeparator
                       prefix={"Rp. "}
@@ -265,7 +198,7 @@ export default function Itemmanagement() {
                     />
                     <Button
                       className="hover:text-red-700"
-                      onClick={() => hapusClick(i)}
+                      onClick={() => hapusClick(idx._id)}
                       size="small"
                       icon={TrashIcon}
                       layout="link"
@@ -275,7 +208,9 @@ export default function Itemmanagement() {
               ))
             ) : (
               <TableRow>
-                <TableCell className="text-center" colSpan="6">Tidak Ada Data</TableCell>
+                <TableCell className="text-center" colSpan="6">
+                  Tidak Ada Data
+                </TableCell>
               </TableRow>
             )}
           </TableBody>
@@ -295,9 +230,10 @@ export default function Itemmanagement() {
         <div className="fixed inset-0 z-40 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center">
           <div className="w-4/5 mx-auto overflow-hidden bg-white rounded-lg px-6 py-4">
             <Item
+              setIsOpen={setIsOpen}
+              isOpen={isOpen}
               data={itemControl}
               toggleEdit={toggleEdit}
-              toggleSubmit={toggleSubmit}
             />
           </div>
         </div>

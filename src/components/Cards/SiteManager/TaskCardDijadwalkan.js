@@ -37,10 +37,10 @@ export default function TaskCardDijadwalkan({ dataTask }) {
     }
   }
   function penanggungJawab(){
-    if(penanggung_jawab === ""){
+    if(penanggung_jawab === null){
       return "Belum Ditentukan"
     }else{
-      return penanggung_jawab
+      return penanggung_jawab.name
     }
   }
   return (

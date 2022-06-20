@@ -6,33 +6,48 @@ import "moment/locale/id";
 import NewProjectForm from "./NewProjectForm";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../reducer/AuthSlice";
-import { loadUserProject, projectSelectors, selectProject } from "../../reducer/ProjectSlice";
-import {CollectionIcon, RefreshIcon, CheckIcon, UsersIcon, BriefcaseIcon} from "@heroicons/react/outline"
+import { useLocation } from "react-router-dom";
+import {
+  loadUserProject,
+  projectSelectors,
+  selectProject,
+} from "../../reducer/ProjectSlice";
+import {
+  CollectionIcon,
+  RefreshIcon,
+  CheckIcon,
+  BriefcaseIcon,
+} from "@heroicons/react/outline";
+import { clearProjectSelected } from "../../reducer/ProjectSelectedSlice";
 
 function ProjectDasborad() {
-
   const [isOpen, setIsOpen] = useState(false);
 
-  const user = useSelector(selectUser)
-  const userProject = useSelector(projectSelectors.selectAll)
-  const selectorProject = useSelector(selectProject)
-  const dispatch = useDispatch()
+  const user = useSelector(selectUser);
+  const userProject = useSelector(projectSelectors.selectAll);
+  const selectorProject = useSelector(selectProject);
+  const dispatch = useDispatch();
+  const location = useLocation();
 
   useEffect(() => {
-    dispatch(loadUserProject({id: user._id}))
-  }, [dispatch])
+    dispatch(loadUserProject({ id: user._id }));
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(clearProjectSelected());
+  }, [location]);
 
   function tonggleTambahProyek() {
-    return(
+    return (
       <Button
-      onClick={() => setIsOpen(!isOpen)}
-      size="small"
-      iconLeft={PlusCircle}
-      layout="outline"
-    >
-      <span className="text-xs">Tambah Proyek</span>
-    </Button>
-    )
+        onClick={() => setIsOpen(!isOpen)}
+        size="small"
+        iconLeft={PlusCircle}
+        layout="outline"
+      >
+        <span className="text-xs">Tambah Proyek</span>
+      </Button>
+    );
   }
 
   return (
@@ -59,25 +74,31 @@ function ProjectDasborad() {
               <div className="p-1 w-6 h-6 rounded-full bg-white">
                 <CollectionIcon className="h-4 w-4 text-black" />
               </div>
-              <h3 className="mt-4 w-26 text-4xl font-bold">{selectorProject.total_proyek}</h3>
+              <h3 className="mt-4 w-26 text-4xl font-bold">
+                {selectorProject.total_proyek}
+              </h3>
               <h4 className="mt-2 text-sm leading-none font-bold">
                 Total Proyek
               </h4>
             </div>
             <div className="flex flex-col p-4 rounded-md  bg-black text-white">
               <div className="p-1 w-6 h-6 rounded-full bg-white">
-              <RefreshIcon className="h-4 w-4 text-black" />
+                <RefreshIcon className="h-4 w-4 text-black" />
               </div>
-              <h3 className="mt-4 w-26 text-4xl font-bold">{selectorProject.proyek_berlangsung}</h3>
+              <h3 className="mt-4 w-26 text-4xl font-bold">
+                {selectorProject.proyek_berlangsung}
+              </h3>
               <h4 className="mt-2 text-sm leading-none font-bold">
                 Proyek Berlangsung
               </h4>
             </div>
             <div className="flex flex-col p-4 rounded-md  bg-black text-white">
               <div className="p-1 w-6 h-6 rounded-full bg-white">
-              <CheckIcon className="h-4 w-4 text-black" />
+                <CheckIcon className="h-4 w-4 text-black" />
               </div>
-              <h3 className="mt-4 w-26 text-4xl font-bold">{selectorProject.proyek_selesai}</h3>
+              <h3 className="mt-4 w-26 text-4xl font-bold">
+                {selectorProject.proyek_selesai}
+              </h3>
               <h4 className="mt-2 text-sm leading-none font-bold">
                 Proyek Selesai
               </h4>
@@ -102,17 +123,19 @@ function ProjectDasborad() {
               Proyek
             </h5>
           </div>
-          {user.role === "pm" ? tonggleTambahProyek():""}
+          {user.role === "pm" ? tonggleTambahProyek() : ""}
         </div>
         <div className="m-auto max-w-screen-xl">
           <ul className="flex my-2 p-4 flex-nowrap overflow-x-scroll overscroll-contain relative gap-6 scrollbar-hide">
-            {userProject ? userProject.map((item, idx) => {
-              return (
-                <li key={idx}>
-                  <ProjectCard dataProyek={item} />
-                </li>
-              );
-            }) : ""}
+            {userProject
+              ? userProject.map((item, idx) => {
+                  return (
+                    <li key={idx}>
+                      <ProjectCard dataProyek={item} />
+                    </li>
+                  );
+                })
+              : ""}
           </ul>
         </div>
       </div>
