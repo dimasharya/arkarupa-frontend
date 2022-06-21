@@ -196,7 +196,7 @@ export default function ProjectSPV() {
                 <div className="flex gap-2 flex-col relative overflow-y-auto h-96 scrollbar-hide">
                   {DataPekerjaan.length !== 0 ? (
                     DataPekerjaan.map((item, idx) => {
-                      if(item.status === "Dijadwlakan"){
+                      if(item.status === "Dijadwalkan"){
                         return <TaskCardDijadwalkan key={idx} dataTask={item} />;
                       }
                     })

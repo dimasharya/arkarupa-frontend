@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom"
-import { projectSelectedSelectorById } from "../../../reducer/ProjectSelectedSlice";
+import { projectSelectedSelectorById, projectSelectedSelectorPekerjaan } from "../../../reducer/ProjectSelectedSlice";
 import ProgressBar from "../../Progresbar/Progresbar"
 
 export default function ProjectInfoCard({dataProyek}) {
@@ -10,16 +10,17 @@ export default function ProjectInfoCard({dataProyek}) {
     projectSelectedSelectorById(state, projectId)
   );
 
-  const {nama_proyek, kategori, pemilik, alamat, progress, pekerjaan} = dataProyek
+  const Pekerjaan = useSelector(projectSelectedSelectorPekerjaan.selectAll);
+
     return(
         <div className="grid grid-flow-col gap-4">
           <div className=" p-6 border border-gray-100 rounded-md bg-gradient-to-tr from-teal-200 to-lime-200">
             <div className="grid grid-cols-9 gap-4">
               <div className="pl-2 col-span-5">
                 <p className="text-2xl font-bold truncate">
-                  {Proyek ? Proyek.nama_proyek : <p className="w-full animate-pulse bg-lime-700" />}
+                  {Proyek ? Proyek.nama_proyek : ""}
                 </p>
-                <h4 className="text-sm font-semibold mb-4">{Proyek ? Proyek.kategori : <p className="w-full animate-pulse bg-lime-700" />}</h4>
+                <h4 className="text-sm font-semibold mb-4">{Proyek ? Proyek.kategori : ""}</h4>
                 <div className="flex py-1 items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -36,7 +37,7 @@ export default function ProjectInfoCard({dataProyek}) {
                     />
                   </svg>
                   <p className="ml-2 text-sm font-semibold">
-                    {Proyek ? Proyek.pemilik : <p className="w-full animate-pulse bg-lime-700" />}
+                    {Proyek ? Proyek.pemilik : ""}
                   </p>
                 </div>
                 <div className="flex py-1 items-center">
@@ -60,11 +61,11 @@ export default function ProjectInfoCard({dataProyek}) {
                     />
                   </svg>
                   <p className="ml-2 text-sm font-semibold truncate">
-                    {Proyek ? Proyek.alamat : <p className="w-full animate-pulse bg-lime-700" />}
+                    {Proyek ? Proyek.alamat : ""}
                   </p>
                 </div>
                 <div className="mr-4">
-                  <ProgressBar progress={Proyek ? Proyek.progress : <p className="w-full animate-pulse bg-lime-700" />} />
+                  <ProgressBar progress={Proyek ? Proyek.progress : ""} />
                 </div>
               </div>
               <div className="col-span-4 grid grid-cols-3 gap-2">
@@ -85,7 +86,7 @@ export default function ProjectInfoCard({dataProyek}) {
                       />
                     </svg>
                   </div>
-                  <h3 className="mt-4 w-26 text-4xl font-bold">{pekerjaan.total_pekerjaan}</h3>
+                  <h3 className="mt-4 w-26 text-4xl font-bold">{Pekerjaan.length}</h3>
                   <h4 className="mt-2 text-sm leading-none font-bold">
                     Total Pekerjaan
                   </h4>
@@ -107,7 +108,12 @@ export default function ProjectInfoCard({dataProyek}) {
                       />
                     </svg>
                   </div>
-                  <h3 className="mt-4 w-26 text-4xl font-bold">{pekerjaan.pekerjaan_berlangsung}</h3>
+                  <h3 className="mt-4 w-26 text-4xl font-bold">{
+                  Pekerjaan.filter(
+                    (item) =>
+                      item.status === "Dimulai" || item.status === "Dijeda"
+                  ).length
+                }</h3>
                   <h4 className="mt-2 text-sm leading-none font-bold">
                     Pekerjaan Berlangsung
                   </h4>
@@ -129,7 +135,7 @@ export default function ProjectInfoCard({dataProyek}) {
                       />
                     </svg>
                   </div>
-                  <h3 className="mt-4 w-26 text-4xl font-bold">{pekerjaan.pekerjaan_selesai}</h3>
+                  <h3 className="mt-4 w-26 text-4xl font-bold">{Pekerjaan.filter((item) => item.status === "Selesai").length}</h3>
                   <h4 className="mt-2 text-sm leading-none font-bold">
                     Pekerjaan Selesai
                   </h4>

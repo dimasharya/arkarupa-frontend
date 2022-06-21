@@ -9,7 +9,7 @@ import { setNotification } from "./NotificationSlice";
 export const loadProjectBudget = createAsyncThunk(
   "projectbudget/load",
   async () => {
-    const result = await Api.get("/api/projectbudget");
+    const result = await Api.get(`/api/projectbudget/`);
     if (result) {
       return result.data;
     }

@@ -23,6 +23,12 @@ export default function ProjectQS() {
   const DataPekerjaan = useSelector(projectSelectedSelectorPekerjaan.selectAll);
 
   const [isOpen, setIsOpen] = useState(false);
+  const [dataEdit, setDataEdit] = useState("")
+
+  const onEdit = (props)=> {
+    setDataEdit(props)
+    setIsOpen(!isOpen)
+  }
 
   return (
     <>
@@ -68,6 +74,7 @@ export default function ProjectQS() {
                     DataPekerjaan.map((item, idx) => {
                         return (
                           <TaskCard
+                            onEdit={onEdit}
                             key={idx}
                             dataTask={item}
                           />
@@ -82,7 +89,7 @@ export default function ProjectQS() {
           </div>
         </div>
       </div>
-      {isOpen && <UpdateForm setIsOpen={setIsOpen} isOpen={isOpen} />}
+      {isOpen && <UpdateForm dataEdit={dataEdit} setIsOpen={setIsOpen} isOpen={isOpen} />}
     </>
   );
 }

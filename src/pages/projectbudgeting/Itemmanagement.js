@@ -17,13 +17,16 @@ import NumberFormat from "react-number-format";
 import Item from "../../components/Projectbudget/Itemmanagement/Item";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteItem, loadItem, selectItem } from "../../reducer/ItemManagementSlice";
+import { useLocation } from "react-router-dom";
 
 export default function Itemmanagement() {
   const dispatch = useDispatch();
 
+  const location = useLocation()
+
   useEffect(() => {
     dispatch(loadItem());
-  }, []);
+  }, [location]);
 
   const Items = useSelector(selectItem.selectAll);
 

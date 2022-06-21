@@ -3,19 +3,22 @@ import Workspace from "./Workspace";
 import CategoryManagement from "./CategoryManagement";
 import ItemManagement from "./Itemmanagement";
 import MaterialManagement from "./MaterialManagement";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import BudgetDocuments from "./BudgetDocument";
 import { useDispatch } from "react-redux";
 import { loadProjectBudget } from "../../reducer/ProjectBudgetSlice";
+import { loadItem } from "../../reducer/ItemManagementSlice";
 
 function ProjectBudgeting() {
 
   const {projectId} = useParams()
   const dispatch = useDispatch()
+  const location = useLocation()
 
   useEffect(() => {
-    dispatch(loadProjectBudget())
-  }, [])
+     dispatch(loadProjectBudget())
+     dispatch(loadItem())
+  }, [location])
   // Tabs Handler
 
   const tabs = [

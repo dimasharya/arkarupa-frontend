@@ -191,8 +191,12 @@ export const editPekerjaan = createAsyncThunk(
 
 export const deletePekerjaan = createAsyncThunk(
   "projectselected/deletepekerjaan",
-  async ({ id_proyek, _id,  item_pekerjaan }, thunkAPI) => {
-    await Api.put("/api/projectschedule/delete", { id_proyek, _id, item_pekerjaan });
+  async ({ id_proyek, _id, item_pekerjaan }, thunkAPI) => {
+    await Api.put("/api/projectschedule/delete", {
+      id_proyek,
+      _id,
+      item_pekerjaan,
+    });
     thunkAPI.dispatch(
       setNotification({
         type: "success",
@@ -202,6 +206,62 @@ export const deletePekerjaan = createAsyncThunk(
     return _id;
   }
 );
+
+// SM
+
+export const tambahPenanggungJawab = createAsyncThunk(
+  "projectselected/tambahpenanggungjawab",
+  async ({ id_proyek, _id, data }, thunkAPI) => {
+    let result
+    await Api.post(`/api/projectschedule/tambahpenanggungjawab/${id_proyek}` , {_id, data}).then(res => {
+      if(res.status === 200){
+        result = res.data
+      }
+    })
+    return {id: _id, data: result}
+  }
+);
+
+// SPV
+
+export const mulaiPekerjaan = createAsyncThunk("projectselected/mulaipekerjaan", async ({id_proyek, _id}, thunkAPI) => {
+  let result
+  await Api.post(`/api/projectschedule/mulaipekerjaan/${id_proyek}` , {_id : _id, status: "Dimulai"}).then((res) => {
+    if(res.status === 200){
+      result = res.data
+      thunkAPI.dispatch(setNotification({type: "success", message: "Pekerjaan berhasil dimulai"}))
+    }else{
+      thunkAPI.dispatch(setNotification({type: "error", message: "Aksi gagal dilakukan"}))
+    }
+  })
+  return {id: _id, data: result}
+})
+
+export const jedaPekerjaan = createAsyncThunk("projectselected/jedapekerjaan", async ({id_proyek, _id}, thunkAPI) => {
+  let result
+  await Api.post(`/api/projectschedule/jedapekerjaan/${id_proyek}` , {_id : _id, status: "Dijeda"}).then((res) => {
+    if(res.status === 200){
+      result = res.data
+      thunkAPI.dispatch(setNotification({type: "success", message: "Pekerjaan berhasil dijeda sementara"}))
+    }else{
+      thunkAPI.dispatch(setNotification({type: "error", message: "Aksi gagal dilakukan"}))
+    }
+  })
+  return {id: _id, data: result}
+})
+
+export const selesaiPekerjaan = createAsyncThunk("projectselected/selesaipekerjaan", async ({id_proyek, _id}, thunkAPI) => {
+  let result
+  await Api.post(`/api/projectschedule/selesaipekerjaan/${id_proyek}` , {_id : _id, status: "Selesai"}).then((res) => {
+    if(res.status === 200){
+      result = res.data
+      thunkAPI.dispatch(setNotification({type: "success", message: "Pekerjaan berhasil diselesaikan"}))
+    }else{
+      thunkAPI.dispatch(setNotification({type: "error", message: "Aksi gagal dilakukan"}))
+    }
+  })
+  return {id: _id, data: result}
+})
 
 const pekerjaanEntity = createEntityAdapter({
   selectId: (pekerjaan) => pekerjaan._id,
@@ -222,11 +282,11 @@ const projectSelectedSlice = createSlice({
     pekerjaan: pekerjaanEntity.getInitialState(),
   }),
   reducers: {
-    clearProjectSelected: (state, action) =>  {
-      projectEntity.removeAll(state)
-      teamEntity.removeAll(state.team)
-      pekerjaanEntity.removeAll(state.pekerjaan)
-    }
+    clearProjectSelected: (state, action) => {
+      projectEntity.removeAll(state);
+      teamEntity.removeAll(state.team);
+      pekerjaanEntity.removeAll(state.pekerjaan);
+    },
   },
   extraReducers: {
     [loadProjectSelected.fulfilled]: (state, action) => {
@@ -264,9 +324,25 @@ const projectSelectedSlice = createSlice({
       });
     },
     [deletePekerjaan.fulfilled]: (state, action) => {
-      console.log(action.payload);
-      pekerjaanEntity.removeOne(state.pekerjaan, action.payload)
+      pekerjaanEntity.removeOne(state.pekerjaan, action.payload);
+    },
+    [tambahPenanggungJawab.fulfilled]: (state, action) => {
+      const payload = action.payload
+      pekerjaanEntity.updateOne(state.pekerjaan, {id: payload.id, changes: payload.data})
+    },
+    [mulaiPekerjaan.fulfilled]: (state, action) => {
+      const payload = action.payload
+      pekerjaanEntity.updateOne(state.pekerjaan, {id: payload.id, changes: payload.data})
+    },
+    [jedaPekerjaan.fulfilled]: (state, action) => {
+      const payload = action.payload
+      pekerjaanEntity.updateOne(state.pekerjaan, {id: payload.id, changes: payload.data})
+    },
+    [selesaiPekerjaan.fulfilled]: (state, action) => {
+      const payload = action.payload
+      pekerjaanEntity.updateOne(state.pekerjaan, {id: payload.id, changes: payload.data})
     }
+
   },
 });
 
@@ -274,9 +350,7 @@ export const projectSelectedSelector = projectEntity.getSelectors(
   (state) => state.projectselected
 );
 export const { selectById: projectSelectedSelectorById } =
-  projectEntity.getSelectors(
-    (state) => state.projectselected
-  );
+  projectEntity.getSelectors((state) => state.projectselected);
 export const projectSelectedSelectorTeam = teamEntity.getSelectors(
   (state) => state.projectselected.team
 );
@@ -284,6 +358,6 @@ export const projectSelectedSelectorPekerjaan = teamEntity.getSelectors(
   (state) => state.projectselected.pekerjaan
 );
 
-export const {clearProjectSelected} = projectSelectedSlice.actions
+export const { clearProjectSelected } = projectSelectedSlice.actions;
 
 export default projectSelectedSlice.reducer;

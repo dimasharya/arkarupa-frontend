@@ -2,28 +2,28 @@ import Moment from "react-moment";
 import { Button } from "@windmill/react-ui";
 import { HeroPlusOutline, Pencil } from "../../../icons";
 
-export default function TaskCardDijadwalkan({ dataTask }) {
+export default function TaskCardDijadwalkan({ dataTask, editPenanggungJawab, tambahPenanggungJawab }) {
   const {
     kode_pekerjaan,
     nama_pekerjaan,
-    tanggal_mulai_rencana,
-    tanggal_selesai_rencana,
+    rencana_tanggal_mulai,
+    rencana_tanggal_selesai,
     volume,
     satuan,
     status,
     penanggung_jawab,
   } = dataTask;
   function tombolAssign() {
-    if (penanggung_jawab === "") {
+    if (penanggung_jawab === null) {
       return (
-        <Button iconLeft={HeroPlusOutline} layout="outline" size="small">
+        <Button onClick={() => tambahPenanggungJawab(dataTask)} iconLeft={HeroPlusOutline} layout="outline" size="small">
           Tambah Penanggung Jawab
         </Button>
       );
     } else {
       if (status === "Dijadwalkan") {
         return (
-          <Button iconLeft={Pencil} layout="outline" size="small">
+          <Button onClick={() => editPenanggungJawab(dataTask)} iconLeft={Pencil} layout="outline" size="small">
             Ubah Penanggung Jawab
           </Button>
         );
@@ -65,7 +65,7 @@ export default function TaskCardDijadwalkan({ dataTask }) {
             <p className="text-xs font-semibold text-gray-500">Rencana Tanggal Mulai</p>
             <p className="text-sm">
               <Moment format="ll" locale="id">
-                {tanggal_mulai_rencana}
+                {rencana_tanggal_mulai}
               </Moment>
             </p>
           </div>
@@ -81,7 +81,7 @@ export default function TaskCardDijadwalkan({ dataTask }) {
             <p className="text-xs font-semibold text-gray-500">Rencana Tanggal Selesai</p>
             <p className="text-sm">
             <Moment format="ll" locale="id">
-                {tanggal_selesai_rencana}
+                {rencana_tanggal_selesai}
               </Moment>
             </p>
           </div>

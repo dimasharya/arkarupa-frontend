@@ -34,13 +34,16 @@ export default function NewPekerjaanForm({
   }, []);
 
   const onSubmit = (props) => {
-    let volume = anggaranBiaya.find(
+    let satuan, volume
+    let result = anggaranBiaya.find(
       (item) => (item._id = props.item_pekerjaan)
     );
-    volume = volume.volume;
+    volume = result.volume;
+    satuan = result.satuan
     const data = {
       ...props,
       volume,
+      satuan
     };
     dispatch(addPekerjaan({id_proyek: projectId, data: data}))
     setModalNewPekerjaan(!modalNewPekerjaan)

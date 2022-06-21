@@ -50,7 +50,7 @@ export default function TaskCardBerlangsung({ dataTask }) {
             <p className="text-xs font-semibold text-gray-500">
               Penanggung Jawab
             </p>
-            <p className="text-sm">{penanggung_jawab}</p>
+            <p className="text-sm">{penanggung_jawab !== null ? penanggung_jawab.name : ""}</p>
           </div>
         </div>
         <ProgressBar progress={progress} />

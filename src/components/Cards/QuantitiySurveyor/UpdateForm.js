@@ -2,13 +2,13 @@ import { useForm } from "react-hook-form";
 import { Label, Input, Button } from "@windmill/react-ui";
 import { useState } from "react";
 
-export default function UpdateForm({ setIsOpen, isOpen, dataPekerjaan }) {
+export default function UpdateForm({ setIsOpen, isOpen, dataEdit }) {
   const { handleSubmit, register } = useForm();
   const onSubmit = (data) => {
     console.log(volumeSekarang);
   };
 
-  const [volumeSekarang, setVolumeSekarang] = useState(50);
+  const [volumeSekarang, setVolumeSekarang] = useState(dataEdit.volume_sekarang);
 
   const onChange = (data) => {
     setVolumeSekarang(data.target.value);
@@ -28,14 +28,14 @@ export default function UpdateForm({ setIsOpen, isOpen, dataPekerjaan }) {
               <Label>
                 <span className="font-semibold text-xs">Nama Pekerjaan</span>
               </Label>
-              <p className="text-base">Galian Tanah 60 CM</p>
+              <p className="text-base">{dataEdit.nama_pekerjaan}</p>
             </div>
             <div className="col-span-3 pb-2">
               <Label>
                 <span className="font-semibold text-xs">Volume</span>
               </Label>
               <p className="text-base">
-                245 <span>m3</span>
+                {dataEdit.volume} <span>{dataEdit.satuan}</span>
               </p>
             </div>
             <div className="col-span-3 pb-2">
@@ -47,11 +47,11 @@ export default function UpdateForm({ setIsOpen, isOpen, dataPekerjaan }) {
                   className="block w-full h-2 bg-gray-200 rounded-lg cursor-pointer"
                   type="range"
                   min={0}
-                  max={245}
+                  max={dataEdit.volume}
                   defaultValue={volumeSekarang}
                   onChange={(data) => onChange(data)}
                 />
-                <span> {volumeSekarang} m3</span>
+                <span> {volumeSekarang} {dataEdit.satuan}</span>
               </div>
             </div>
           </div>

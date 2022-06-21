@@ -200,7 +200,7 @@ export default function Item({ data, setIsOpen, isOpen }) {
                 </tr>
               </thead>
               <tbody className="mt-1 relative h-60 overflow-y-scroll">
-                {displayedIngredients.map((item, indexitem) => {
+                {displayedIngredients ? displayedIngredients.map((item, indexitem) => {
                   return (
                     <>
                       <ItemData
@@ -218,7 +218,7 @@ export default function Item({ data, setIsOpen, isOpen }) {
                       />
                     </>
                   );
-                })}
+                }):""}
               </tbody>
               <tfoot className="border-t p-2 bottom-0 text-sm font-semibold text-black bg-white">
                 <tr className="flex justify-between inset-x-0">

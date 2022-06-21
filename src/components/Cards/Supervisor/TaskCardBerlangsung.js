@@ -3,6 +3,9 @@ import { Button } from "@windmill/react-ui";
 import { Play, Pause, Stop } from "../../../icons";
 import BadgeTaskStatus from "../../Badge/BadgeTaskStatus";
 import ProgressBar from "../../Progresbar/Progresbar";
+import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { jedaPekerjaan, mulaiPekerjaan, selesaiPekerjaan } from "../../../reducer/ProjectSelectedSlice";
 
 export default function TaskCardBerlangsung({ dataTask }) {
   const {
@@ -15,6 +18,7 @@ export default function TaskCardBerlangsung({ dataTask }) {
     status,
     permit_to_work,
   } = dataTask;
+
   let button_mulai, button_jeda;
   if (status === "Dimulai") {
     button_mulai = true;
@@ -24,6 +28,23 @@ export default function TaskCardBerlangsung({ dataTask }) {
     button_jeda = true;
   }
   const progress = volume_sekarang/volume
+
+  let { projectId } = useParams();
+
+  const dispatch = useDispatch();
+
+  const onMulai = () => {
+    dispatch(mulaiPekerjaan({ id_proyek: projectId, _id: dataTask._id }));
+  };
+
+  const onJeda = () => {
+    dispatch(jedaPekerjaan({ id_proyek: projectId, _id: dataTask._id }));
+  };
+
+  const onSelesai = () => {
+    dispatch(selesaiPekerjaan({ id_proyek: projectId, _id: dataTask._id }));
+  };
+
   return (
     <>
       <div className="flex flex-col border rounded-md p-4 bg-white shadow-md">
@@ -55,13 +76,13 @@ export default function TaskCardBerlangsung({ dataTask }) {
         </div>
         <ProgressBar progress={progress} />
         <div className="flex gap-2 pt-3 justify-end">
-          <Button disabled={button_mulai} iconLeft={Play} layout="outline" size="small">
+          <Button onClick={() => onMulai()} disabled={button_mulai} iconLeft={Play} layout="outline" size="small">
             Mulai
           </Button>
-          <Button disabled={button_jeda} iconLeft={Pause} layout="outline" size="small">
+          <Button onClick={() => onJeda()} disabled={button_jeda} iconLeft={Pause} layout="outline" size="small">
             Jeda
           </Button>
-          <Button iconLeft={Stop} layout="outline" size="small">
+          <Button onClick={() => onSelesai()} iconLeft={Stop} layout="outline" size="small">
             Akhiri
           </Button>
         </div>

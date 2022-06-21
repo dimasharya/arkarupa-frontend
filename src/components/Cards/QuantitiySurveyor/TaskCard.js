@@ -5,7 +5,7 @@ import ProgressbarSmall from "../../Progresbar/ProgressbarSmall";
 import BadgeTaskStatus from "../../Badge/BadgeTaskStatus";
 import { useState } from "react";
 
-export default function TaskCard({ dataTask, setIsOpen, isOpen }) {
+export default function TaskCard({ dataTask, onEdit }) {
   const {
     kode_pekerjaan,
     nama_pekerjaan,
@@ -63,7 +63,7 @@ export default function TaskCard({ dataTask, setIsOpen, isOpen }) {
           </div>
           <div className="flex justify-center pt-1">
             <Button
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={() => onEdit(dataTask)}
               disabled={button_update}
               iconLeft={Pencil}
               layout="outline"
