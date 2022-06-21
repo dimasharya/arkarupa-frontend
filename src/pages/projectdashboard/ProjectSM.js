@@ -13,6 +13,8 @@ import {
   projectSelectedSelector,
   projectSelectedSelectorPekerjaan,
 } from "../../reducer/ProjectSelectedSlice";
+import UbahPenanggungJawab from "./SiteManager/UbahPenanggungJawab";
+import TambaPenanggungJawab from "./SiteManager/TambahPenanggungJawab";
 
 export default function ProjectSM() {
   let { projectId } = useParams();
@@ -20,33 +22,26 @@ export default function ProjectSM() {
 
   const location = useLocation();
 
-  const dataProyek = {
-    nama_proyek: "BSD Botanical Garden",
-    pemilik: "PT. Bukit Serpong Damai",
-    kategori: "Area Publik",
-    alamat:
-      "Jl. Telaga Golf Raya, Lengkong Gudang, Kec. Serpong, Kota Tangerang Selatan, Banten",
-    progress: 20,
-    pekerjaan: {
-      total_pekerjaan: 120,
-      pekerjaan_berlangsung: 10,
-      pekerjaan_selesai: 4,
-    },
-  };
-
   useEffect(() => {
     dispatch(loadProjectSelected({ id: projectId }));
     dispatch(loadPekerjaan({ id_proyek: projectId }));
   }, [location]);
 
-  const Proyek = useSelector(projectSelectedSelector.selectAll);
-
   const DataPekerjaan = useSelector(projectSelectedSelectorPekerjaan.selectAll);
 
-  console.log(Proyek);
   const [dataEdit, setDataEdit] = useState("");
+  const [modalEditPenanggungJawab, setModalEditPenanggungJawab] = useState(false)
+  const [modalTambahPenanggungJawab, setModalTambahPenanggungJawab] = useState(false)
 
-  console.log(projectId);
+  const editPenanggungJawab = (props) => {
+    setDataEdit(props)
+    setModalEditPenanggungJawab(!modalEditPenanggungJawab)
+  }
+
+  const tambahPenanggungJawab = (props) => {
+    setDataEdit(props)
+    setModalTambahPenanggungJawab(!modalTambahPenanggungJawab)
+  }
 
   return (
     <>
@@ -90,7 +85,7 @@ export default function ProjectSM() {
                 <div className="flex gap-2 flex-col relative overflow-y-auto h-96 scrollbar-hide">
                   {DataPekerjaan.length !== 0 ? (
                     DataPekerjaan.map((item, idx) => {
-                      return <TaskCardDijadwalkan key={idx} dataTask={item} />;
+                      return <TaskCardDijadwalkan key={idx} dataTask={item} editPenanggungJawab={editPenanggungJawab} tambahPenanggungJawab={tambahPenanggungJawab} />;
                     })
                   ) : (
                     <p className="text-center text-xs">Tidak Ada Data</p>
@@ -140,6 +135,8 @@ export default function ProjectSM() {
           </div>
         </div>
       </div>
+      {modalEditPenanggungJawab && (<UbahPenanggungJawab dataEdit={dataEdit} modalEditPenanggungJawab={modalEditPenanggungJawab} setModalEditPenanggungJawab={setModalEditPenanggungJawab}  />)}
+      {modalTambahPenanggungJawab && (<TambaPenanggungJawab dataEdit={dataEdit} modalTambahPenanggungJawab={modalTambahPenanggungJawab} setModalTambahPenanggungJawab={setModalTambahPenanggungJawab}  />)}
     </>
   );
 }
