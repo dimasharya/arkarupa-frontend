@@ -9,10 +9,11 @@ export const loadUserProject = createAsyncThunk(
   "project/getUserProject",
   async ({ id }) => {
     try {
-      const response = await Api.get("/api/project/userproject", {
+      let response = await Api.get("/api/project/userproject", {
         params: { userId: id },
       });
-      return response.data;
+      response = response.data
+      return response
     } catch (error) {}
   }
 );

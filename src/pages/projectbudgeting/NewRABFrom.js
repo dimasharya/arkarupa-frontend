@@ -10,7 +10,7 @@ import { addProjectBudget } from "../../reducer/ProjectBudgetSlice";
 
 const NewRABForm = ({ modalNewRab, setModalNewRab }) => {
   const { handleSubmit, register } = useForm();
-  const [project, setProject] = useState("");
+  const [project, setProject] = useState([]);
   const dispatch = useDispatch()
   const user = useSelector(selectUser)
 
@@ -50,7 +50,7 @@ const NewRABForm = ({ modalNewRab, setModalNewRab }) => {
               </Label>
               <Select defaultValue={"default"} {...register("project")}>
               <option value={"default"} disabled>Pilih Proyek</option>
-                {project !== "" ? (
+                {project.length !== 0 ? (
                   project.map((item, idx) => {
                     let opt;
                     if (item.rancangan_anggaran === null) {

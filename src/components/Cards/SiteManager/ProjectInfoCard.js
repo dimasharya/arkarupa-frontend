@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
+  progressProyekSelector,
   projectSelectedSelectorById,
   projectSelectedSelectorPekerjaan,
 } from "../../../reducer/ProjectSelectedSlice";
@@ -13,6 +14,7 @@ export default function ProjectInfoCard({ dataProyek }) {
     projectSelectedSelectorById(state, projectId)
   );
   const Pekerjaan = useSelector(projectSelectedSelectorPekerjaan.selectAll);
+  const ProgressProyek = useSelector(progressProyekSelector)
 
   return (
     <div className="grid grid-flow-col gap-4">
@@ -63,7 +65,7 @@ export default function ProjectInfoCard({ dataProyek }) {
               </p>
             </div>
             <div className="mr-4">
-              <ProgressBar progress={Proyek ? Proyek.progress : ""} />
+              <ProgressBar progress={ProgressProyek ? ProgressProyek : ""} />
             </div>
           </div>
           <div className="col-span-4 grid grid-cols-3 gap-2">

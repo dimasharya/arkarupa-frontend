@@ -9,11 +9,12 @@ export default function TaskCardSelesai({ dataTask }) {
     tanggal_mulai,
     tanggal_selesai,
     volume,
+    volume_sekarang,
     satuan,
     status,
-    permit_to_work,
-    progress,
   } = dataTask;
+
+  const progress = Math.floor((parseFloat(volume_sekarang.replace(",", ".")) / volume)*100)
   return (
     <>
       <div className="flex flex-col border rounded-md p-4 bg-white shadow-md">

@@ -27,7 +27,7 @@ export default function TaskCardBerlangsung({ dataTask }) {
     button_mulai = false;
     button_jeda = true;
   }
-  const progress = volume_sekarang/volume
+  const progress = Math.floor((parseFloat(volume_sekarang.replace(",", ".")) / volume)*100)
 
   let { projectId } = useParams();
 

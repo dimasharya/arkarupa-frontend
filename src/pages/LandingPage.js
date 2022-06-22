@@ -14,20 +14,20 @@ export default function LandingPage(params) {
             <div className="flex items-center">
               <img src={LogoHeader} className="w-auto h-6 " />
             </div>
-            <div className="md:justify-start hidden md:flex flex justify-center items-center">
+            {/* <div className="md:justify-start flex justify-center items-center"> */}
               <Link to="/login">
                 <Button layout="primary">Sign In</Button>
               </Link>
-            </div>
+            {/* </div> */}
             {/* <div className="md:hidden flex items-center">
               <div className="outline-none mobile-menu-button">
                 <svg
                   className="w-6 h-6 text-gray-500 hover:text-green-500"
                   x-show="!showMenu"
                   fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   viewbox="0 0
                 24 24"
                   stroke="currentColor"
@@ -37,7 +37,7 @@ export default function LandingPage(params) {
               </div>
             </div> */}
           </div>
-          <div className="hidden mobile-menu">
+          {/* <div className="hidden mobile-menu">
             <div className="">
               <div className="active">
                 <Link to="/login">
@@ -47,7 +47,7 @@ export default function LandingPage(params) {
                 </Link>
               </div>
             </div>
-          </div>
+          </div> */}
         </nav>
       </div>
       <div
@@ -98,7 +98,9 @@ export default function LandingPage(params) {
                 with two aspect design, not only aesthetics but also the
                 function.
               </p>
-              <p className="mt-2 md:text-lg text-base text-gray-700">Hi, got a project disscuss with us?</p>
+              <p className="mt-2 md:text-lg text-base text-gray-700">
+                Hi, got a project disscuss with us?
+              </p>
             </div>
             <div className="flex flex-col md:flex-row">
               <input
@@ -114,9 +116,7 @@ export default function LandingPage(params) {
               >
                 Get Early Access
               </button> */}
-              <button
-                className="h-12 rounded-md mr-6 pt-0 pr-6 pl-6 text-medium font-semibold tracking-wide shadow-md inline-flex items-center justify-center bg-transparent text-lime-700 transition duration-200 hover:bg-blue-50 focus:shadow-outline focus:outline-none"
-              >
+              <button className="h-12 rounded-md mr-6 pt-0 pr-6 pl-6 text-medium font-semibold tracking-wide shadow-md inline-flex items-center justify-center bg-transparent text-lime-700 transition duration-200 hover:bg-blue-50 focus:shadow-outline focus:outline-none">
                 Send Request
               </button>
             </div>

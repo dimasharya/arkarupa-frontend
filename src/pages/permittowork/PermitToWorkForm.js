@@ -1,11 +1,30 @@
 import { Label, Input, Button, Select, Textarea } from "@windmill/react-ui";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import Moment from "react-moment";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { selectUser } from "../../reducer/AuthSlice";
+import { projectSelectedSelectorById, projectSelectedSelectorTeam, tambahPermitTowork } from "../../reducer/ProjectSelectedSlice";
 
-export default function PermitToWorkForm({ setIsOpen, isOpen }) {
-  const { register, handleSubmit, watch } = useForm();
+export default function PermitToWorkForm({ setIsOpen, isOpen, dataPermitBaru, modalPermitBaru, setModalPermitBaru }) {
+  const { register, handleSubmit } = useForm();
 
-  const peralatanHotWork = [
+  let {projectId} = useParams()
+
+  const dispatch = useDispatch()
+
+  const proyek = useSelector((state) =>
+    projectSelectedSelectorById(state, projectId)
+  );
+
+  const team = useSelector(projectSelectedSelectorTeam.selectAll)
+
+  const user = useSelector(selectUser)
+
+  const {nama_pekerjaan, rencana_tanggal_mulai, rencana_tanggal_selesai} = dataPermitBaru
+
+  const peralatanKerjaPanas = [
     {
       value: "grinder",
       label: "Grinder",
@@ -18,11 +37,93 @@ export default function PermitToWorkForm({ setIsOpen, isOpen }) {
       value: "las",
       label: "Las",
     },
+    {
+      value: "pemotong besi",
+      label: "Pemotong Besi"
+    }
   ];
 
-  const [currentChecbox, setCurrentCheckbox] = useState(peralatanHotWork);
+  const peralatanKerjaDiketinggian = [
+    {
+      value: "proteksi jatuh",
+      label: "Proteksi Jatuh"
+    },
+    {
+      value: "pelindung mata",
+      label: "Pelindung Mata"
+    },
+    {
+      value: "respirator",
+      label: "Respirator"
+    },
+    {
+      value: "pelindung lengan",
+      label: "Pelindung Lengan"
+    }
+  ]
 
-  const onSubmit = (data) => console.log(data);
+  const peralatanKerjaKelistrikan = [
+    {
+      value: "alat proteksi badan",
+      label: "Alat Proteksi Badan"
+    },
+    {
+      value: "sarung tangan",
+      label: "Sarung Tangan"
+    }
+  ]
+
+  const peralatanKerjaEkskavasi = [
+    {
+      value: "ekskavator",
+      label: "Ekskavator"
+    },
+    {
+      value: "cangkul",
+      label: "Cangkul"
+    },
+    {
+      value: "pompa air",
+      label: "Pompa Air"
+    }
+  ]
+
+  const [currentChecbox, setCurrentCheckbox] = useState("");
+
+  const onChange = (data) => {
+    checkbox(data.target.value)
+  }
+
+  const checkbox = (props) => {
+    if(props === "Pekerjaan Panas"){
+      return setCurrentCheckbox(peralatanKerjaPanas)
+    }else if (props === "Pekerjaan Di Ketinggian"){
+      return setCurrentCheckbox(peralatanKerjaDiketinggian)
+    }else if (props === "Pekerjaan Kelistrikan"){
+      return setCurrentCheckbox(peralatanKerjaKelistrikan)
+    }else if (props === "Pekerjaan Ekskavasi"){
+      return setCurrentCheckbox(peralatanKerjaEkskavasi)
+    }
+  }
+
+  const onSubmit = (data) => {
+    let manajer_lapangan = team.find((item) => item.role === "sm")
+    const dataToSubmit = {
+      nama_proyek: proyek.nama_proyek,
+      id_proyek: proyek._id,
+      rencana_tanggal_mulai,
+      rencana_tanggal_selesai,
+      nama_pekerjaan: dataPermitBaru.nama_pekerjaan,
+      item_pekerjaan: dataPermitBaru._id,
+      penanggung_jawab: user._id,
+      manajer_lapangan: manajer_lapangan._id,
+      ...data
+    }
+    dispatch(tambahPermitTowork({id_proyek: projectId, _id: dataPermitBaru._id, data: dataToSubmit}))
+    setModalPermitBaru(!modalPermitBaru)
+  }
+
+
 
   return (
     <>
@@ -37,35 +138,28 @@ export default function PermitToWorkForm({ setIsOpen, isOpen }) {
               <div className="">
                 <div className="py-2">
                   <Label className="mt-2">
-                    <span className="font-semibold text-xs">Proyek</span>
+                    <span className="font-semibold text-xs">Item Pekerjaan</span>
                   </Label>
-                  <Select className="truncate w-full" {...register("proyek", {required: true})}>
-                    <option>serverside render</option>
-                    <option>Item Pekerjaan</option>
-                    <option>Material</option>
-                  </Select>
+                  <p className="truncate text-base">{nama_pekerjaan}</p>
                 </div>
                 <div className="py-2">
                   <Label className="mt-2">
                     <span className="font-semibold text-xs">
-                      Item Pekerjaan
+                      Tanggal Pelaksanaan Pekerjaan
                     </span>
+                    <p className="truncate text-base"><Moment format="LL">{rencana_tanggal_mulai}</Moment></p>
                   </Label>
-                  <Select className="truncate w-full" {...register("item_pekerjaan", {required: true})}>
-                    <option>serverside render</option>
-                    <option>Item Pekerjaan</option>
-                    <option>Material</option>
-                  </Select>
                 </div>
                 <div className="py-2">
                   <Label className="mt-2">
                     <span className="font-semibold text-xs">
-                      Jenis Pekerjaan
+                      Jenis Izin Pekerjaan
                     </span>
-                    <Select className="truncate w-full" {...register("jenis_pekerjaan", {required: true})}>
-                      <option>Cold Work Permit</option>
-                      <option>Item Pekerjaan</option>
-                      <option>Material</option>
+                    <Select onClick={(item) => onChange(item)} className="truncate w-full" {...register("jenis_izin", {required: true})}>
+                      <option>Pekerjaan Panas</option>
+                      <option>Pekerjaan Di Ketinggian</option>
+                      <option>Pekerjaan Kelistrikan</option>
+                      <option>Pekerjaan Ekskavasi</option>
                     </Select>
                   </Label>
                 </div>
@@ -74,20 +168,17 @@ export default function PermitToWorkForm({ setIsOpen, isOpen }) {
                 <div className="py-2">
                   <Label className="mt-2">
                     <span className="font-semibold text-xs">
-                      Tanggal Pelaksanaan Pekerjaan
+                      Penanggung Jawab
                     </span>
-                    <Input type="date" {...register("tanggal_pelaksanaan", {required: true})} />
+                    <p className="truncate text-base">{user.name}</p>
                   </Label>
                 </div>
                 <div className="py-2">
                   <Label className="mt-2">
                     <span className="font-semibold text-xs">
-                      Penanggung Jawab
+                      Tanggal Selesai Pekerjaan
                     </span>
-                    <Input
-                    {...register("penanggung_jawab", {required: true})}
-                      placeholder="ex: Perumahan"
-                    />
+                    <p className="truncate text-base"><Moment format="LL">{rencana_tanggal_selesai}</Moment></p>
                   </Label>
                 </div>
                 <div className="py-2">
@@ -95,7 +186,6 @@ export default function PermitToWorkForm({ setIsOpen, isOpen }) {
                     <span className="font-semibold text-xs">Lokasi</span>
                     <Input
                     {...register("lokasi", {required: true})}
-                      placeholder="ex: Perumahan"
                     />
                   </Label>
                 </div>
@@ -106,7 +196,7 @@ export default function PermitToWorkForm({ setIsOpen, isOpen }) {
                 <span className="font-semibold text-xs">
                   Pekerjaan Yang Akan Dilakukan
                 </span>
-                <Textarea {...register("deskripsi_pekerjaan")} />
+                <Textarea {...register("deskripsi_pekerjaan", {required: true})} />
               </Label>
             </div>
             <div className="py2">
@@ -114,7 +204,7 @@ export default function PermitToWorkForm({ setIsOpen, isOpen }) {
                 <span className="font-semibold text-xs">Peralatan</span>
               </Label>
               <div className="flex flex-wrap border border-gray-300 rounded-md p-4">
-                {currentChecbox.map((value, idx) => {
+                {currentChecbox !== "" ? currentChecbox.map((value, idx) => {
                   return (
                     <div key={idx} className="flex items-center mr-4">
                       <input
@@ -128,13 +218,13 @@ export default function PermitToWorkForm({ setIsOpen, isOpen }) {
                       </label>
                     </div>
                   );
-                })}
+                }):""}
               </div>
             </div>
           </div>
           <div className="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row bg-white">
             <div className="hidden sm:block">
-              <Button layout="outline" onClick={() => setIsOpen(!isOpen)}>
+              <Button layout="outline" onClick={() => setModalPermitBaru(!modalPermitBaru)}>
                 Batal
               </Button>
             </div>
@@ -146,7 +236,7 @@ export default function PermitToWorkForm({ setIsOpen, isOpen }) {
                 block
                 size="large"
                 layout="outline"
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={() => setModalPermitBaru(!modalPermitBaru)}
               >
                 Batal
               </Button>

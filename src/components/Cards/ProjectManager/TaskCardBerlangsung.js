@@ -15,7 +15,7 @@ export default function TaskCardBerlangsung({ dataTask }) {
     penanggung_jawab,
     volume_sekarang,
   } = dataTask;
-  const progress = volume_sekarang / volume
+  const progress = Math.floor((parseFloat(volume_sekarang.replace(",", ".")) / volume)*100)
   return (
     <>
       <div className="flex flex-col border rounded-md p-4 bg-white shadow-md">

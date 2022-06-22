@@ -1,18 +1,38 @@
 import { useForm } from "react-hook-form";
 import { Label, Input, Button } from "@windmill/react-ui";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import { updateVolume } from "../../../reducer/ProjectSelectedSlice";
+import { setNotification } from "../../../reducer/NotificationSlice";
 
 export default function UpdateForm({ setIsOpen, isOpen, dataEdit }) {
   const { handleSubmit, register } = useForm();
+  let { projectId } = useParams();
+  const dispatch = useDispatch();
+
   const onSubmit = (data) => {
-    console.log(volumeSekarang);
+    if(parseFloat(data.volume_sekarang.replace(",", ".")) > dataEdit.volume){
+      dispatch(setNotification({type: "error", message: "Data lebih dari volume yang ditentukan!"}))
+    }else{
+      dispatch(
+        updateVolume({
+          id_proyek: projectId,
+          _id: dataEdit._id,
+          volume: data.volume_sekarang,
+        })
+      );
+      setIsOpen(!isOpen);
+    }
   };
 
-  const [volumeSekarang, setVolumeSekarang] = useState(dataEdit.volume_sekarang);
+  // const [volumeSekarang, setVolumeSekarang] = useState(
+  //   dataEdit.volume_sekarang
+  // );
 
-  const onChange = (data) => {
-    setVolumeSekarang(data.target.value);
-  };
+  // const onChange = (data) => {
+  //   setVolumeSekarang(data.target.value);
+  // };
   return (
     <div className="fixed inset-0 z-40 flex items-end bg-black bg-opacity-20 sm:items-center sm:justify-center">
       <form
@@ -42,16 +62,15 @@ export default function UpdateForm({ setIsOpen, isOpen, dataEdit }) {
               <Label>
                 <span className="font-semibold text-xs">Volume Sekarang</span>
               </Label>
-              <div className="flex gap-2 items-center">
+              <div className="flex gap-2 flex-grow items-center">
                 <input
-                  className="block w-full h-2 bg-gray-200 rounded-lg cursor-pointer"
-                  type="range"
-                  min={0}
-                  max={dataEdit.volume}
-                  defaultValue={volumeSekarang}
-                  onChange={(data) => onChange(data)}
+                  {...register("volume_sekarang", { required: true })}
+                  type="text"
+                  className=" mt-1 rounded-md w-full text-sm border-gray-300 focus:border-gray-600 ring-0 focus:ring-gray-300 focus:ring-2"
+                  defaultValue={dataEdit.volume_sekarang}
+                  // onChange={(data) => onChange(data)}
                 />
-                <span> {volumeSekarang} {dataEdit.satuan}</span>
+                <p className="text-sm w-20 font-bold">{dataEdit.satuan}</p>
               </div>
             </div>
           </div>

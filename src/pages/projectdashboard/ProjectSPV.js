@@ -13,6 +13,7 @@ import {
   projectSelectedSelectorPekerjaan,
 } from "../../reducer/ProjectSelectedSlice";
 import { selectUser } from "../../reducer/AuthSlice";
+import PermitToWorkForm from "../permittowork/PermitToWorkForm";
 
 export default function ProjectSPV() {
   let { projectId } = useParams();
@@ -29,131 +30,15 @@ export default function ProjectSPV() {
 
   const DataPekerjaan = useSelector(projectSelectedSelectorPekerjaan.selectAll);
 
-  const dataProyek = {
-    nama_proyek: "BSD Botanical Garden",
-    pemilik: "PT. Bukit Serpong Damai",
-    kategori: "Area Publik",
-    alamat:
-      "Jl. Telaga Golf Raya, Lengkong Gudang, Kec. Serpong, Kota Tangerang Selatan, Banten",
-    progress: 20,
-    pekerjaan: {
-      total_pekerjaan: 120,
-      pekerjaan_berlangsung: 10,
-      pekerjaan_selesai: 4,
-    },
-  };
+  const [dataPermitBaru, setDataPermitBaru] = useState("")
 
-  const dataDijadwalkan = [
-    {
-      id: "xxxx",
-      kode_pekerjaan: "BBG000001",
-      nama_pekerjaan: "Galian Tanah 60 CM",
-      volume: 245,
-      satuan: "m3",
-      tanggal_mulai_rencana: "2022-06-06",
-      tanggal_selesai_rencana: "2022-06-10",
-      tanggal_mulai: "2022-06-06",
-      tanggal_selesai: "2022-06-10",
-      status: "Dijadwalkan",
-      penanggung_jawab: "Sentot Wibisono",
-      progress: "40",
-      permit_to_work: "null",
-    },
-    {
-      id: "xxxx",
-      kode_pekerjaan: "BBG000001",
-      nama_pekerjaan: "Galian Tanah 60 CM",
-      volume: 245,
-      satuan: "m3",
-      tanggal_mulai_rencana: "2022-06-06",
-      tanggal_selesai_rencana: "2022-06-10",
-      tanggal_mulai: "2022-06-06",
-      tanggal_selesai: "2022-06-10",
-      status: "Dijadwalkan",
-      penanggung_jawab: "Sentot Wibisono",
-      progress: "40",
-      permit_to_work: "null",
-    },
-    {
-      id: "xxxx",
-      kode_pekerjaan: "BBG000001",
-      nama_pekerjaan: "Galian Tanah 60 CM",
-      volume: 245,
-      satuan: "m3",
-      tanggal_mulai_rencana: "2022-06-06",
-      tanggal_selesai_rencana: "2022-06-10",
-      tanggal_mulai: "2022-06-06",
-      tanggal_selesai: "2022-06-10",
-      status: "Dijadwalkan",
-      penanggung_jawab: "Sentot Wibisono",
-      progress: "40",
-      permit_to_work: "null",
-    },
-  ];
-  const dataBerlangsung = [
-    {
-      id: "xxxx",
-      kode_pekerjaan: "BBG000001",
-      nama_pekerjaan: "Galian Tanah 60 CM",
-      volume: 245,
-      satuan: "m3",
-      tanggal_mulai_rencana: "2022-06-06",
-      tanggal_selesai_rencana: "2022-06-10",
-      tanggal_mulai: "2022-06-06",
-      tanggal_selesai: "2022-06-10",
-      status: "Dimulai",
-      penanggung_jawab: "Sentot Wibisono",
-      progress: "40",
-      permit_to_work: "null",
-    },
-    {
-      id: "xxxx",
-      kode_pekerjaan: "BBG000001",
-      nama_pekerjaan: "Galian Tanah 60 CM",
-      volume: 245,
-      satuan: "m3",
-      tanggal_mulai_rencana: "2022-06-06",
-      tanggal_selesai_rencana: "2022-06-10",
-      tanggal_mulai: "2022-06-06",
-      tanggal_selesai: "2022-06-10",
-      status: "Dimulai",
-      penanggung_jawab: "Sentot Wibisono",
-      progress: "40",
-      permit_to_work: "null",
-    },
-    {
-      id: "xxxx",
-      kode_pekerjaan: "BBG000001",
-      nama_pekerjaan: "Galian Tanah 60 CM",
-      volume: 245,
-      satuan: "m3",
-      tanggal_mulai_rencana: "2022-06-06",
-      tanggal_selesai_rencana: "2022-06-10",
-      tanggal_mulai: "2022-06-06",
-      tanggal_selesai: "2022-06-10",
-      status: "Dimulai",
-      penanggung_jawab: "Sentot Wibisono",
-      progress: "40",
-      permit_to_work: "null",
-    },
-  ];
-  const dataSelesai = [
-    {
-      id: "xxxx",
-      kode_pekerjaan: "BBG000001",
-      nama_pekerjaan: "Galian Tanah 60 CM",
-      volume: 245,
-      satuan: "m3",
-      tanggal_mulai_rencana: "2022-06-06",
-      tanggal_selesai_rencana: "2022-06-10",
-      tanggal_mulai: "2022-06-06",
-      tanggal_selesai: "2022-06-10",
-      status: "Selesai",
-      penanggung_jawab: "Sentot Wibisono",
-      progress: "100",
-      permit_to_work: "null",
-    },
-  ];
+  const [modalPermitBaru, setModalPermitBaru] = useState(false)
+
+  const permitBaru = (props) => {
+    setDataPermitBaru(props)
+    setModalPermitBaru(!modalPermitBaru)
+  }
+
   return (
     <>
       <div className="flex gap-4 items-center my-2">
@@ -163,7 +48,7 @@ export default function ProjectSPV() {
         <label className="text-base font-bold">Proyek</label>
       </div>
       <div className="flex flex-col gap-4">
-        <ProjectInfoCard dataProyek={dataProyek} />
+        <ProjectInfoCard />
         <div className="grid ">
           <div className="p-6 bg-white rounded-lg border">
             <div className="flex pb-3 mb-3 px-2 items-center gap-2">
@@ -197,7 +82,7 @@ export default function ProjectSPV() {
                   {DataPekerjaan.length !== 0 ? (
                     DataPekerjaan.map((item, idx) => {
                       if(item.status === "Dijadwalkan"){
-                        return <TaskCardDijadwalkan key={idx} dataTask={item} />;
+                        return <TaskCardDijadwalkan permitBaru={permitBaru} key={idx} dataTask={item} />;
                       }
                     })
                   ) : (
@@ -248,6 +133,7 @@ export default function ProjectSPV() {
           </div>
         </div>
       </div>
+      {modalPermitBaru && (<PermitToWorkForm dataPermitBaru={dataPermitBaru} setModalPermitBaru={setModalPermitBaru} modalPermitBaru={modalPermitBaru} />)}
     </>
   );
 }

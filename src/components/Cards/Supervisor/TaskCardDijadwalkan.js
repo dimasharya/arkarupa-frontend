@@ -1,11 +1,11 @@
 import Moment from "react-moment";
-import { Button } from "@windmill/react-ui";
+import { Button, HelperText } from "@windmill/react-ui";
 import { Play, QrCOde } from "../../../icons";
 import { useDispatch } from "react-redux";
 import { mulaiPekerjaan } from "../../../reducer/ProjectSelectedSlice";
 import { useParams } from "react-router-dom";
 
-export default function TaskCardDijadwalkan({ dataTask }) {
+export default function TaskCardDijadwalkan({ dataTask, permitBaru }) {
   const {
     kode_pekerjaan,
     nama_pekerjaan,
@@ -18,17 +18,26 @@ export default function TaskCardDijadwalkan({ dataTask }) {
   } = dataTask;
   let button_ptw,
     button_mulai,
-    button_tidak_perlu_ptw = false;
-  if (permit_to_work !== true) {
+    button_perlu_ptw = true;
+  if (permit_to_work === true) {
+    button_perlu_ptw = true;
     if (permit_to_work_data === null) {
-      button_ptw = true;
-      button_mulai = false;
-    } else {
       button_ptw = false;
       button_mulai = true;
+    } else {
+      if (
+        permit_to_work_data.status === "Diajukan" ||
+        permit_to_work_data.status === "Ditolak"
+      ) {
+        button_ptw = true;
+        button_mulai = true;
+      } else if (permit_to_work_data.status === "Disetujui") {
+        button_ptw = true;
+        button_mulai = false;
+      }
     }
   } else {
-    button_tidak_perlu_ptw = true;
+    button_perlu_ptw = false;
     button_ptw = false;
     button_mulai = true;
   }
@@ -87,9 +96,16 @@ export default function TaskCardDijadwalkan({ dataTask }) {
             </p>
           </div>
         </div>
-        <div className="flex gap-2 pt-3 justify-end">
-          {button_tidak_perlu_ptw && (
+        <div className="flex gap-2 pt-3 justify-end items-center">
+          {button_perlu_ptw === true && permit_to_work_data !== null ? (
+            <HelperText>PTW {permit_to_work_data.status}</HelperText>
+          ) : (
+            ""
+          )}
+
+          {button_perlu_ptw && (
             <Button
+              onClick={() => permitBaru(dataTask)}
               disabled={button_ptw}
               layout="outline"
               iconLeft={QrCOde}

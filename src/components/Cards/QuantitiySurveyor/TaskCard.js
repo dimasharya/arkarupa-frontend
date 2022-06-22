@@ -22,7 +22,7 @@ export default function TaskCard({ dataTask, onEdit }) {
     button_update = true;
   }
 
-  const progress = volume_sekarang / volume;
+  const progress = Math.floor((parseFloat(volume_sekarang.replace(",", ".")) / volume)*100)
 
   return (
     <>

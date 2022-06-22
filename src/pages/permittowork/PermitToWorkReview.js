@@ -25,15 +25,17 @@ export default function PermitToWorkReview({ setIsOpenReview, isOpenReview }) {
     },
   ];
 
+  const rencana_tanggal_mulai = new Date("2022-06-23")
+
   const [currentCheckbox, setCurrentCheckbox] = useState(currentChecked);
   const [currentDaterange, setCurrentDaterange] = useState(
-    new Date(),
+    rencana_tanggal_mulai,
     new Date()
   );
 
-  const onSubmit = (data) => console.log(data);
+  // const onSubmit = (data) => console.log(data);
 
-  const cekData = () => {console.log(currentDaterange)}
+  const onSubmit = () => {console.log(currentDaterange)}
 
   return (
     <>

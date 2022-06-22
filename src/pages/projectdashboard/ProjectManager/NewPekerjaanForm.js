@@ -5,6 +5,7 @@ import { Label, Select, Button } from "@windmill/react-ui";
 import Api from "../../../reducer/Api";
 import { useParams } from "react-router-dom";
 import { addPekerjaan } from "../../../reducer/ProjectSelectedSlice";
+import { setNotification } from "../../../reducer/NotificationSlice";
 
 export default function NewPekerjaanForm({
   modalNewPekerjaan,
@@ -34,7 +35,8 @@ export default function NewPekerjaanForm({
   }, []);
 
   const onSubmit = (props) => {
-    let satuan, volume
+    if(props.item_pekerjaan !== "Pilih Pekerjaan"){
+      let satuan, volume
     let result = anggaranBiaya.find(
       (item) => (item._id = props.item_pekerjaan)
     );
@@ -47,6 +49,9 @@ export default function NewPekerjaanForm({
     };
     dispatch(addPekerjaan({id_proyek: projectId, data: data}))
     setModalNewPekerjaan(!modalNewPekerjaan)
+    }else{
+      dispatch(setNotification({type: "error", message:"Anda harus memilih pekerjaan!"}))
+    }
   };
   return (
     <>

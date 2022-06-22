@@ -11,16 +11,25 @@ export const loadProjectSelected = createAsyncThunk(
   async ({ id }) => {
     let proyek = [],
       team;
+      const progress = await progress_proyek(id)
     try {
       const response = await Api.get("/api/project/", {
         params: { id: id },
       });
       team = response.data.team;
       proyek.push(response.data);
-      return { proyek: proyek, team: team };
+      return { proyek: proyek, progress: progress, team: team };
     } catch (error) {}
   }
 );
+
+export const progress_proyek = async (props) => {
+  let data
+  await Api.get(`/api/projectschedule/getprogress/${props}`).then((res) => {
+    data = res.data
+  })
+  return data
+}
 
 export const addTeam = createAsyncThunk(
   "projectselected/addTeam",
@@ -78,7 +87,6 @@ export const loadPekerjaanSpv = createAsyncThunk(
     }).then((res) => {
       if (res.status === 200) {
         result = res.data;
-        console.log(result);
       }
     });
     return result;
@@ -263,6 +271,37 @@ export const selesaiPekerjaan = createAsyncThunk("projectselected/selesaipekerja
   return {id: _id, data: result}
 })
 
+// PTW
+
+export const tambahPermitTowork = createAsyncThunk("projectselected/tambahpermittowork", async ({id_proyek, _id, data}, thunkAPI) => {
+  let result
+  await Api.post(`/api/permittowork/${_id}`, {id_proyek, data}).then((res) => {
+    if(res.status === 200){
+      result = res.data
+      thunkAPI.dispatch(setNotification({type: "success", message: "Berhasil mengajukan permit pekerjaan"}))
+    }else{
+      thunkAPI.dispatch(setNotification({type: "error", message: "Aksi gagal dilakukan"}))
+    }
+  })
+  return {id: result._id, data: result}
+})
+
+// QS
+
+export const updateVolume = createAsyncThunk("projectselected/updatevolume", async ({id_proyek, _id, volume}, thunkAPI) => {
+  let result
+  await Api.post(`/api/projectschedule/updatevolume/${id_proyek}` , {_id : _id, volume: volume}).then((res) => {
+    if(res.status === 200){
+      result = res.data
+      thunkAPI.dispatch(setNotification({type: "success", message: "Berhasil Mengupdate volume pekerjaan"}))
+    }else{
+      thunkAPI.dispatch(setNotification({type: "error", message: "Aksi gagal dilakukan"}))
+    }
+  })
+  const progress = await progress_proyek(id_proyek)
+  return {id: _id, progress: progress, data: result}
+})
+
 const pekerjaanEntity = createEntityAdapter({
   selectId: (pekerjaan) => pekerjaan._id,
 });
@@ -278,6 +317,7 @@ const projectEntity = createEntityAdapter({
 const projectSelectedSlice = createSlice({
   name: "projectselected",
   initialState: projectEntity.getInitialState({
+    progress: "0",
     team: teamEntity.getInitialState(),
     pekerjaan: pekerjaanEntity.getInitialState(),
   }),
@@ -292,9 +332,8 @@ const projectSelectedSlice = createSlice({
     [loadProjectSelected.fulfilled]: (state, action) => {
       const payload = action.payload;
       projectEntity.setAll(state, payload.proyek);
-      // console.log(payload.proyek);
-      // console.log(payload.team);
       teamEntity.setAll(state.team, payload.team);
+      state.progress = payload.progress
     },
     [addTeam.fulfilled]: (state, action) => {
       const payload = action.payload;
@@ -341,7 +380,16 @@ const projectSelectedSlice = createSlice({
     [selesaiPekerjaan.fulfilled]: (state, action) => {
       const payload = action.payload
       pekerjaanEntity.updateOne(state.pekerjaan, {id: payload.id, changes: payload.data})
-    }
+    },
+    [updateVolume.fulfilled]: (state, action) => {
+      const payload = action.payload
+      pekerjaanEntity.updateOne(state.pekerjaan, {id: payload.id, changes: payload.data})
+      state.progress = payload.progress
+    },
+    [tambahPermitTowork.fulfilled]: (state, action) => {
+      const payload = action.payload
+      pekerjaanEntity.updateOne(state.pekerjaan, {id: payload.id, changes: payload.data})
+    },
 
   },
 });
@@ -357,6 +405,8 @@ export const projectSelectedSelectorTeam = teamEntity.getSelectors(
 export const projectSelectedSelectorPekerjaan = teamEntity.getSelectors(
   (state) => state.projectselected.pekerjaan
 );
+
+export const progressProyekSelector = (state) => state.projectselected.progress
 
 export const { clearProjectSelected } = projectSelectedSlice.actions;
 
