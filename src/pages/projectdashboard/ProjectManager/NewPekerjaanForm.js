@@ -41,7 +41,7 @@ export default function NewPekerjaanForm({
       (item) => (item._id = props.item_pekerjaan)
     );
     volume = result.volume;
-    satuan = result.satuan
+    satuan = result.item_pekerjaan.satuan
     const data = {
       ...props,
       volume,
@@ -87,7 +87,7 @@ export default function NewPekerjaanForm({
                   ? anggaranBiaya.map((item, idx) => {
                       return (
                         <option key={idx} value={item._id}>
-                          {item.item_pekerjaan.nama_pekerjaan}
+                          {item.item_pekerjaan.nama_pekerjaan + " - " + item.volume + " " + item.item_pekerjaan.satuan}
                         </option>
                       );
                     })

@@ -15,7 +15,7 @@ export default function TaskCardSelesai({ dataTask }) {
     volume_sekarang,
   } = dataTask;
 
-  const progress = Math.floor((parseFloat(volume_sekarang.replace(",", ".")) / volume)*100)
+  const progress = Math.floor((parseFloat(volume_sekarang.replace(",", ".")) / parseFloat(volume.replace(",", ".")))*100)
 
   return (
     <>

@@ -1,19 +1,12 @@
-import { createSlice, createEntityAdapter } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
-
-// export const setNotification = (data) => {
-//   // if (data.type === "error") {
-//   //   return toast.error(data.message);
-//   // }
-//   // if (data.type === "success") {
-//   //   return toast.success(data.message);
-//   // }
-//   return
-// };
 
 const NotificationSlice = createSlice({
   name: "notification",
-  initialState: {},
+  initialState: {
+    type: "",
+    message: ""
+  },
   reducers: {
     setNotification: (state, action) => {
       state.type = action.payload.type;
@@ -26,15 +19,13 @@ const NotificationSlice = createSlice({
       }
     },
     clearNotification: (state, action) => {
-      return { notification: "" };
+      state.type = ""
+      state.message = ""
     },
   },
 });
-// const { reducer, actions } = NotificationSlice;
-// export const { setNotification, clearNotification } = actions;
-// export default reducer;
 
-export const notification = (state) => state.notification;
+export const notificationSelector = (state) => state.notification;
 const { reducer, actions } = NotificationSlice;
-export const { setNotification } = actions;
+export const { setNotification, clearNotification } = actions;
 export default reducer;

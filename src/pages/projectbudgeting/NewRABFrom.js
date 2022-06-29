@@ -22,7 +22,9 @@ const NewRABForm = ({ modalNewRab, setModalNewRab }) => {
   };
 
   useEffect(() => {
+    let mounted = true
     getAllProject();
+    return () => mounted = false
   }, []);
 
   const onSubmit = (data) => {

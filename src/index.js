@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import "./assets/css/tailwind.output.css";
 import "./assets/css/Custom.css";
 import App from "./App";
-import "react-dropzone-uploader/dist/styles.css";
 import * as serviceWorker from "./serviceWorker";
 
 // if (process.env.NODE_ENV !== 'production') {

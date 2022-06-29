@@ -4,6 +4,7 @@ import {
   createSlice,
 } from "@reduxjs/toolkit";
 import Api from "./Api";
+import { setNotification } from "./NotificationSlice";
 
 export const loadUserProject = createAsyncThunk(
   "project/getUserProject",
@@ -12,9 +13,30 @@ export const loadUserProject = createAsyncThunk(
       let response = await Api.get("/api/project/userproject", {
         params: { userId: id },
       });
-      response = response.data
-      return response
+      response = response.data;
+      return response;
     } catch (error) {}
+  }
+);
+
+export const tambahProyekBaru = createAsyncThunk(
+  "project/addnewproject",
+  async (formData, thunkAPI) => {
+    try {
+      let result;
+      await Api.post("/api/project", formData).then((res) => {
+        result = res.data;
+      });
+      thunkAPI.dispatch(
+        setNotification({ type: "success", message: "Proyek baru berhasil ditambah" })
+      );
+      return result;
+    } catch (error) {
+      thunkAPI.dispatch(
+        setNotification({ type: "error", message: error.response.data.msg })
+      );
+      return thunkAPI.rejectWithValue()
+    }
   }
 );
 
@@ -42,12 +64,16 @@ const ProjectSlice = createSlice({
         (el) => el.status === "Selesai"
       ).length;
     },
+    [tambahProyekBaru.fulfilled]: (state, action) => {
+      const payload = action.payload
+      projectEntity.addOne(state, payload)
+    }
   },
 });
 
 export const projectSelectors = projectEntity.getSelectors(
   (state) => state.userproject
 );
-export const selectProject = (state) => state.userproject
+export const selectProject = (state) => state.userproject;
 
 export default ProjectSlice.reducer;

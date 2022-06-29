@@ -119,11 +119,6 @@ export const routeQS = [
 
 export const routeADM = [
   {
-    path: "/app/adm/schedule",
-    icon: "FormsIcon",
-    name: "Penjadwalan",
-  },
-  {
     path: "/app/adm/usermanagement",
     icon: "FormsIcon",
     name: "Pengguna",

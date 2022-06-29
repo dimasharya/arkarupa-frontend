@@ -9,5 +9,7 @@ export const getRoles = (data) => {
     return "Quantity Surveyor";
   } else if (data === "se") {
     return "Staff Engineer";
+  }else if (data === "adm") {
+    return "Administrator";
   }
 };

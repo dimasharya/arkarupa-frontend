@@ -30,7 +30,7 @@ export default function Tim({ dataTim, modalNewTeam, setModalNewTeam, projectId 
               return (
                 <>
                   <li key={idx} className="py-2">
-                    <div className="flex items-center space-x-4">
+                    <div key={idx} className="flex items-center space-x-4">
                       <div className="flex-shrink-0">
                         <Avatar
                           className="align-middle"

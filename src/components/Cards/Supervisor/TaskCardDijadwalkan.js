@@ -26,20 +26,22 @@ export default function TaskCardDijadwalkan({ dataTask, permitBaru }) {
       button_mulai = true;
     } else {
       if (
-        permit_to_work_data.status === "Diajukan" ||
-        permit_to_work_data.status === "Ditolak"
+        permit_to_work_data.status === "Diajukan"
       ) {
         button_ptw = true;
         button_mulai = true;
       } else if (permit_to_work_data.status === "Disetujui") {
         button_ptw = true;
         button_mulai = false;
+      }else if(permit_to_work_data.status === "Ditolak" || permit_to_work_data.status === "Kadaluarsa") {
+        button_ptw = false;
+        button_mulai = true;
       }
     }
   } else {
     button_perlu_ptw = false;
-    button_ptw = false;
-    button_mulai = true;
+    button_ptw = true;
+    button_mulai = false;
   }
 
   let { projectId } = useParams();

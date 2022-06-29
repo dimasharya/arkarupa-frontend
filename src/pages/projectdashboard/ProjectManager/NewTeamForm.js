@@ -6,7 +6,6 @@ import { getRoles } from "../../../utils/getRoles";
 import { useDispatch } from "react-redux";
 import {
   addTeam,
-  projectSelectedSelectorTeam,
 } from "../../../reducer/ProjectSelectedSlice";
 
 export default function NewTeamForm({ modalNewTeam, setModalNewTeam, projectId }) {
@@ -29,7 +28,9 @@ export default function NewTeamForm({ modalNewTeam, setModalNewTeam, projectId }
   };
 
   useEffect(() => {
+    let mounted = true
     getAllUser();
+    return () => mounted = false
   }, []);
 
   const onSubmit = (data) => {

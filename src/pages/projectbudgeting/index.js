@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Workspace from "./Workspace";
-import CategoryManagement from "./CategoryManagement";
+// import CategoryManagement from "./CategoryManagement";
 import ItemManagement from "./Itemmanagement";
 import MaterialManagement from "./MaterialManagement";
 import { useLocation, useParams } from "react-router-dom";
@@ -25,7 +25,6 @@ function ProjectBudgeting() {
     "lembar kerja",
     "manajemen item pekerjaan",
     "manajemen material",
-    "kategori",
   ];
   const [tabActive, setTabactive] = useState(tabs[0]);
 
@@ -71,11 +70,11 @@ function ProjectBudgeting() {
         >
           <MaterialManagement />
         </div>
-        <div
+        {/* <div
           className={tabActive === "kategori" ? "block" : "hidden"}
         >
           <CategoryManagement />
-        </div>
+        </div> */}
       </div>
     </>
   );

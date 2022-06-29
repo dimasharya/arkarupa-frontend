@@ -25,7 +25,7 @@ function ProjectDasborad() {
 
   const user = useSelector(selectUser);
   const userProject = useSelector(projectSelectors.selectAll);
-  const selectorProject = useSelector(selectProject);
+  // const selectorProject = useSelector(selectProject);
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -75,7 +75,7 @@ function ProjectDasborad() {
                 <CollectionIcon className="h-4 w-4 text-black" />
               </div>
               <h3 className="mt-4 w-26 text-4xl font-bold">
-                {selectorProject.total_proyek}
+                {userProject.length}
               </h3>
               <h4 className="mt-2 text-sm leading-none font-bold">
                 Total Proyek
@@ -86,7 +86,7 @@ function ProjectDasborad() {
                 <RefreshIcon className="h-4 w-4 text-black" />
               </div>
               <h3 className="mt-4 w-26 text-4xl font-bold">
-                {selectorProject.proyek_berlangsung}
+                {userProject.filter((item) => item.status === "Belum Dimulai").length}
               </h3>
               <h4 className="mt-2 text-sm leading-none font-bold">
                 Proyek Berlangsung
@@ -97,7 +97,7 @@ function ProjectDasborad() {
                 <CheckIcon className="h-4 w-4 text-black" />
               </div>
               <h3 className="mt-4 w-26 text-4xl font-bold">
-                {selectorProject.proyek_selesai}
+                {userProject.filter((item) => item.status === "Selesai").length}
               </h3>
               <h4 className="mt-2 text-sm leading-none font-bold">
                 Proyek Selesai
@@ -135,7 +135,7 @@ function ProjectDasborad() {
                     </li>
                   );
                 })
-              : ""}
+              : <div className="text-center text-sm font-bold">Tidak Ada Data</div>}
           </ul>
         </div>
       </div>
