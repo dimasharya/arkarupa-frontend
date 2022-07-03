@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import AuthSlice from "./reducer/AuthSlice";
 import ItemManagementSlice from "./reducer/ItemManagementSlice";
+import MaterialManagementSlice from "./reducer/MaterialManagementSlice";
 import NotificationSlice from "./reducer/NotificationSlice";
 import PermitToWorkSlice from "./reducer/PermitToWorkSlice";
 import ProjectBudgetSelectedSlice from "./reducer/ProjectBudgetSelectedSlice";
@@ -21,7 +22,8 @@ export const store = configureStore({
         itemmanagement: ItemManagementSlice,
         permittowork: PermitToWorkSlice,
         usermanagement: UserManagementSlice,
-        validationmessage: ValidationMessageSlice
+        validationmessage: ValidationMessageSlice, 
+        materialmanagement: MaterialManagementSlice
     },
     devTools: true
 })

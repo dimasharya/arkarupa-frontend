@@ -9,6 +9,7 @@ import TaskCardSelesai from "../../components/Cards/ProjectManager/TaskCardSeles
 import Tim from "../../components/Project/Tim";
 import NewPekerjaanForm from "./ProjectManager/NewPekerjaanForm";
 import EditPekerjaanForm from "./ProjectManager/EditPekerjaanForm";
+import { CollectionIcon } from "@heroicons/react/outline";
 // import Table, {
 //   DisplayBadgeStatus,
 //   DisplayProgressBarSmall,
@@ -21,11 +22,18 @@ import {
   projectSelectedSelectorTeam,
 } from "../../reducer/ProjectSelectedSlice";
 import NewTeamForm from "./ProjectManager/NewTeamForm";
+import KurvaS from "./KurvaS";
+import BadgeTaskStatus from "../../components/Badge/BadgeTaskStatus";
+import ProgressbarSmall from "../../components/Progresbar/ProgressbarSmall";
+import moment from "moment";
 
 export default function Project() {
   const [modalNewPekerjaan, setModalNewPekerjaan] = useState(false);
   const [modalNewTeam, setModalNewTeam] = useState(false);
   const [modalEditPekerjaan, setModalEditPekerjaan] = useState(false);
+
+  const tabs = ["jadwal", "progres", "kurva s"];
+  const [tabActive, setTabactive] = useState(tabs[0]);
 
   let { projectId } = useParams();
   const dispatch = useDispatch();
@@ -58,7 +66,7 @@ export default function Project() {
       </div>
       <div className="flex flex-col gap-4">
         <div className="grid grid-cols-4 grid-flow-col gap-4">
-            <ProjectInfoCard />
+          <ProjectInfoCard />
           <div className="col-span-1 py-4 px-6 rounded-md text-white bg-gradient-to-b from-gray-900 to-gray-600 bg-gradient-to-r">
             <h2 className="font-semibold mb-4">Data Proyek</h2>
             <div className="grid grid-cols-2 gap-2">
@@ -107,48 +115,62 @@ export default function Project() {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-4 grid-flow-row-dense gap-4">
           <div className=" col-span-3 p-6 bg-white rounded-lg border">
             <div className="flex justify-between pb-3 mb-3 px-2 items-center gap-2">
-              <div className="flex items-center gap-2">
-                <div className="p-1.5 w-7 h-7 rounded-full bg-black">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 text-white"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
-                    />
-                  </svg>
+              <div className="flex flex-row gap-4 items-center">
+                <div className="flex items-center gap-2">
+                  <div className="p-1.5 w-7 h-7 rounded-full bg-black">
+                    <CollectionIcon className="h-4 w-4 text-white" />
+                  </div>
+                  <h5 className="font-semibold leading-none text-gray-900 dark:text-white">
+                    Pekerjaan
+                  </h5>
                 </div>
-                <h5 className="font-semibold leading-none text-gray-900 dark:text-white">
-                  Pekerjaan
-                </h5>
+                <ul className="inline-flex gap-4 text-xs cursor-pointer">
+                  {tabs.map((item, idx) => {
+                    return (
+                      <li
+                        key={idx}
+                        className={
+                          (tabActive === item
+                            ? "py-2 px-4 border-gray-200 bg-gray-100 rounded-lg text-black"
+                            : "py-2 px-4  text-gray-500") +
+                          " font-bold transition duration-500 ease-in-out hover:text-black"
+                        }
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setTabactive(item);
+                        }}
+                        role="tablist"
+                      >
+                        {item.toUpperCase()}
+                      </li>
+                    );
+                  })}
+                </ul>
               </div>
-              <Button
-                onClick={() => setModalNewPekerjaan(!modalNewPekerjaan)}
-                iconLeft={HeroPlusOutline}
-                layout="primary"
-                size="small"
-              >
-                Tambah Pekerjaan
-              </Button>
+              <div className={tabActive === "jadwal" ? "block" : "hidden"}>
+                <Button
+                  onClick={() => setModalNewPekerjaan(!modalNewPekerjaan)}
+                  iconLeft={HeroPlusOutline}
+                  layout="primary"
+                  size="small"
+                >
+                  Tambah Pekerjaan
+                </Button>
+              </div>
             </div>
-            <div className="grid grid-cols-3 gap-6 px-2">
-              <div className="grid">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="rounded-full bg-orange-400 w-3 h-3" />
-                  <h2 className="text-sm font-bold">Semua Pekerjaan</h2>
-                </div>
-                <div className="flex gap-2 flex-col relative overflow-y-auto h-96 scrollbar-hide">
-                  {DataPekerjaan.length !== 0 ? (
-                    DataPekerjaan.map((item, idx) => {
+            <div className={tabActive === "jadwal" ? "block" : "hidden"}>
+              <div className="grid grid-cols-3 gap-6 px-2">
+                <div className="grid">
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="rounded-full bg-orange-400 w-3 h-3" />
+                    <h2 className="text-sm font-bold">Semua Pekerjaan</h2>
+                  </div>
+                  <div className="flex gap-2 flex-col relative overflow-y-auto h-96 scrollbar-hide">
+                    {DataPekerjaan.length !== 0 ? (
+                      DataPekerjaan.map((item, idx) => {
                         return (
                           <TaskCardDijadwalkan
                             key={idx}
@@ -156,51 +178,93 @@ export default function Project() {
                             editPekerjaan={editPekerjaan}
                           />
                         );
-                    })
-                  ) : (
-                    <p className="text-center text-xs">Tidak Ada Data</p>
-                  )}
+                      })
+                    ) : (
+                      <p className="text-center text-xs">Tidak Ada Data</p>
+                    )}
+                  </div>
+                </div>
+                <div className="grid">
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="rounded-full bg-blue-400 w-3 h-3" />
+                    <h2 className="text-sm font-bold">Berlangsung</h2>
+                  </div>
+                  <div className="flex gap-2 flex-col relative overflow-y-auto h-96 scrollbar-hide">
+                    {DataPekerjaan.length !== 0 ? (
+                      DataPekerjaan.map((item, idx) => {
+                        if (
+                          item.status === "Dimulai" ||
+                          item.status === "Dijeda"
+                        ) {
+                          return (
+                            <TaskCardBerlangsung key={idx} dataTask={item} />
+                          );
+                        }
+                      })
+                    ) : (
+                      <p className="text-center text-xs">Tidak Ada Data</p>
+                    )}
+                  </div>
+                </div>
+                <div className="grid">
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="rounded-full bg-green-400 w-3 h-3" />
+                    <h2 className="text-sm font-bold">Selesai</h2>
+                  </div>
+                  <div className="flex gap-2 flex-col relative overflow-y-auto h-96 scrollbar-hide">
+                    {DataPekerjaan.length !== 0 ? (
+                      DataPekerjaan.map((item, idx) => {
+                        if (item.status === "Selesai") {
+                          return <TaskCardSelesai key={idx} dataTask={item} />;
+                        }
+                      })
+                    ) : (
+                      <p className="text-center text-xs">Tidak Ada Data</p>
+                    )}
+                  </div>
                 </div>
               </div>
-              <div className="grid">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="rounded-full bg-blue-400 w-3 h-3" />
-                  <h2 className="text-sm font-bold">Berlangsung</h2>
-                </div>
-                <div className="flex gap-2 flex-col relative overflow-y-auto h-96 scrollbar-hide">
-                  {DataPekerjaan.length !== 0 ? (
-                    DataPekerjaan.map((item, idx) => {
-                      if (
-                        item.status === "Dimulai" ||
-                        item.status === "Dijeda"
-                      ) {
-                        return (
-                          <TaskCardBerlangsung key={idx} dataTask={item} />
-                        );
-                      }
-                    })
-                  ) : (
-                    <p className="text-center text-xs">Tidak Ada Data</p>
-                  )}
-                </div>
-              </div>
-              <div className="grid">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="rounded-full bg-green-400 w-3 h-3" />
-                  <h2 className="text-sm font-bold">Selesai</h2>
-                </div>
-                <div className="flex gap-2 flex-col relative overflow-y-auto h-96 scrollbar-hide">
-                  {DataPekerjaan.length !== 0 ? (
-                    DataPekerjaan.map((item, idx) => {
-                      if (item.status === "Selesai") {
-                        return <TaskCardSelesai key={idx} dataTask={item} />;
-                      }
-                    })
-                  ) : (
-                    <p className="text-center text-xs">Tidak Ada Data</p>
-                  )}
-                </div>
-              </div>
+            </div>
+            <div className={tabActive === "progres" ? "block" : "hidden"}>
+              {DataPekerjaan.length !== 0 ? (
+                <>
+                  <div className="flex p-3 rounded-t-md border w-full text-center items-center">
+                    <p className="text-xs font-bold w-2/6">PEKERJAAN</p>
+                    <p className="text-xs font-bold w-1/6">TANGGAL MULAI</p>
+                    <p className="text-xs font-bold w-1/6">TANGGAL SELESAI</p>
+                    <p className="text-xs font-bold w-1/6">PROGRESS</p>
+                    <p className="text-xs font-bold w-1/6">STATUS</p>
+                  </div>
+                  <ul className="relative scrollbar-hide overflow-y-scroll rounded-b-md border-l border-r border-b px-3 h-96">
+                    {DataPekerjaan.map((item, idx) => {
+                      const progress = Math.ceil((parseFloat(item.volume_sekarang.replace(",", ".")) / parseFloat(item.volume.replace(",", ".")))*100)
+                      return (
+                        <li key={idx} className="flex flex-row items-center py-3 border-b">
+                          <div className="flex items-center pl-2 w-2/6 gap-5">
+                            <CollectionIcon className="h-4 w-4 text-black" />
+                            <p className="text-sm font-bold truncate">
+                              {item.nama_pekerjaan}
+                            </p>
+                          </div>
+                          <p className="text-sm w-1/6">{moment(item.tanggal_mulai).format("LL")}</p>
+                          <p className="text-sm w-1/6">{moment(item.tanggal_mulai).format("LL")}</p>
+                          <div className="flex justify-center w-1/6">
+                            <ProgressbarSmall progress={progress} />
+                          </div>
+                          <div className="flex justify-center w-1/6">
+                            <BadgeTaskStatus status={item.status} />
+                          </div>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </>
+              ) : (
+                <p className="text-sm text-center font-bold">Belum Ada Progres</p>
+              )}
+            </div>
+            <div className={tabActive === "kurva s" ? "block" : "hidden"}>
+              <KurvaS projectId={projectId} />
             </div>
           </div>
           {Tim.length !== 0 ? (

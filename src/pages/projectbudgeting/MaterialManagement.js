@@ -15,23 +15,27 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faCog } from "@fortawesome/free-solid-svg-icons";
 import NumberFormat from "react-number-format";
 import Item from "../../components/Projectbudget/Materialmanagement/Item";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import { loadMaterialManagement, MaterialSelector } from "../../reducer/MaterialManagementSlice";
 
 export default function MaterialManagement() {
-  const data = [
-    {
-      item: "Mandor",
-      category: "Pekerja",
-      sign: "PJA",
-      unit: "O.H",
-      price: 90000,
-    },
-  ];
+
+  const dispatch = useDispatch()
+
+  const location = useLocation()
+
+  useEffect(() => {
+    dispatch(loadMaterialManagement())
+  }, [location])
+
+  const Material = useSelector(MaterialSelector.selectAll)
 
   /// Table Area
-  const [itemTable, setItemTable] = useState(data);
+  // const [itemTable, setItemTable] = useState(data);
   const [pageTable, setPageTable] = useState(1);
   const [dataTable, setDataTable] = useState([]);
-  const [totalResults, setTotalResult] = useState(itemTable.length);
+  const [totalResults, setTotalResult] = useState(Material.length);
   const [selectedCategory, setSelectedCategory] = useState("Semua Kategori");
   const [searchKey, setSearchKey] = useState("");
 
@@ -47,79 +51,79 @@ export default function MaterialManagement() {
   const [itemControl, setItemcontrol] = useState("");
 
   function hapusClick(props) {
-    const data = [...itemTable];
-    let indexData = 0;
-    if (pageTable !== 0) {
-      indexData = (pageTable - 1) * 10 + props;
-    } else {
-      indexData = props;
-    }
-    data.splice(indexData, 1);
-    setTotalResult(data.length);
-    setItemTable(data);
+    // const data = [...itemTable];
+    // let indexData = 0;
+    // if (pageTable !== 0) {
+    //   indexData = (pageTable - 1) * 10 + props;
+    // } else {
+    //   indexData = props;
+    // }
+    // data.splice(indexData, 1);
+    // setTotalResult(data.length);
+    // setItemTable(data);
   }
 
   function toggleSubmit(props) {
-    const changedData = {
-      item: props.item,
-      category: props.category,
-      sign: props.sign,
-      unit: props.unit,
-      price: props.price,
-    };
+    // const changedData = {
+    //   item: props.item,
+    //   category: props.category,
+    //   sign: props.sign,
+    //   unit: props.unit,
+    //   price: props.price,
+    // };
 
-    let newData = [];
-    if (props.mode === "edit") {
-      let indexData = 0;
-      if (pageTable !== 0) {
-        indexData = (pageTable - 1) * 10 + props.index;
-      } else {
-        indexData = props.index;
-      }
+    // let newData = [];
+    // if (props.mode === "edit") {
+    //   let indexData = 0;
+    //   if (pageTable !== 0) {
+    //     indexData = (pageTable - 1) * 10 + props.index;
+    //   } else {
+    //     indexData = props.index;
+    //   }
 
-      for (let index = 0; index < itemTable.length; index++) {
-        if (index === indexData) {
-          newData[index] = changedData;
-        } else {
-          newData[index] = itemTable[index];
-        }
-      }
-    } else {
-      newData = [...itemTable, changedData];
-    }
-    setItemTable(newData);
+    //   for (let index = 0; index < itemTable.length; index++) {
+    //     if (index === indexData) {
+    //       newData[index] = changedData;
+    //     } else {
+    //       newData[index] = itemTable[index];
+    //     }
+    //   }
+    // } else {
+    //   newData = [...itemTable, changedData];
+    // }
+    // setItemTable(newData);
   }
 
   useEffect(() => {
     setDataTable(
-      itemTable.slice(
+      Material.slice(
         (pageTable - 1) * resultsPerPage,
         pageTable * resultsPerPage
       )
     );
-  }, [pageTable, itemTable]);
+  }, [pageTable, Material]);
 
   function searchResultcontrol(category, keyword) {
     let filtered;
     if (keyword !== "") {
       if (category !== "Semua Kategori") {
-        filtered = itemTable.filter((item) => {
+        filtered = Material.filter((item) => {
           return (
-            item.item.toLowerCase().includes(keyword.toLowerCase()) &&
-            item.category.toLowerCase().includes(category.toLowerCase())
+            item.nama_item.toLowerCase().includes(keyword.toLowerCase()) &&
+            item.kategori.toLowerCase().includes(category.toLowerCase())
           );
         });
       } else {
-        filtered = itemTable.filter((item) => {
-          return item.item.toLowerCase().includes(keyword.toLowerCase());
+        filtered = Material.filter((item) => {
+          return item.nama_item.toLowerCase().includes(keyword.toLowerCase());
         });
       }
     } else if (category !== "Semua Kategori") {
-      filtered = itemTable.filter((item) => {
-        return item.category.toLowerCase().includes(category.toLowerCase());
+      filtered = Material.filter((item) => {
+        return item.kategori.toLowerCase().includes(category.toLowerCase());
       });
     } else {
-      filtered = itemTable;
+      filtered = Material;
     }
     setDataTable(
       filtered.slice(
@@ -184,7 +188,6 @@ export default function MaterialManagement() {
             <tr className="text-center">
               <TableCell>Item</TableCell>
               <TableCell>Kategori</TableCell>
-              <TableCell>Simbol</TableCell>
               <TableCell>Satuan</TableCell>
               <TableCell>Harga</TableCell>
               <TableCell>
@@ -200,24 +203,15 @@ export default function MaterialManagement() {
                   className="hover:bg-yellow-50 focus:bg-yellow-100 "
                 >
                   <TableCell>
-                    <p className="truncate">{idx.item}</p>
+                    <p className="truncate">{idx.nama_item}</p>
                   </TableCell>
                   <TableCell className="text-center">
-                    <label>{idx.category}</label>
+                    <label>{idx.kategori}</label>
                   </TableCell>
-                  <TableCell className="text-center">
-                    <label
-                      className="mr-2 text-xs font-black"
-                      data-tip
-                      data-for="table-cat"
-                    >
-                      {idx.sign}
-                    </label>
-                  </TableCell>
-                  <TableCell className="text-center">{idx.unit}</TableCell>
+                  <TableCell className="text-center">{idx.satuan}</TableCell>
                   <TableCell>
                     <NumberFormat
-                      value={idx.price}
+                      value={idx.harga}
                       displayType={"text"}
                       thousandSeparator
                       prefix={"Rp. "}

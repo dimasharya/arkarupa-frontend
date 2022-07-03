@@ -67,8 +67,9 @@ export const loadUser = createAsyncThunk(
   }
 );
 
-export const logout = createAsyncThunk("auth/logout", async (thunkAPI) => {
-  localStorage.removeItem("theArkarupaSecureAuth");
+export const logout = createAsyncThunk("auth/logout", async => {
+  localStorage.removeItem("theArkarupaSecureAuth")
+  
 });
 
 let token = localStorage.getItem("theArkarupaSecureAuth")

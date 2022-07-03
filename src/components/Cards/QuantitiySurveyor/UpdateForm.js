@@ -1,25 +1,31 @@
 import { useForm } from "react-hook-form";
 import { Label, Input, Button } from "@windmill/react-ui";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { updateVolume } from "../../../reducer/ProjectSelectedSlice";
 import { setNotification } from "../../../reducer/NotificationSlice";
+import { selectUser } from "../../../reducer/AuthSlice";
 
 export default function UpdateForm({ setIsOpen, isOpen, dataEdit }) {
   const { handleSubmit, register } = useForm();
   let { projectId } = useParams();
   const dispatch = useDispatch();
 
+  const user = useSelector(selectUser)
+
   const onSubmit = (data) => {
     if(parseFloat(data.volume_sekarang.replace(",", ".")) > dataEdit.volume){
       dispatch(setNotification({type: "error", message: "Data lebih dari volume yang ditentukan!"}))
-    }else{
+    } else if(parseFloat(data.volume_sekarang.replace(",", ".")) < dataEdit.volume_sekarang){
+      dispatch(setNotification({type: "error", message: "Data kurang dari volume progres sekarang!"}))
+  }else{
       dispatch(
         updateVolume({
           id_proyek: projectId,
           _id: dataEdit._id,
           volume: data.volume_sekarang,
+          surveyor: user._id
         })
       );
       setIsOpen(!isOpen);

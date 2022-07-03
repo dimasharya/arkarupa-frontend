@@ -351,30 +351,57 @@ export const tambahPermitTowork = createAsyncThunk(
 
 export const updateVolume = createAsyncThunk(
   "projectselected/updatevolume",
-  async ({ id_proyek, _id, volume }, thunkAPI) => {
-    let result;
-    await Api.post(`/api/projectschedule/updatevolume/${id_proyek}`, {
-      _id: _id,
-      volume: volume,
-    }).then((res) => {
-      if (res.status === 200) {
-        result = res.data;
-        thunkAPI.dispatch(
-          setNotification({
-            type: "success",
-            message: "Berhasil Mengupdate volume pekerjaan",
-          })
-        );
-      } else {
-        thunkAPI.dispatch(
-          setNotification({ type: "error", message: "Aksi gagal dilakukan" })
-        );
-      }
-    });
-    const progress = await progress_proyek(id_proyek);
-    return { id: _id, progress: progress, data: result };
+  async ({ id_proyek, _id, volume, surveyor }, thunkAPI) => {
+    try {
+      let result;
+      await Api.post(`/api/projectschedule/updatevolume/${id_proyek}`, {
+        _id: _id,
+        volume: volume,
+        surveyor: surveyor,
+      }).then((res) => {
+        if (res.status === 200) {
+          result = res.data;
+          thunkAPI.dispatch(
+            setNotification({
+              type: "success",
+              message: "Berhasil Mengupdate volume pekerjaan",
+            })
+          );
+        }
+      });
+      const progress = await progress_proyek(id_proyek);
+      return { id: _id, progress: progress, data: result };
+    } catch (error) {}
   }
 );
+
+export const loadProgressKurvaS = createAsyncThunk(
+  "projectselected/loadkurvas",
+  async ({ id_proyek }, thunkAPI) => {
+    try {
+      let realisasi, rencana;
+      await Api.get(`/api/project/progres/${id_proyek}`).then((res) => {
+        realisasi = res.data;
+      });
+      await Api.get(`/api/projectschedule/getrencanaprogres/${id_proyek}`).then((res) => {
+        rencana = res.data
+      })
+      return {realisasi, rencana};
+    } catch (error) {}
+  }
+);
+
+export const loadProgressKurvaSRencana = createAsyncThunk("projectselected/loadkurvasrencana", async ({id_proyek}, thunkAPI) => {
+  try {
+    let result
+    await Api.get(`/api/projectschedule/getrencanaprogres/${id_proyek}`).then((res) => {
+      result = res.data
+    })
+    return result
+  } catch (error) {
+    
+  }
+})
 
 const pekerjaanEntity = createEntityAdapter({
   selectId: (pekerjaan) => pekerjaan._id,
@@ -394,12 +421,16 @@ const projectSelectedSlice = createSlice({
     progress: "0",
     team: teamEntity.getInitialState(),
     pekerjaan: pekerjaanEntity.getInitialState(),
+    progreskurvas: {},
+    progreskurvasrencana: {}
   }),
   reducers: {
     clearProjectSelected: (state, action) => {
       projectEntity.removeAll(state);
       teamEntity.removeAll(state.team);
       pekerjaanEntity.removeAll(state.pekerjaan);
+      state.progreskurvas = {}
+      state.progreskurvasrencana = {}
     },
   },
   extraReducers: {
@@ -482,6 +513,15 @@ const projectSelectedSlice = createSlice({
         changes: payload.data,
       });
     },
+    [loadProgressKurvaS.fulfilled]: (state, action) => {
+      const payload = action.payload;
+      state.progreskurvas = payload.realisasi
+      state.progreskurvasrencana = payload.rencana
+    },
+    [loadProgressKurvaSRencana.fulfilled]: (state, action) => {
+      const payload = action.payload;
+      state.progreskurvasrencana = payload;
+    },
   },
 });
 
@@ -498,6 +538,8 @@ export const projectSelectedSelectorPekerjaan = teamEntity.getSelectors(
 );
 
 export const progressProyekSelector = (state) => state.projectselected.progress;
+export const progressKurvaSProyekSelector = (state) => state.projectselected.progreskurvas;
+export const progressKurvaSRencanaProyekSelector = (state) => state.projectselected.progreskurvasrencana;
 
 export const { clearProjectSelected } = projectSelectedSlice.actions;
 

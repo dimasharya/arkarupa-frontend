@@ -6,16 +6,24 @@ import Header from "../components/Header";
 import Main from "../containers/Main";
 import ThemedSuspense from "../components/ThemedSuspense";
 import { SidebarContext } from "../context/SidebarContext";
-import RoleBased from "./RoleBased"
+import RoleBased from "./RoleBased";
 import { useSelector } from "react-redux";
 import { selectUser } from "../reducer/AuthSlice";
-import { routeADM, routePM, routeQS, routeSE, routeSM, routeSPV } from "../routes/sidebar";
+import {
+  routeADM,
+  routePM,
+  routeQS,
+  routeSE,
+  routeSM,
+  routeSPV,
+} from "../routes/sidebar";
+// const KurvaS = lazy(() => import("../pages/projectdashboard/KurvaS"));
 
 const ProjectDashboard = lazy(() =>
   import("../pages/projectdashboard/ProjectDasborad")
 );
-const Greeting = lazy(() => import("../pages/Greeting"))
-const UserProfile = lazy(() => import("../pages/user/UserProfile"))
+const Greeting = lazy(() => import("../pages/Greeting"));
+const UserProfile = lazy(() => import("../pages/user/UserProfile"));
 const ProjectBudgeting = lazy(() => import("../pages/projectbudgeting"));
 // const Schedule = lazy(() => import("../pages/schedule/Schedule"));
 const UserManagement = lazy(() => import("../pages/user/UserManagement"));
@@ -40,16 +48,16 @@ function Layout() {
 
   if (user.role === "pm") {
     routes = routePM;
-  }else if (user.role === "spv") {
-    routes = routeSPV
-  }else if (user.role === "sm") {
-    routes = routeSM
-  }else if (user.role === "se") {
-    routes = routeSE
-  }else if (user.role === "qs") {
-    routes = routeQS
-  }else if (user.role === "adm") {
-    routes = routeADM
+  } else if (user.role === "spv") {
+    routes = routeSPV;
+  } else if (user.role === "sm") {
+    routes = routeSM;
+  } else if (user.role === "se") {
+    routes = routeSE;
+  } else if (user.role === "qs") {
+    routes = routeQS;
+  } else if (user.role === "adm") {
+    routes = routeADM;
   }
 
   return (
@@ -70,15 +78,27 @@ function Layout() {
               <Route element={<RoleBased allowedRole={"pm"} />}>
                 <Route path="pm/project" exact element={<ProjectDashboard />} />
                 <Route path="pm/project/:projectId" element={<ProjectPM />} />
+                {/* <Route path="pm/kurvas" element={<KurvaS />} /> */}
               </Route>
               <Route element={<RoleBased allowedRole={"spv"} />}>
-                <Route path="spv/project" exact element={<ProjectDashboard />} />
+                <Route
+                  path="spv/project"
+                  exact
+                  element={<ProjectDashboard />}
+                />
                 <Route path="spv/project/:projectId" element={<ProjectSPV />} />
                 <Route path="spv/permittowork" element={<PermitToWork />} />
               </Route>
               <Route element={<RoleBased allowedRole={"se"} />}>
-                <Route path="se/projectbudgeting" exact element={<ProjectBudgeting />} />
-                <Route path="se/projectbudgeting/:projectId" element={<ProjectBudgeting />} />
+                <Route
+                  path="se/projectbudgeting"
+                  exact
+                  element={<ProjectBudgeting />}
+                />
+                <Route
+                  path="se/projectbudgeting/:projectId"
+                  element={<ProjectBudgeting />}
+                />
                 {/* <Route path="se/schedule" element={<Schedule />} /> */}
               </Route>
               <Route element={<RoleBased allowedRole={"sm"} />}>

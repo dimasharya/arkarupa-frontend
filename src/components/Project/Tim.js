@@ -12,7 +12,7 @@ export default function Tim({ dataTim, modalNewTeam, setModalNewTeam, projectId 
   };
   return (
     <>
-      <div className="flex flex-col p-6 max-w-md bg-white rounded-lg border">
+      <div className="p-6 h-96 max-w-md bg-white rounded-lg border">
         <div className="flex justify-between items-center mb-4">
           <h5 className="font-semibold leading-none text-gray-900 dark:text-white">
             Tim
@@ -25,7 +25,7 @@ export default function Tim({ dataTim, modalNewTeam, setModalNewTeam, projectId 
           />
         </div>
         <div className="flow-root">
-          <ul className="relative h-60 px-2 overflow-y-auto divide-y divide-gray-200 dark:divide-gray-700">
+          <ul className="relative h-64 px-3 overflow-y-auto divide-y divide-gray-200 dark:divide-gray-700 border border-white rounded-md hover:border-gray-300 duration-300 scrollbar-hide">
             {dataTim.map((item, idx) => {
               return (
                 <>

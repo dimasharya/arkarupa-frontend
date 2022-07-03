@@ -15,7 +15,12 @@ export const routePM = [
     path: "/app/pm/project",
     icon: "FormsIcon",
     name: "Proyek",
-  }
+  },
+  // {
+  //   path: "/app/pm/kurvas",
+  //   icon: "FormsIcon",
+  //   name: "Kurva S",
+  // }
   // {
   //   path: '/app/forms',
   //   icon: 'FormsIcon',
