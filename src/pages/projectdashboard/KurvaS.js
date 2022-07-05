@@ -3,7 +3,6 @@ import "chartjs-adapter-moment";
 import { useDispatch, useSelector } from "react-redux";
 import {
   loadProgressKurvaS,
-  loadProgressKurvaSRencana,
   progressKurvaSProyekSelector,
   progressKurvaSRencanaProyekSelector,
 } from "../../reducer/ProjectSelectedSlice";
@@ -66,29 +65,6 @@ export default function KurvaS({ projectId }) {
 
   const [dataKurva, setDataKurva] = useState("");
 
-  const dataRencana = [
-    {
-      x: "2022-07-02T00:00:00.000Z",
-      y: "0",
-    },
-    {
-      x: "2022-07-04T00:00:00.000Z",
-      y: "9.139956170640119",
-    },
-    {
-      x: "2022-07-06T00:00:00.000Z",
-      y: "31.177804162414652",
-    },
-    {
-      x: "2022-07-08T00:00:00.000Z",
-      y: "91.28102595816338",
-    },
-    {
-      x: "2022-07-10T00:00:00.000Z",
-      y: "100",
-    },
-  ];
-
   const parsingDataKurva = () => {
     let dataProgresRealisasi = [];
     let dataProgresRencana = [];
@@ -98,7 +74,7 @@ export default function KurvaS({ projectId }) {
         // console.log(ProgresRencana);
         ProgresRencana.map((item) => {
         return dataProgresRencana.push({
-          x: item.x,
+          x: new Date(item.x).setHours(0,0,0,0),
           y: String(item.y),
         });
       });
@@ -107,7 +83,7 @@ export default function KurvaS({ projectId }) {
     if (Object.keys(Progres).length !== 0) {
       Progres.map((item) => {
         return dataProgresRealisasi.push({
-          x: item.tanggal_input,
+          x: new Date(item.tanggal_input).setHours(0,0,0,0),
           y: item.realisasi_progres,
         });
       });
@@ -136,7 +112,7 @@ export default function KurvaS({ projectId }) {
     setDataKurva(dataToState);
   };
 
-  return dataKurva !== "" ? (
+  return dataKurva.length !== 0 ? (
     <Line data={dataKurva} options={options} />
   ) : (
     <p className="text-sm text-center font-bold">Belum Ada Progres</p>
