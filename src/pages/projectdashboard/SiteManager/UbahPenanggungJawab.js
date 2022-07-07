@@ -57,7 +57,7 @@ export default function UbahPenanggungJawab({
       setModalEditPenanggungJawab(!modalEditPenanggungJawab);
     } else {
       dispatch(
-        setNotification({ type: "error", message: "Pilih salah satu pekerja" })
+        dispatch(setNotification({type: "error", message: "Harap memilih penanggung jawab"}))
       );
     }
   };

@@ -142,7 +142,7 @@ export default function NewProjectForm({ isOpen, setIsOpen }) {
                 <span className="font-semibold text-xs">Berkas Kontrak</span>
               </Label>
               <input
-                {...register("files", { required: true })}
+                {...register("files")}
                 className="block w-full pl-5 pr-1 py-1 my-2 text-sm focus:border-gray-400 border-gray-300 dark:border-gray-600 focus:ring focus:ring-gray-300 dark:focus:border-gray-600 dark:focus:ring-gray-300 dark:bg-gray-700"
                 type="file"
               />

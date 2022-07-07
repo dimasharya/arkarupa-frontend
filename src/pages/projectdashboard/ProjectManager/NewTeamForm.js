@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import {
   addTeam,
 } from "../../../reducer/ProjectSelectedSlice";
+import { setNotification } from "../../../reducer/NotificationSlice";
 
 export default function NewTeamForm({ modalNewTeam, setModalNewTeam, projectId }) {
   const { handleSubmit, register } = useForm();
@@ -45,6 +46,8 @@ export default function NewTeamForm({ modalNewTeam, setModalNewTeam, projectId }
       });
       dispatch(addTeam({id: projectId, data: users}));
       setModalNewTeam(!modalNewTeam)
+    }else if (data.users === false){
+      dispatch(setNotification({type: "error", message: "Pilih pekerja untuk dimasukkan anggota proyek"}))
     }
   };
   return (

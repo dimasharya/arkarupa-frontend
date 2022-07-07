@@ -166,7 +166,7 @@ export const addPekerjaan = createAsyncThunk(
     thunkAPI.dispatch(
       setNotification({
         type: "success",
-        message: "Pekerjaan Berhasil Ditambahkan",
+        message: "Jadwala pekerjaan berhasil ditambahkan",
       })
     );
     return result;
@@ -190,7 +190,7 @@ export const editPekerjaan = createAsyncThunk(
     thunkAPI.dispatch(
       setNotification({
         type: "success",
-        message: "Pekerjaan Berhasil Diupdate",
+        message: "Jadwal pekerjaan berhasil diubah",
       })
     );
     return result;
@@ -208,7 +208,7 @@ export const deletePekerjaan = createAsyncThunk(
     thunkAPI.dispatch(
       setNotification({
         type: "success",
-        message: "Pekerjaan Berhasil Dihapus",
+        message: "Jadwal pekerjaan berhasil dihapus",
       })
     );
     return _id;

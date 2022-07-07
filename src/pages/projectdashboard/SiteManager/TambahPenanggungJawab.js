@@ -56,7 +56,7 @@ export default function TambaPenanggungJawab({
       );
       setModalTambahPenanggungJawab(!modalTambahPenanggungJawab);
     } else {
-        dispatch(setNotification({type: "error", message: "Pilih salah satu pekerja"}))
+        dispatch(setNotification({type: "error", message: "Harap memilih penanggung jawab"}))
     }
   };
   return (
