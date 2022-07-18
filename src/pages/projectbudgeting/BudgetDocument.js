@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Button } from "@windmill/react-ui";
 import {
   Print,
@@ -33,6 +33,8 @@ import {
 } from "../../reducer/ProjectBudgetSelectedSlice";
 import Moment from "react-moment";
 import Api from "../../reducer/Api";
+import { useReactToPrint } from "react-to-print";
+import { BudgetDocumentPrint } from "../../components/Projectbudget/Workspace/BudgetDocumentPrint";
 
 export default function BudgetDocuments() {
   const { projectId } = useParams();
@@ -126,7 +128,7 @@ export default function BudgetDocuments() {
       nama_pekerjaan: props.item_pekerjaan.nama_pekerjaan,
       kategori: props.item_pekerjaan.kategori,
       simbol: props.item_pekerjaan.simbol,
-      harga: props.item_pekerjaan.harga
+      harga: props.item_pekerjaan.harga,
     };
     const dataEdit = {
       mode: "edit",
@@ -169,8 +171,24 @@ export default function BudgetDocuments() {
     setKey(searchKey);
   }
 
+  const componentRef = useRef(null);
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+
   return (
     <>
+      {Proyek ? (
+        <div className=" hidden">
+          <BudgetDocumentPrint
+            className="hidden"
+            id={Proyek._id}
+            ref={componentRef}
+          />
+        </div>
+      ) : (
+        ""
+      )}
       <div className="flex py-2 px-2">
         <div className="flex flex-auto justify-between items-center">
           <div className="flex gap-4 items-center">
@@ -190,7 +208,12 @@ export default function BudgetDocuments() {
                 </Moment>
               </span>
             </label>
-            <Button size="small" iconLeft={Print} layout="outline">
+            <Button
+              onClick={handlePrint}
+              size="small"
+              iconLeft={Print}
+              layout="outline"
+            >
               <span>Cetak</span>
             </Button>
             <Button size="small" iconLeft={Download} layout="outline">

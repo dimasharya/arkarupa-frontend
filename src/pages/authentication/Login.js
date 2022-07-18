@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ImageLight from "../../assets/img/arka-secure.png";
 import ImageDark from "../../assets/img/login-office-dark.jpeg";
 import { Label, Input, Button } from "@windmill/react-ui";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { login } from "../../reducer/AuthSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { login, selectToken } from "../../reducer/AuthSlice";
 // import { useAuthDispatch, loginUser, useAuthState } from "../../context";
 
 function Login(props) {
@@ -23,6 +23,15 @@ function Login(props) {
     });
     setIsLoading(false);
   };
+
+  const token = useSelector(selectToken)
+
+  useEffect(() => {
+    if(token !== ""){
+      navigate("/app")
+    }
+  },[])
+
   return (
     <div className="flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
       <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">

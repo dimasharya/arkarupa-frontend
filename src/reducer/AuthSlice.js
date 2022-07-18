@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { setNotification } from "./NotificationSlice";
 import Api from "./Api";
 import setAuthToken from "../utils/setAuthToken";
-import { loadUserProject } from "./ProjectSlice";
 
 // let user = localStorage.getItem("theArkarupaSecureAuth")
 //   ? JSON.parse(localStorage.getItem("theArkarupaSecureAuth")).user
@@ -67,9 +66,8 @@ export const loadUser = createAsyncThunk(
   }
 );
 
-export const logout = createAsyncThunk("auth/logout", async => {
-  localStorage.removeItem("theArkarupaSecureAuth")
-  
+export const logout = createAsyncThunk("auth/logout", (async) => {
+  localStorage.removeItem("theArkarupaSecureAuth");
 });
 
 let token = localStorage.getItem("theArkarupaSecureAuth")
@@ -104,4 +102,5 @@ const AuthSlice = createSlice({
 });
 
 export const selectUser = (state) => state.auth.user;
+export const selectToken = (state) => state.auth.token;
 export default AuthSlice.reducer;

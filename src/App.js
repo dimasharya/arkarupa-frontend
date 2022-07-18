@@ -9,6 +9,7 @@ import { SidebarProvider } from "./context/SidebarContext";
 import ThemedSuspense from "./components/ThemedSuspense";
 import { Windmill } from "@windmill/react-ui";
 import CustomStyle from "./assets/css/Customstyle";
+// import BudgetDocumentPrint from "./components/Projectbudget/Workspace/BudgetDocumentPrint";
 
 const LandingPage = lazy(() => import("./pages/LandingPage"))
 const RequiredAuth = lazy(() => import("./containers/RequiredAuth"));
@@ -36,6 +37,7 @@ function App() {
                 <Routes>
                   <Route path="/" element={<LandingPage />} />
                   <Route path="/login" element={<Login />} />
+                  {/* <Route path="/print" element={<BudgetDocumentPrint />} /> */}
                   {/* <Route path="/create-account" element={<CreateAccount />} /> */}
                   {/* <Route path="/forgot-password" element={<ForgotPassword />} /> */}
                   {/* Place new routes over this */}
