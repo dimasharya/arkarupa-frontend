@@ -64,9 +64,9 @@ export default function Workspace() {
           </div>
           <div className=" mt-3 p-2 rounded-lg shadow-inner">
             <ul className="relative h-80 overflow-y-scroll">
-              {projectBudget.map((item, idx) => {
+              {projectBudget.length !== 0 ? projectBudget.map((item, idx) => {
                 return <TableDataLong key={idx} dataProjectBudget={item} />;
-              })}
+              }) : <p className="text-center font-semibold text-sm">Tidak Ada Data</p>}
             </ul>
           </div>
         </div>

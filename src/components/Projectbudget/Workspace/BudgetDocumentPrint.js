@@ -224,7 +224,7 @@ export const BudgetDocumentPrint = React.forwardRef(({ id }, ref) => {
           </div>
         </div>
       ) : (
-        ""
+        <p className="text-center text-sm font-semibold"> Tidak Ada Data </p>
       )}
     </>
   );

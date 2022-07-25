@@ -82,7 +82,7 @@ export const deleteUser = createAsyncThunk(
   "usermanagement/delete",
   async ({ _id }, thunkApi) => {
     try {
-      await Api.delete("/api/users/delete", { _id });
+      await Api.delete(`/api/users/delete/${_id}`);
       thunkApi.dispatch(
         setNotification({ type: "success", message: "User berhasil dihapus" })
       );

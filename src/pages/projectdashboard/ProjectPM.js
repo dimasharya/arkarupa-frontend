@@ -26,11 +26,13 @@ import KurvaS from "./KurvaS";
 import BadgeTaskStatus from "../../components/Badge/BadgeTaskStatus";
 import ProgressbarSmall from "../../components/Progresbar/ProgressbarSmall";
 import moment from "moment";
+import BiayaProyekForm from "./ProjectManager/BiayaProyekForm";
 
 export default function Project() {
   const [modalNewPekerjaan, setModalNewPekerjaan] = useState(false);
   const [modalNewTeam, setModalNewTeam] = useState(false);
   const [modalEditPekerjaan, setModalEditPekerjaan] = useState(false);
+  const [modalBiayaProyek, setModalBiayaProyek] = useState(false)
 
   const tabs = ["jadwal", "progres", "kurva s"];
   const [tabActive, setTabactive] = useState(tabs[0]);
@@ -70,7 +72,7 @@ export default function Project() {
           <div className="col-span-1 py-4 px-6 rounded-md text-white bg-gradient-to-b from-gray-900 to-gray-600 bg-gradient-to-r">
             <h2 className="font-semibold mb-4">Data Proyek</h2>
             <div className="grid grid-cols-2 gap-2">
-              <button className="flex bg-white text-sm text-left rounded-lg items-center">
+              <button onClick={() => setModalBiayaProyek(!modalBiayaProyek)} className="flex bg-white text-sm text-left rounded-lg items-center">
                 <div className="rounded-md p-2 bg-white">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -91,7 +93,7 @@ export default function Project() {
                   Anggaran Biaya
                 </span>
               </button>
-              <button className="flex bg-white text-sm text-left rounded-lg items-center">
+              {/* <button className="flex bg-white text-sm text-left rounded-lg items-center">
                 <div className="rounded-md p-2 bg-white">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -111,7 +113,7 @@ export default function Project() {
                 <span className="text-black font-semibold leading-none px-2">
                   Berkas Kontrak
                 </span>
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
@@ -246,8 +248,8 @@ export default function Project() {
                               {item.nama_pekerjaan}
                             </p>
                           </div>
-                          <p className="text-sm w-1/6">{moment(item.tanggal_mulai).format("LL")}</p>
-                          <p className="text-sm w-1/6">{moment(item.tanggal_mulai).format("LL")}</p>
+                          <p className="text-sm w-1/6 text-center">{item.tanggal_mulai ? moment(item.tanggal_mulai).format("LL") : "Belum Dimulai"}</p>
+                          <p className="text-sm w-1/6 text-center">{item.tanggal_selesai ? moment(item.tanggal_selesai).format("LL") : "-"}</p>
                           <div className="flex justify-center w-1/6">
                             <ProgressbarSmall progress={progress} />
                           </div>
@@ -300,6 +302,11 @@ export default function Project() {
           setModalNewTeam={setModalNewTeam}
         />
       )}
+      {
+        modalBiayaProyek && (
+          <BiayaProyekForm modalBiayaProyek={modalBiayaProyek} setModalBiayaProyek={setModalBiayaProyek} />
+        )
+      }
     </>
   );
 }
